@@ -1,29 +1,11 @@
 package Controller;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+
 public class StudentController {
 
-	public void addCourse() {
-		
-		
-	}
 	
-	public void dropCourse() {
-		
-	}
 	
-	public void checkRegisteredCourses() {
-		
-	}
-	
-	public void checkVacancies() {
-		
-	}
-	
-	public void changeIndex() {
-		
-	}
-	
-	public void swopIndex() {
-		
-	}
 }

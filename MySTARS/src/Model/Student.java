@@ -5,6 +5,14 @@ public class Student {
 	private String matricNumber; 
 	private String gender;
 	private String nationality;
+	
+	public Student(String name, String matricNumber, String gender, String nationality) {
+		this.name = name;
+		this.matricNumber = matricNumber;
+		this.gender = gender;
+		this.nationality = nationality;
+	}
+	
 	public String getName() {
 		return name;
 	}

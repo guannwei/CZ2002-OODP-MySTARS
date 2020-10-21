@@ -1,10 +1,19 @@
 package Model;
 
+import java.util.Queue;
+
 public class Index {
 	private int indexNumber;
 	private String courseCode;
 	private int vacancy;
-	private Student[] waitList;
+	private Queue<Student> waitList;
+	
+	public Index(int indexNumber, String courseCode, int vacancy, Queue<Student> waitList) {
+		this.indexNumber = indexNumber;
+		this.courseCode = courseCode;
+		this.vacancy = vacancy;
+		this.waitList = waitList;
+	}
 	
 	public int getIndexNumber() {
 		return indexNumber;
@@ -24,12 +33,13 @@ public class Index {
 	public void setVacancy(int vacancy) {
 		this.vacancy = vacancy;
 	}
-	public Student[] getWaitList() {
+	public Queue<Student> getWaitList() {
 		return waitList;
 	}
-	public void setWaitList(Student[] waitList) {
+	public void setWaitList(Queue<Student> waitList) {
 		this.waitList = waitList;
 	}
+
 	
 	
 
