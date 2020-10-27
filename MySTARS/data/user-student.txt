@@ -1,4 +1,2 @@
-userName||password
-Henry||123456
-Jiayi||test123
-Bobb||test3456
+AC123,9435f238df55fba1769179a45999ace8,ac12@gmail.com,Amiee Chambers,U193457G,female,Singaporean,2020-10-08T12:30,2020-10-30T12:30
+JB123,eafacebfd90b456c9e51d39bbe518ba1,jb12@gmail.com,Jouie Bouge,U194377G,female,Singaporean,1990-04-08T12:30,1998-04-11T12:30
