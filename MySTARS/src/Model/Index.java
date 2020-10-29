@@ -14,6 +14,12 @@ public class Index {
 		this.vacancy = vacancy;
 		this.waitList = waitList;
 	}
+	public Index(int indexNumber, String courseCode, int vacancy) {
+		this.indexNumber = indexNumber;
+		this.courseCode = courseCode;
+		this.vacancy = vacancy;
+		this.waitList = new Queue<Student>;
+	}
 	
 	public int getIndexNumber() {
 		return indexNumber;
