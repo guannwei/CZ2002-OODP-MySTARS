@@ -4,13 +4,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.StringTokenizer;
+import java.util.*;
 
 import Model.*;
-
+X
 public class FileManager {
 	public static final String SEPARATOR = ",";
 
@@ -96,6 +93,98 @@ public class FileManager {
 			}
 			write(filename,alw);
 	}
+
+	public static ArrayList readCourse() throws IOException {
+		String filename = "course.txt" ;
+		ArrayList stringArray = (ArrayList)read(filename);
+		Map<String,Course> courses = new HashMap<>();
+
+		for (int i = 0 ; i < stringArray.size() ; i++) {
+			String st = (String)stringArray.get(i);
+			StringTokenizer star = new StringTokenizer(st , SEPARATOR);
+			String  courseCode = star.nextToken().trim();
+			String  courseName = star.nextToken().trim();
+			String  school = star.nextToken().trim();
+			courses.put(coursCode, new Course(courseCode, courseName, school));
+
+		}
+		return alr ;
+	}
+
+	public static void saveCourse(HashMap courses) throws IOException {
+		String filename = "data/user-student.txt" ;
+		List alw = new ArrayList() ;
+		Set set = courses.entrySet();
+		Iterator it = set.iterator();
+		while (it.hasNext()) {
+			Map.Entry entry = (Map.Entry) it.next();
+			Student course = entry.getValue();
+			StringBuilder st =  new StringBuilder() ;
+			st.append(course.getCourseCode().trim());
+			st.append(SEPARATOR);
+			st.append(course.getCourseName().trim());
+			st.append(SEPARATOR);
+			st.append(course.getSchool().trim());
+			st.append(SEPARATOR);
+			st.append(student.getName().trim());
+
+			alw.add(st.toString()) ;
+		}
+		write(filename,alw);
+	}
+
+	public static ArrayList readIndex() throws IOException {
+		String filename = "Index.txt" ;
+		ArrayList stringArray = (ArrayList)read(filename);
+		Map<String,Index> indexes = new HashMap<>();
+
+		for (int i = 0 ; i < stringArray.size() ; i++) {
+			String st = (String)stringArray.get(i);
+			StringTokenizer star = new StringTokenizer(st , SEPARATOR);
+			int indexNumber = parseInt(star.nextToken().trim());
+			String  courseName = star.nextToken().trim();
+			int vacancy = parseInt(star.nextToken().trim());
+			waitList = new Queue<Index>;
+			while (star.nextToken().trim()!=null){
+				waitList.add(star.nextToken().trim());
+			}
+			indexes.put(indexNumber,new Index(indexNumber,courseName,vacancy,waitList));
+
+		}
+		return indexes ;
+	}
+
+	public static void saveIndex(HashMap indexes) throws IOException {
+		String filename = "indexes.txt" ;
+		List alw = new ArrayList() ;
+		Set set = indexes.entrySet();
+		Iterator it = set.iterator();
+		while (it.hasNext()) {
+			Map.Entry entry = (Map.Entry) it.next();
+			Index index = entry.getValue();
+			StringBuilder st =  new StringBuilder() ;
+			st.append(index.getIndexNumber().trim());
+			st.append(SEPARATOR);
+			st.append(index.getCourseName().trim());
+			st.append(SEPARATOR);
+			st.append(course.getVacancy().trim());
+
+			Iterator<Integer> itr = queue.iterator();
+
+			// hasNext() returns true if the queue has more elements
+			while (itr.hasNext()) {
+				st.append(SEPARATOR);
+				st.append(hasNext());
+
+			}
+
+			alw.add(st.toString()) ;
+		}
+		write(filename,alw);
+	}
+
+
+
     public static void write(String fileName, List data) throws IOException  {
         PrintWriter out = new PrintWriter(new FileWriter(fileName));
 
