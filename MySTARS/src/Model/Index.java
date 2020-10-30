@@ -6,9 +6,9 @@ public class Index {
 	private int indexNumber;
 	private String courseCode;
 	private int vacancy;
-	private Queue<Student> waitList;
+	private Queue<String> waitList;
 	
-	public Index(int indexNumber, String courseCode, int vacancy, Queue<Student> waitList) {
+	public Index(int indexNumber, String courseCode, int vacancy, Queue<String> waitList) {
 		this.indexNumber = indexNumber;
 		this.courseCode = courseCode;
 		this.vacancy = vacancy;
@@ -18,7 +18,7 @@ public class Index {
 		this.indexNumber = indexNumber;
 		this.courseCode = courseCode;
 		this.vacancy = vacancy;
-		this.waitList = new Queue<Student>;
+		this.waitList = new Queue<String>;
 	}
 	
 	public int getIndexNumber() {
@@ -39,10 +39,10 @@ public class Index {
 	public void setVacancy(int vacancy) {
 		this.vacancy = vacancy;
 	}
-	public Queue<Student> getWaitList() {
+	public Queue<String> getWaitList() {
 		return waitList;
 	}
-	public void setWaitList(Queue<Student> waitList) {
+	public void setWaitList(Queue<String> waitList) {
 		this.waitList = waitList;
 	}
 
