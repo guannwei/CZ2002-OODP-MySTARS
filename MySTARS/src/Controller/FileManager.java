@@ -52,6 +52,29 @@ public class FileManager {
 			}
 			return alr ;
 	}
+	
+	public static HashMap readStudents2() throws IOException {
+		String filename = "data/user-student.txt" ;
+		ArrayList stringArray = (ArrayList)read(filename);
+		HashMap<String,Student> alr = new HashMap<>() ;
+
+		for (int i = 0 ; i < stringArray.size() ; i++) {
+			String st = (String)stringArray.get(i);
+			StringTokenizer star = new StringTokenizer(st , SEPARATOR);
+			String  username = star.nextToken().trim();
+			String  password = star.nextToken().trim();
+			String  email = star.nextToken().trim();
+			String  name = star.nextToken().trim();
+			String  matricNumber = star.nextToken().trim();
+			String  gender = star.nextToken().trim();
+			String  nationality = star.nextToken().trim();
+			LocalDateTime accessStartPeriod = LocalDateTime.parse(star.nextToken().trim());
+			LocalDateTime accessEndPeriod = LocalDateTime.parse(star.nextToken().trim());
+			Student student = new Student(username, password, email,name,matricNumber,gender,nationality,accessStartPeriod,accessEndPeriod);
+			alr.put(matricNumber,student) ;
+		}
+		return alr ;
+	}
 
 	public static void saveStudent(List al) throws IOException {
 			String filename = "data/user-student.txt" ;
@@ -81,6 +104,43 @@ public class FileManager {
 				}
 				write(filename,alw);
 		}
+	
+	public static void saveStudent2(HashMap<String,Student> al) throws IOException {
+		String filename = "data/user-student.txt" ;
+		List alw = new ArrayList() ;
+
+		Set set = al.entrySet();
+		Iterator it = set.iterator();
+		while (it.hasNext()) {
+			Map.Entry entry = (Map.Entry) it.next();
+			Student student = (Student) entry.getValue();
+
+			StringBuilder st =  new StringBuilder() ;
+			st.append(student.getUsername().trim());
+			st.append(SEPARATOR);
+			st.append(student.hashPassword(student.getPassword()).trim());
+			st.append(SEPARATOR);
+			st.append(student.getEmail().trim());
+			st.append(SEPARATOR);
+			st.append(student.getName().trim());
+			st.append(SEPARATOR);
+			st.append(student.getMatricNumber().trim());
+			st.append(SEPARATOR);
+			st.append(student.getGender().trim());
+			st.append(SEPARATOR);
+			st.append(student.getNationality().trim());
+			st.append(SEPARATOR);
+			st.append(student.getAccessStartPeriod().toString().trim());
+			st.append(SEPARATOR);
+			st.append(student.getAccessEndPeriod().toString());
+
+			alw.add(st.toString()) ;
+		}
+		write(filename,alw);
+	}
+
+	
+	
 	public static void saveAdmin(List al) throws IOException {
 		String filename = "data/user-admin.txt" ;
 		List alw = new ArrayList() ;// to store Professors data
