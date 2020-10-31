@@ -19,8 +19,6 @@ public class Index {
 		this.indexNumber = indexNumber;
 		this.courseCode = courseCode;
 		this.vacancy = vacancy;
-		Queue<String> waitList= new LinkedList<String>();
-		this.waitList = waitList;
 	}
 
 	
