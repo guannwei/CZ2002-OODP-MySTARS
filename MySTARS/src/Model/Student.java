@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.Date;
+import java.util.List;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -15,7 +16,7 @@ public class Student extends User{
 	private String nationality;
 	private LocalDateTime accessStartPeriod;
 	private LocalDateTime accessEndPeriod;
-	
+	private List<StudentRegisteredCourses> registeredCourses;
 	
 	public Student(String username, String password,String email,String name, String matricNumber, String gender, String nationality, LocalDateTime accessStartPeriod, LocalDateTime accessEndPeriod) {
 		super(username,password);
@@ -27,48 +28,71 @@ public class Student extends User{
 		this.accessStartPeriod = accessStartPeriod;
 		this.accessEndPeriod = accessEndPeriod;
 	}
+	
 	public String getEmail() {
 		return email;
 	}
+	
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	public String getMatricNumber() {
 		return matricNumber;
 	}
+	
 	public void setMatricNumber(String matricNumber) {
 		this.matricNumber = matricNumber;
 	}
+	
 	public String getGender() {
 		return gender;
 	}
+	
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+	
 	public String getNationality() {
 		return nationality;
 	}
+	
 	public void setNationality(String nationality) {
 		this.nationality = nationality;
 	}
+	
 	public LocalDateTime getAccessStartPeriod() {
 		return accessStartPeriod;
 	}
+	
 	public void setAccessStartPeriod(LocalDateTime accessStartPeriod) {
 		this.accessStartPeriod = accessStartPeriod;
 	}
+	
 	public LocalDateTime getAccessEndPeriod() {
 		return accessEndPeriod;
 	}
+	
 	public void setAccessEndPeriod(LocalDateTime accessEndPeriod) {
 		this.accessEndPeriod = accessEndPeriod;
 	}
+	
+	public List<StudentRegisteredCourses> getRegisteredCourses() {
+		return registeredCourses;
+	}
+	
+	public void setRegisteredCourses(List<StudentRegisteredCourses> registeredCourses) {
+		this.registeredCourses = registeredCourses;
+	}
+	
 	public boolean equals(Object o) {
 		if (o instanceof Student) {
 			Student s = (Student)o;
@@ -76,6 +100,7 @@ public class Student extends User{
 		}
 		return false;
 	}
+	
 	public boolean checkAccessTime() {
 		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -94,6 +119,8 @@ public class Student extends User{
         		.append(this.getGender()).append(",").append(this.getNationality()).append(",")
 				.append(this.getAccessStartPeriod()).append(",").append(this.getAccessEndPeriod()).toString();
     }
+
+	
 	
 
 
