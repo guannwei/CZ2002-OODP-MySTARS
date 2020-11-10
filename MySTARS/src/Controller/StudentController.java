@@ -6,7 +6,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
+import Model.Course;
+import Model.Index;
 import Model.Student;
 
 public class StudentController {
@@ -114,6 +118,35 @@ public class StudentController {
 		
 		}
 		
+	}
+
+	public ArrayList checkStudentsInIndex(int index) throws IOException {
+		ArrayList studentNominal = new ArrayList<Student>();
+
+			ArrayList<Student> studentList = accessFile.readStudentsNoAccessTime();
+			for(int i = 0; i<studentList.size(); i++) {
+				if(studentList.get(i).checkStudentInIndex(index)==Boolean.TRUE){
+					studentNominal.add(studentList.get(i));
+				}
+			}
+		return studentList;
+	}
+
+	public ArrayList checkStudentsInCourse(String courseName) throws IOException {
+		ArrayList studentNominal = new ArrayList<Student>();
+
+		HashMap courseList = FileManager.readCourse();
+		ArrayList<Student> studentList = FileManager.readStudentsNoAccessTime();
+		Course toFind = (Course) courseList.get(courseName);
+		List<Index> indexList = toFind.getIndexList();
+
+		for(int i = 0; i<studentList.size(); i++) {
+			for ( int j=0; j<indexList.size(); j++)
+			if(studentList.get(i).checkStudentInIndex(indexList.get(j).getIndexNumber())==Boolean.TRUE){
+				studentNominal.add(studentList.get(i));
+			}
+		}
+		return studentList;
 	}
 	
 	

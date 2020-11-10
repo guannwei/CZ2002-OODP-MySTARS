@@ -2,16 +2,18 @@ package Controller;
 import Controller.FileManager;
 import Model.Course;
 import Model.Index;
+import Model.Student;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public class CourseController {
     private HashMap<String,Course> courses;
     private HashMap<Integer, Index> indexes;
-
+//
     public CourseController( HashMap courses, HashMap indexes ){
         this.courses=courses;
         this.indexes=indexes;
@@ -48,7 +50,7 @@ public class CourseController {
 
                 case 3:
                     System.out.println("Do you want to: \n" +
-                            "1)Change an index's number\n" +
+                            "1)Update an index's number\n" +
                             "2)Add an index\n");
 
                     switch (sc.nextInt()) {
@@ -82,7 +84,7 @@ public class CourseController {
 
             }
             FileManager.saveCourse(courses);
-//            FileManager.saveIndex(indexes);
+            FileManager.saveIndex(indexes);
 
         }
         else
@@ -144,6 +146,22 @@ public class CourseController {
     public static void changeIndex() {
     	
     }
+
+    public void printIndexNomRoll(ArrayList<Student> nomRoll, int index){
+        System.out.println("Student List for Index "+index+" (Name, Gender, Nationality)");
+        for (int i=0;i<nomRoll.size();i++){
+            System.out.println((i+1)+") "+nomRoll.get(i).getName()+", " + nomRoll.get(i).getGender()+", " + nomRoll.get(i).getNationality() );
+        }
+    }
+
+    public void printCourseNomRoll(ArrayList<Student> nomRoll, String courseName){
+        System.out.println("Student List for Course Code "+courseName+" (Name, Gender, Nationality)");
+        for (int i=0;i<nomRoll.size();i++){
+            System.out.println((i+1)+") "+nomRoll.get(i).getName()+", " + nomRoll.get(i).getGender()+", " + nomRoll.get(i).getNationality() );
+        }
+    }
+
+
     
 
 }

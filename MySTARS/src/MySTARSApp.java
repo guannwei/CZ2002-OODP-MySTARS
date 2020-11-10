@@ -12,7 +12,7 @@ public class MySTARSApp {
 	private static Admin admin;
 	private static Student student;
 	
-	public static void main(String[] args){
+	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		Scanner sc = new Scanner(System.in);
 		String userType = "";

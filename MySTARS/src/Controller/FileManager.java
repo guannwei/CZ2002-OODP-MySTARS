@@ -176,10 +176,10 @@ public class FileManager {
 			write(filename,alw);
 	}
 
-	public static ArrayList readCourse() throws IOException {
+	public static HashMap<String,Course> readCourse() throws IOException {
 		String filename = "course.txt" ;
 		ArrayList stringArray = (ArrayList)read(filename);
-		Map<String,Course> courses = new HashMap<>();
+		HashMap<String,Course> courses = new HashMap<>();
 
 		for (int i = 0 ; i < stringArray.size() ; i++) {
 			String st = (String)stringArray.get(i);
@@ -190,7 +190,7 @@ public class FileManager {
 			courses.put(courseCode, new Course(courseCode, courseName, school));
 
 		}
-		return stringArray;
+		return courses;
 	}
 	
 	

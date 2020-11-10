@@ -1,5 +1,6 @@
 package Boundary;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -8,18 +9,23 @@ import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import Controller.CourseController;
+import Controller.FileManager;
 import Controller.StudentController;
 import Model.*;
 
 public class AdminUI {
 	
 	public static StudentController stuCtrl = new StudentController();
-	
-	public static void adminMenu(Admin admin) {
+
+
+
+	public static void adminMenu(Admin admin) throws IOException {
 		int choice = 0;
 		boolean validInput = false;
 		String matric = "";
 		Scanner sc = new Scanner(System.in);
+		CourseController CCtrl = new CourseController(FileManager.readCourse(),FileManager.readIndex());
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
 		do {
@@ -145,15 +151,23 @@ public class AdminUI {
 
 				break;
 			case 3:
+				CCtrl.updateCourse();
 
 				break;
 			case 4:
+				CCtrl.checkVacant();
 
 				break;
 			case 5:
+				System.out.print("Enter Index number: ");
+				int indexNum = sc.nextInt();
+				CCtrl.printIndexNomRoll(stuCtrl.checkStudentsInIndex(indexNum),indexNum);
 
 				break;
 			case 6:
+				System.out.print("Enter Course code: ");
+				String courseCode = sc.next();
+				CCtrl.printCourseNomRoll(stuCtrl.checkStudentsInCourse(courseCode),courseCode);
 
 				break;
 			case 7:
