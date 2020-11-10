@@ -217,77 +217,52 @@ public class FileManager {
 		write(filename,alw);
 	}
 	
-	public static ArrayList readIndex() throws IOException {
+	
+	public static HashMap readIndex() throws IOException {
 		String filename = "Index.txt" ;
 		ArrayList stringArray = (ArrayList)read(filename);
-		ArrayList alr = new ArrayList() ;
+		HashMap<Integer,Index> indexes = new HashMap<>();
 
 		for (int i = 0 ; i < stringArray.size() ; i++) {
 			String st = (String)stringArray.get(i);
 			StringTokenizer star = new StringTokenizer(st , SEPARATOR);
-			StringTokenizer listStar = new StringTokenizer(st, SEPARATORLIST);
+			StringTokenizer starList = new StringTokenizer(st , SEPARATORLIST);
 			int indexNumber = Integer.parseInt(star.nextToken().trim());
-			String  courseName = star.nextToken().trim();
 			int vacancy = Integer.parseInt(star.nextToken().trim());
 			
-			Queue<String> waitList = new LinkedList<>();
-			while (listStar.nextToken().trim()!=null){
-				waitList.add(listStar.nextToken().trim());
+			Queue<String> waitList = new LinkedList<String>();
+			while (starList.nextToken().trim()!=null){
+				waitList.add(starList.nextToken().trim());
 			}
-			//alr.add();
+			indexes.put(indexNumber,new Index(indexNumber,vacancy,waitList));
 
 		}
-		return alr;
+		return indexes;
 	}
-//	public static ArrayList readIndex() throws IOException {
-//		String filename = "Index.txt" ;
-//		ArrayList stringArray = (ArrayList)read(filename);
-//		Map<String,Index> indexes = new HashMap<>();
-//
-//		for (int i = 0 ; i < stringArray.size() ; i++) {
-//			String st = (String)stringArray.get(i);
-//			StringTokenizer star = new StringTokenizer(st , SEPARATOR);
-//			int indexNumber = Integer.parseInt(star.nextToken().trim());
-//			String  courseName = star.nextToken().trim();
-//			int vacancy = Integer.parseInt(star.nextToken().trim());
-//			waitList = new Queue<Index>;
-//			while (star.nextToken().trim()!=null){
-//				waitList.add(star.nextToken().trim());
-//			}
-//			indexes.put(indexNumber,new Index(indexNumber,courseName,vacancy,waitList));
-//
-//		}
-//		return indexes ;
-//	}
 
-//	public static void saveIndex(HashMap indexes) throws IOException {
-//		String filename = "indexes.txt" ;
-//		List alw = new ArrayList() ;
-//		Set set = indexes.entrySet();
-//		Iterator it = set.iterator();
-//		while (it.hasNext()) {
-//			Map.Entry entry = (Map.Entry) it.next();
-//			Index index = (Index)entry.getValue();
-//			StringBuilder st =  new StringBuilder() ;
-//			st.append(index.getIndexNumber().trim());
-//			st.append(SEPARATOR);
-//			st.append(index.getCourseName().trim());
-//			st.append(SEPARATOR);
-//			st.append(course.getVacancy().trim());
-//
-//			Iterator<Integer> itr = queue.iterator();
-//
-//			// hasNext() returns true if the queue has more elements
-//			while (itr.hasNext()) {
-//				st.append(SEPARATOR);
-//				st.append(hasNext());
-//
-//			}
-//
-//			alw.add(st.toString()) ;
-//		}
-//		write(filename,alw);
-//	}
+	public static void saveIndex(HashMap indexes) throws IOException {
+		String filename = "indexes.txt" ;
+		List alw = new ArrayList() ;
+		Set set = indexes.entrySet();
+		Iterator it = set.iterator();
+		while (it.hasNext()) {
+			Map.Entry entry = (Map.Entry) it.next();
+			Index index = (Index)entry.getValue();
+			StringBuilder st =  new StringBuilder() ;
+			st.append(index.getIndexNumber());
+			st.append(SEPARATOR);
+			st.append(index.getVacancy());
+			st.append(SEPARATOR);
+
+			for(int i = 0; i < index.getWaitList().size(); i++) {
+				st.append(index.getWaitList().poll());
+				st.append(SEPARATORLIST);
+			}
+
+			alw.add(st.toString()) ;
+		}
+		write(filename,alw);
+	}
 
 
 

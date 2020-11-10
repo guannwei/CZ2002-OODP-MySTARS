@@ -15,6 +15,13 @@ public class Index {
 		this.vacancy = vacancy;
 		this.waitList = waitList;
 	}
+	
+	public Index(int indexNumber, int vacancy, Queue<String> waitList) {
+		this.indexNumber = indexNumber;
+		this.vacancy = vacancy;
+		this.waitList = waitList;
+	}
+	
 	public Index(int indexNumber, String courseCode, int vacancy) {
 		this.indexNumber = indexNumber;
 		this.courseCode = courseCode;
