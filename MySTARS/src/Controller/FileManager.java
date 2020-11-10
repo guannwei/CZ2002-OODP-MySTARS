@@ -168,32 +168,32 @@ public class FileManager {
 			courses.put(courseCode, new Course(courseCode, courseName, school));
 
 		}
-		return alr ;
+		return stringArray;
 	}
 	
 	
 
-	public static void saveCourse(HashMap courses) throws IOException {
-		String filename = "data/user-student.txt" ;
-		List alw = new ArrayList() ;
-		Set set = courses.entrySet();
-		Iterator it = set.iterator();
-		while (it.hasNext()) {
-			Map.Entry entry = (Map.Entry) it.next();
-			Student course = entry.getValue();
-			StringBuilder st =  new StringBuilder() ;
-			st.append(course.getCourseCode().trim());
-			st.append(SEPARATOR);
-			st.append(course.getCourseName().trim());
-			st.append(SEPARATOR);
-			st.append(course.getSchool().trim());
-			st.append(SEPARATOR);
-			st.append(course.getName().trim());
-
-			alw.add(st.toString()) ;
-		}
-		write(filename,alw);
-	}
+//	public static void saveCourse(HashMap courses) throws IOException {
+//		String filename = "data/user-student.txt" ;
+//		List alw = new ArrayList() ;
+//		Set set = courses.entrySet();
+//		Iterator it = set.iterator();
+//		while (it.hasNext()) {
+//			Map.Entry entry = (Map.Entry) it.next();
+//			Student course = entry.getValue();
+//			StringBuilder st =  new StringBuilder() ;
+//			st.append(course.getCourseCode().trim());
+//			st.append(SEPARATOR);
+//			st.append(course.getCourseName().trim());
+//			st.append(SEPARATOR);
+//			st.append(course.getSchool().trim());
+//			st.append(SEPARATOR);
+//			st.append(course.getName().trim());
+//
+//			alw.add(st.toString()) ;
+//		}
+//		write(filename,alw);
+//	}
 
 //	public static ArrayList readIndex() throws IOException {
 //		String filename = "Index.txt" ;
