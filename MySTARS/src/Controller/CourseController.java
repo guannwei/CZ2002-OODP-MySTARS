@@ -1,5 +1,4 @@
-package com.assign;
-
+package Controller;
 import Controller.FileManager;
 import Model.Course;
 import Model.Index;
