@@ -10,6 +10,7 @@ import Model.*;
 
 public class FileManager {
 	public static final String SEPARATOR = ",";
+	public static final String SEPARATORLIST = "/";
 
 	public static ArrayList readAdmin() throws IOException {
 		String filename = "data/user-admin.txt" ;
@@ -45,6 +46,27 @@ public class FileManager {
 				LocalDateTime accessStartPeriod = LocalDateTime.parse(star.nextToken().trim());
 				LocalDateTime accessEndPeriod = LocalDateTime.parse(star.nextToken().trim());
 				Student student = new Student(username, password, email,name,matricNumber,gender,nationality,accessStartPeriod,accessEndPeriod);
+				alr.add(student) ;
+			}
+			return alr ;
+	}
+	
+	public static ArrayList readStudentsNoAccessTime() throws IOException {
+		String filename = "data/user-student.txt" ;
+		ArrayList stringArray = (ArrayList)read(filename);
+		ArrayList alr = new ArrayList() ;
+
+        for (int i = 0 ; i < stringArray.size() ; i++) {
+				String st = (String)stringArray.get(i);
+				StringTokenizer star = new StringTokenizer(st , SEPARATOR);	
+				String  username = star.nextToken().trim();	
+				String  password = star.nextToken().trim();	
+				String  email = star.nextToken().trim();	
+				String  name = star.nextToken().trim();	
+				String  matricNumber = star.nextToken().trim();	
+				String  gender = star.nextToken().trim();	
+				String  nationality = star.nextToken().trim();	
+				Student student = new Student(username, password, email,name,matricNumber,gender,nationality);
 				alr.add(student) ;
 			}
 			return alr ;
@@ -194,7 +216,29 @@ public class FileManager {
 		}
 		write(filename,alw);
 	}
+	
+	public static ArrayList readIndex() throws IOException {
+		String filename = "Index.txt" ;
+		ArrayList stringArray = (ArrayList)read(filename);
+		ArrayList alr = new ArrayList() ;
 
+		for (int i = 0 ; i < stringArray.size() ; i++) {
+			String st = (String)stringArray.get(i);
+			StringTokenizer star = new StringTokenizer(st , SEPARATOR);
+			StringTokenizer listStar = new StringTokenizer(st, SEPARATORLIST);
+			int indexNumber = Integer.parseInt(star.nextToken().trim());
+			String  courseName = star.nextToken().trim();
+			int vacancy = Integer.parseInt(star.nextToken().trim());
+			
+			Queue<String> waitList = new LinkedList<>();
+			while (listStar.nextToken().trim()!=null){
+				waitList.add(listStar.nextToken().trim());
+			}
+			//alr.add();
+
+		}
+		return alr;
+	}
 //	public static ArrayList readIndex() throws IOException {
 //		String filename = "Index.txt" ;
 //		ArrayList stringArray = (ArrayList)read(filename);
@@ -215,7 +259,7 @@ public class FileManager {
 //		}
 //		return indexes ;
 //	}
-//
+
 //	public static void saveIndex(HashMap indexes) throws IOException {
 //		String filename = "indexes.txt" ;
 //		List alw = new ArrayList() ;
@@ -272,6 +316,41 @@ public class FileManager {
         }
         return data;
       }
+      
+      public static ArrayList readStudentRegisteredCourses() throws IOException {
+  		String filename = "data/student-registered-courses.txt" ;
+  		ArrayList stringArray = (ArrayList)read(filename);
+  		ArrayList alr = new ArrayList() ;
+
+          for (int i = 0 ; i < stringArray.size() ; i++) {
+  				String st = (String)stringArray.get(i);
+  				StringTokenizer star = new StringTokenizer(st , SEPARATOR);	
+  				String  matricNumber = star.nextToken().trim();	
+  				int  indexNumber = Integer.parseInt(star.nextToken().trim());	
+  				Boolean  complete = Boolean.parseBoolean(star.nextToken().trim());	
+  				
+  				StudentRegisteredCourses course = new StudentRegisteredCourses(matricNumber, indexNumber, complete);
+  				alr.add(course) ;
+  			}
+  			return alr;
+  	}
+      
+      public static void saveRegisteredCourses(List al) throws IOException {
+			String filename = "data/student-registered-courses.txt" ;
+			List alw = new ArrayList() ;
+	        for (int i = 0 ; i < al.size() ; i++) {
+	        		StudentRegisteredCourses course = (StudentRegisteredCourses)al.get(i);
+					StringBuilder st =  new StringBuilder() ;
+					st.append(course.getMatricNumber().trim());
+					st.append(SEPARATOR);
+					st.append(String.valueOf(course.getIndexNumber()).trim());
+					st.append(SEPARATOR);
+					st.append(course.getComplete());
+					
+					alw.add(st.toString()) ;
+				}
+				write(filename,alw);
+		}
 
 }
     
