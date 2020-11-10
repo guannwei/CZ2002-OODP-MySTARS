@@ -173,27 +173,27 @@ public class FileManager {
 	
 	
 
-//	public static void saveCourse(HashMap courses) throws IOException {
-//		String filename = "data/user-student.txt" ;
-//		List alw = new ArrayList() ;
-//		Set set = courses.entrySet();
-//		Iterator it = set.iterator();
-//		while (it.hasNext()) {
-//			Map.Entry entry = (Map.Entry) it.next();
-//			Student course = entry.getValue();
-//			StringBuilder st =  new StringBuilder() ;
-//			st.append(course.getCourseCode().trim());
-//			st.append(SEPARATOR);
-//			st.append(course.getCourseName().trim());
-//			st.append(SEPARATOR);
-//			st.append(course.getSchool().trim());
-//			st.append(SEPARATOR);
-//			st.append(course.getName().trim());
-//
-//			alw.add(st.toString()) ;
-//		}
-//		write(filename,alw);
-//	}
+	public static void saveCourse(HashMap courses) throws IOException {
+		String filename = "data/user-student.txt" ;
+		List alw = new ArrayList() ;
+		Set set = courses.entrySet();
+		Iterator it = set.iterator();
+		while (it.hasNext()) {
+			Map.Entry entry = (Map.Entry) it.next();
+			Course course = (Course)entry.getValue();
+			StringBuilder st =  new StringBuilder() ;
+			st.append(course.getCourseCode().trim());
+			st.append(SEPARATOR);
+			st.append(course.getCourseName().trim());
+			st.append(SEPARATOR);
+			st.append(course.getSchool().trim());
+			st.append(SEPARATOR);
+			st.append(course.getCourseName().trim());
+
+			alw.add(st.toString()) ;
+		}
+		write(filename,alw);
+	}
 
 //	public static ArrayList readIndex() throws IOException {
 //		String filename = "Index.txt" ;
@@ -203,9 +203,9 @@ public class FileManager {
 //		for (int i = 0 ; i < stringArray.size() ; i++) {
 //			String st = (String)stringArray.get(i);
 //			StringTokenizer star = new StringTokenizer(st , SEPARATOR);
-//			int indexNumber = parseInt(star.nextToken().trim());
+//			int indexNumber = Integer.parseInt(star.nextToken().trim());
 //			String  courseName = star.nextToken().trim();
-//			int vacancy = parseInt(star.nextToken().trim());
+//			int vacancy = Integer.parseInt(star.nextToken().trim());
 //			waitList = new Queue<Index>;
 //			while (star.nextToken().trim()!=null){
 //				waitList.add(star.nextToken().trim());
@@ -223,7 +223,7 @@ public class FileManager {
 //		Iterator it = set.iterator();
 //		while (it.hasNext()) {
 //			Map.Entry entry = (Map.Entry) it.next();
-//			Index index = entry.getValue();
+//			Index index = (Index)entry.getValue();
 //			StringBuilder st =  new StringBuilder() ;
 //			st.append(index.getIndexNumber().trim());
 //			st.append(SEPARATOR);

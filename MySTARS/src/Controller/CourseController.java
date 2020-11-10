@@ -18,7 +18,6 @@ public class CourseController {
     }
 
 
-
     public void updateCourse() throws IOException {
         //scan for Object with courseCode = CourseCode
         Scanner sc = new Scanner(System.in);
@@ -26,8 +25,6 @@ public class CourseController {
         String CourseCode=sc.next();
         if (courses.get(CourseCode)!=null){
             Course course =courses.get(CourseCode);
-
-
 
             System.out.println("Choose what to update: \n" +
                     "1)Course Code\n" +
@@ -85,13 +82,7 @@ public class CourseController {
 
             }
             FileManager.saveCourse(courses);
-            FileManager.saveIndex(indexes);
-
-
-
-
-
-
+//            FileManager.saveIndex(indexes);
 
         }
         else
@@ -150,6 +141,9 @@ public class CourseController {
         System.out.println("This index has vacancy of "+vacancy+" students.");
     }
 
+    public static void changeIndex() {
+    	
+    }
     
 
 }
