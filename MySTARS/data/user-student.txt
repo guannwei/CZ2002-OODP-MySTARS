@@ -1,4 +1,4 @@
-jhtan01,0ff38626df3dd06095f729ca6eee2160,jhtan01@gmail.com,John Tan,U191919A,Male,Singaporean,2020-11-16T07:30,2020-11-30T07:30
-JB123,64cc8b329f08b0e73316b396b43749be,jb12@gmail.com,Jouie Bouge,U194377G,Female,Singaporean,1990-04-08T12:30,1998-04-11T12:30
-alee01,b9aabfac0a41d865b50dae3be0ab849b,alee01@gmail.com,Alex Lee,U192121B,Female,Singaporean,2020-11-16T17:12:26.366,2020-11-16T17:12:26.366
-AC123,c06f44ccccbb1ac61b59e312dccecaf0,ac12@gmail.com,Amiee Chambers,U193457G,Female,Singaporean,2020-10-08T12:30,2020-10-30T12:30
+jhtan01,0ff38626df3dd06095f729ca6eee2160,jhtan01@gmail.com,John Tan,U191919A,Male,Singaporean,2020-11-02T11:55,2020-11-30T11:55
+bayu1,76e77f9de0f16322181c521512b15542,bagel@gmail.com,Bagel Yu,U192011A,Female,Indonesian,2020-11-12T11:55,2020-11-25T10:55
+QUQU123,74c364170bdfd468808421fd0e44647f,QUQU123@gmail.com,Qu Qu,U128403G,Female,Singaporean,2020-12-29T11:55,2021-02-03T11:55
+alee01,b9aabfac0a41d865b50dae3be0ab849b,alexlee@gmail.com,Alex Lee,U122742B,Male,Singaporean,2020-11-12T11:55,2020-11-25T10:55

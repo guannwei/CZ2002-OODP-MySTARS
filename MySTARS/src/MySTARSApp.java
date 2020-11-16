@@ -28,15 +28,16 @@ public class MySTARSApp {
 				String username = sc.nextLine();
 				System.out.println("Enter password: ");
 				String password = sc.nextLine();
-				if(AccountController.logIn(userType, username, password) != null) {
+				Object object = AccountController.logIn(userType, username, password);
+				if(object != null) {
 					status = false;
 					if(userType.equals("admin")) {
-						admin = (Admin)AccountController.logIn(userType, username, password);
+						admin = (Admin)object;
 						System.out.println("Loged in");
 						System.out.println(admin.getUsername());
 						AdminUI.adminMenu(admin);
 					}else {
-						student = (Student)AccountController.logIn(userType, username, password);
+						student = (Student)object;
 						if(!student.checkAccessTime()) {
 							System.out.println("Please log in during your access period");
 						}else {
