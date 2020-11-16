@@ -17,9 +17,7 @@ public class StudentUI {
 		int choice = 0;
 		boolean validInput = false;
 		Scanner sc = new Scanner(System.in);
-		String matric="";
-		
-		
+		String matric= student.getMatricNumber();
 		
 			
 		do {
