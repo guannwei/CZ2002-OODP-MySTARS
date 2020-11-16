@@ -28,9 +28,47 @@ public class CourseController {
     	
     }
 
+    public boolean checkCourse(String courseCode){
+		if (courses.get(courseCode)!=null){
+			return true;
+		}
+		else return false;
+	}
 
-    public void updateCourse() throws IOException {
-        //scan for Object with courseCode = CourseCode
+	public boolean checkIndex(int index){
+		if (indexes.get(index)!=null){
+			return true;
+		}
+		else return false;
+	}
+
+	public void updateCourseCode(String courseCodeOld, String courseCodeNew){
+		Course course =courses.get(courseCodeOld);
+		course.setCourseCode(courseCodeNew);
+	}
+
+	public void updateCourseSchool(String courseCode, String newSchool){
+		Course course =courses.get(courseCode);
+		course.setSchool(newSchool);
+	}
+
+	public void updateIndex(int newIndex, int oldIndex){
+		Index index=indexes.get(newIndex);
+		index.setIndexNumber(oldIndex);
+	}
+
+	public void updateVacancy(int indexNum, int vacancy){
+		Index index=indexes.get(indexNum);
+		index.setVacancy(vacancy);
+	}
+
+	public void newIndex(int indexNum, String courseCode, int vacancyInt){
+    	indexes.put(indexNum,new Index(indexNum,courseCode,vacancyInt));
+	}
+
+
+   //public void updateCourse() throws IOException {
+      /*   //scan for Object with courseCode = CourseCode
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter Course Code to update:");
         String CourseCode=sc.next();
@@ -104,81 +142,33 @@ public class CourseController {
 
 
     }
+    */
 
 
-    public void addCourse() throws IOException {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter new Course Code:");
-        String courseCode=sc.next();
-        if (courses.get(courseCode)!=null){
-            System.out.println("This Course Code already exists");
-            return;
-        }
-        System.out.print("Enter new Course Name:");
-        String courseName=sc.next();
-        System.out.print("Enter Course School:");
-        String school=sc.next();
+    public void addCourse(String courseCode, String courseName, String school) throws IOException {
+
         courses.put(courseCode,new Course(courseCode,courseName,school));
         FileManager.saveCourse(courses);
-
-        System.out.println("New Course successfully added!");
-
     }
 
-    public void delCourse() throws IOException {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter Course Code to be deleted:");
-        String courseCode=sc.next();
-        if (courses.get(courseCode)==null){
-            System.out.println("This Course Code does not exists");
-            return;
-        }
+    public void delCourse(String courseCode) throws IOException {
 
         courses.remove(courseCode);
         FileManager.saveCourse(courses);
 
-        System.out.println("New Course successfully added!");
+
     }
 
-    public void checkVacant(){
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter the index of which you like to check vacancy for:");
-        int index = sc.nextInt();
+    public int checkVacant(int index){
+
         if (indexes.get(index)==null){
-            System.out.println("This index does not exist.");
-            return;
+            return -1;
         }
         int vacancy=indexes.get(index).getVacancy();
-        System.out.println("This index has vacancy of "+vacancy+" students.");
+        return vacancy;
     }
 
 
-    public void printIndexNomRoll(ArrayList<Student> nomRoll, int index){
-
-        System.out.println("Student List for Index "+index+" (Name, Gender, Nationality)");
-        if (nomRoll.size()==0){
-			System.out.println("Empty");
-			return;
-		}
-        for (int i=0;i<nomRoll.size();i++){
-            System.out.println((i+1)+") "+nomRoll.get(i).getName()+", " + nomRoll.get(i).getGender()+", " + nomRoll.get(i).getNationality() );
-        }
-		System.out.println("");
-    }
-
-    public void printCourseNomRoll(ArrayList<Student> nomRoll, String courseName){
-        System.out.println("Student List for Course Code "+courseName+" (Name, Gender, Nationality)");
-		if (nomRoll.size()==0){
-			System.out.println("Empty");
-			return;
-		}
-        for (int i=0;i<nomRoll.size();i++){
-            System.out.println((i+1)+") "+nomRoll.get(i).getName()+", " + nomRoll.get(i).getGender()+", " + nomRoll.get(i).getNationality() );
-        }
-		System.out.println("");
-    }
-
-    
     
     /* For Students */
     public Boolean checkCourseRegistered(String matric, int index){

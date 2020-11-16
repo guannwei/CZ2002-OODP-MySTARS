@@ -91,6 +91,9 @@ public class Student extends User{
 
 	public Boolean checkStudentInIndex(int index) {
 		List regCourse = getRegisteredCourses();
+		if (regCourse==null){
+			return false;
+		}
 		for (int i=0;i<regCourse.size();i++){
 			StudentRegisteredCourses regIndex = (StudentRegisteredCourses) regCourse.get(i);
 			if (regIndex.getIndexNumber()==index)

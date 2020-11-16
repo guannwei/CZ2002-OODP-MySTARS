@@ -1,15 +1,13 @@
 package Controller;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
 import Model.Course;
 import Model.Index;
 import Model.Student;
+import Model.StudentRegisteredCourses;
 
 public class StudentController {
 	private static FileManager accessFile = new FileManager();
@@ -170,38 +168,34 @@ public class StudentController {
 	public ArrayList checkStudentsInIndex(int index) throws IOException {
 		ArrayList studentNominal = new ArrayList<Student>();
 
-			ArrayList<Student> studentList = new ArrayList();
-			studentList= accessFile.readStudentsArray();
+		HashMap<String,Student> studentList = FileManager.readStudents();
+		ArrayList<StudentRegisteredCourses> regCourseList = FileManager.readStudentRegisteredCourses();
 
-			for(int i = 0; i<studentList.size(); i++) {
-				if(studentList.get(i).checkStudentInIndex(index)==true){
-					studentNominal.add(studentList.get(i));
-				}
+		for(int i = 0; i<regCourseList.size(); i++) {
+			if(regCourseList.get(i).getIndexNumber()==index&&!regCourseList.get(i).getComplete()){
+				studentNominal.add(studentList.get(regCourseList.get(i).getMatricNumber()));
 			}
+		}
 		if (studentNominal==null){
 			return (ArrayList) Collections.<Student>emptyList();
 		}
 		return studentNominal;
 	}
 
-	public ArrayList checkStudentsInCourse(String courseName) throws IOException {
+	public ArrayList<Student> checkStudentsInCourse(String courseName) throws IOException {
 		ArrayList studentNominal = new ArrayList<Student>();
+		HashMap<Integer,Index> indexList = FileManager.readIndex();
+		HashMap<String,Student> studentList = FileManager.readStudents();
+		ArrayList<StudentRegisteredCourses> regCourseList = FileManager.readStudentRegisteredCourses();
 
-		HashMap courseList = FileManager.readCourse();
-		ArrayList<Student> studentList = FileManager.readStudentsArray();
-		Course toFind = (Course) courseList.get(courseName);
-		List<Index> indexList = toFind.getIndexList();
+		for(int i = 0; i<regCourseList.size(); i++) {
+			if(indexList.get(regCourseList.get(i).getIndexNumber()).getCourseCode().equals(courseName)&&!regCourseList.get(i).getComplete()){
+				studentNominal.add(studentList.get(regCourseList.get(i).getMatricNumber()));
 
-		for(int i = 0; i<studentList.size(); i++) {
-			for ( int j=0; j<indexList.size(); j++)
-			if(studentList.get(i).checkStudentInIndex(indexList.get(j).getIndexNumber())==true){
-				studentNominal.add(studentList.get(i));
 			}
 		}
-		if (studentNominal==null){
-			return (ArrayList) Collections.<Student>emptyList();
-		}
-		return studentList;
+
+		return studentNominal;
 	}
 	
 	
