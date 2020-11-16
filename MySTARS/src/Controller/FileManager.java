@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 
 import Model.*;
@@ -230,6 +231,7 @@ public class FileManager {
 			int vacancy = Integer.parseInt(star.nextToken().trim());
 			int max = Integer.parseInt(star.nextToken().trim());
 			
+			
 			String waitListBeforeSplit = star.nextToken().trim();
 			String[] waitListSplit = waitListBeforeSplit.split(SEPARATORLIST);
 			for(String a : waitListSplit) {
@@ -333,5 +335,49 @@ public class FileManager {
 				write(filename,alw);
 		}
 
+      public static ArrayList<Lesson> readLessonArray() throws IOException {
+  		String filename = "data/lessons.txt" ;
+  		ArrayList stringArray = (ArrayList)read(filename);
+  		ArrayList<Lesson> Lessons = new ArrayList<>();
+
+  		for (int i = 0 ; i < stringArray.size() ; i++) {
+  			String st = (String)stringArray.get(i);
+  			StringTokenizer star = new StringTokenizer(st , SEPARATOR);
+  			
+  			int indexNumber = Integer.parseInt(star.nextToken().trim());
+  			LocalTime startTime = LocalTime.parse(star.nextToken().trim());
+  			LocalTime endTime = LocalTime.parse(star.nextToken().trim());
+  			String day = star.nextToken().trim();
+  			String type = star.nextToken().trim();
+  			String venue = star.nextToken().trim();
+  			
+  			Lesson le = new Lesson(indexNumber, startTime, endTime, day, type, venue);
+  			
+  		}
+  		return Lessons;
+  	}
+      
+      public static void saveLesson(ArrayList<Lesson> al) throws IOException {
+			String filename = "data/lessons.txt" ;
+			List alw = new ArrayList();
+	        for (int i = 0 ; i < al.size() ; i++) {
+					Lesson lesson = (Lesson)al.get(i);
+					StringBuilder st =  new StringBuilder() ;
+					st.append(lesson.getIndexNumber());
+					st.append(SEPARATOR);
+					st.append(lesson.getStartTime().toString().trim());
+					st.append(SEPARATOR);
+					st.append(lesson.getEndTime().toString().trim());
+					st.append(SEPARATOR);
+					st.append(lesson.getDay().trim());
+					st.append(SEPARATOR);
+					st.append(lesson.getType().trim());
+					st.append(SEPARATOR);
+					st.append(lesson.getVenue().trim());
+					
+					alw.add(st.toString()) ;
+				}
+				write(filename,alw);
+		}
 }
     

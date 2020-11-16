@@ -29,6 +29,10 @@ public class Student extends User{
 		this.accessEndPeriod = accessEndPeriod;
 	}
 	
+	public Student(String username, String password) {
+		super(username, password);
+	}
+	
 	public String getEmail() {
 		return email;
 	}

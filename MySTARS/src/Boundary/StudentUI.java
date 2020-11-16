@@ -55,53 +55,61 @@ public class StudentUI {
 
 				break;
 			case 5:
-				try {
-					System.out.println("Enter the course");
-					String courseCode = sc.nextLine();
-					System.out.println("Enter the original index");
-					int index = sc.nextInt();
+				
+				System.out.println("Enter the course");
+				String courseCode = sc.nextLine();
+				System.out.println("Enter the original index");
+				int index = sc.nextInt();
 					
-		    		if(courseCtrl.checkCourseRegistered(matric, index) == false) {
-		    			System.out.println("You have not registered for this course!");
-		    		}
-		    		else {
-		    			if(courseCtrl.checkCompleteCourse(matric, index) == true) {
-		    				System.out.println("You have alread completed this course!");
-		    			}
-		    			else {
-		    				//Print all indexes that course has
-		    				ArrayList<Index> indexList = new ArrayList<Index>();
-		    				indexList = courseCtrl.allIndexOfCourse(courseCode);
-		    				System.out.println("List of indexes");
-		    				System.out.println("Index	Vacancy");
-		    				System.out.println("----------------");
-		    				for(int i = 0; i < indexList.size(); i++) {
-		    					System.out.println(indexList.get(i).getIndexNumber() + "	" + indexList.get(i).getVacancy());
-		    				}
-		    				
-		    				//Get new index
-		    				System.out.println("\nEnter new index");
-		    				int newIndex = sc.nextInt();
-		    				//Change index if have vacancy
-		    				if(courseCtrl.checkVacancy(newIndex) == true) {
+		    	if(courseCtrl.checkCourseRegistered(matric, index) == false) {
+		    		System.out.println("You have not registered for this course!");
+		   		}
+		   		else {
+		   			if(courseCtrl.checkCompleteCourse(matric, index) == true) {
+		   				System.out.println("You have alread completed this course!");
+	    			}
+	    			else {
+	    				//Print all indexes that course has
+		    			ArrayList<Index> indexList = new ArrayList<Index>();
+		    			indexList = courseCtrl.allIndexOfCourse(courseCode);
+		    			System.out.println("List of indexes");
+		   				System.out.println("Index	Vacancy");
+		   				System.out.println("----------------");
+		   				for(int i = 0; i < indexList.size(); i++) {
+		   					System.out.println(indexList.get(i).getIndexNumber() + "	" + indexList.get(i).getVacancy());
+	    				}
+		   				
+		   				//Get new index
+		    			System.out.println("\nEnter new index");
+		    			int newIndex = sc.nextInt();
+		    			//Check if index have vacancy
+		    			if(courseCtrl.checkVacancy(newIndex) == true) {
+		    				//Check if index clashes
+		    				if(courseCtrl.checkClash(matric, index) == false) {
 		    					courseCtrl.changeIndex(matric, index, newIndex);
 		    				}
 		    				else {
-		    					System.out.println("Index has 0 vacancies, unable to change index!");
+		    					System.out.println("Chosen index clashes with current timetable, unable to change index!");
 		    				}
 		    				
 		    			}
-		    		}
+		   				else {
+		   					System.out.println("Index has 0 vacancies, unable to change index!");
+		   				}	
+		   			}
 		    	}
-		    	catch(Exception e){
-		    		
-		    	}
+		    	
+		    	
 				break;
 			case 6:
+				System.out.println("Enter peer's username");
+				System.out.println("Enter peer's password");
+				System.out.println("Enter your index");
+				System.out.println("Enter peer's index");
 
 				break;
 			case 7:
-				System.out.println("Loged out successfully");
+				System.out.println("Logged out successfully");
 				break;
 			default:
 				System.out.println("");

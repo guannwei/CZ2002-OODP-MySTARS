@@ -1,27 +1,29 @@
 package Model;
 
 import java.sql.Time;
+import java.time.LocalTime;
 
 public class Lesson {
 	private int indexNumber;
-	private String courseCode;
-	private Time startTime;
-	private Time endTime;
+	private LocalTime startTime;
+	private LocalTime endTime;
 	private String day;
 	private String type;
 	private String venue;
-	private String staffName;
+
 	
-	public Lesson(int indexNumber, String courseCode, Time startTime, Time endTime, String day, String type,
-			String venue, String staffName) {
+	public Lesson(int indexNumber, LocalTime startTime, LocalTime endTime, String day, String type,
+			String venue) {
 		this.indexNumber = indexNumber;
-		this.courseCode = courseCode;
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.day = day;
 		this.type = type;
 		this.venue = venue;
-		this.staffName = staffName;
+
+	}
+	public Lesson() {
+		
 	}
 
 	public int getIndexNumber() {
@@ -32,27 +34,19 @@ public class Lesson {
 		this.indexNumber = indexNumber;
 	}
 
-	public String getCourseCode() {
-		return courseCode;
-	}
-
-	public void setCourseCode(String courseCode) {
-		this.courseCode = courseCode;
-	}
-
-	public Time getStartTime() {
+	public LocalTime getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(Time startTime) {
+	public void setStartTime(LocalTime startTime) {
 		this.startTime = startTime;
 	}
 
-	public Time getEndTime() {
+	public LocalTime getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(Time endTime) {
+	public void setEndTime(LocalTime endTime) {
 		this.endTime = endTime;
 	}
 
@@ -79,17 +73,6 @@ public class Lesson {
 	public void setVenue(String venue) {
 		this.venue = venue;
 	}
-
-	public String getStaffName() {
-		return staffName;
-	}
-
-	public void setStaffName(String staffName) {
-		this.staffName = staffName;
-	}
-	
-	
-	
 	
 	
 

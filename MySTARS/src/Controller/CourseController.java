@@ -2,6 +2,7 @@ package Controller;
 import Controller.FileManager;
 import Model.Course;
 import Model.Index;
+import Model.Lesson;
 import Model.Student;
 import Model.StudentRegisteredCourses;
 
@@ -242,6 +243,74 @@ public class CourseController {
     	return vacant;
     }
 
+    public Boolean checkClash(String matric, int index) {
+    	Boolean clash = false;
+    	try {
+    		//Get all lesson details
+    		ArrayList<Lesson> lessonList = new ArrayList<>();
+    		lessonList = accessFile.readLessonArray();
+    		
+    		ArrayList<Lesson> studentLesson = new ArrayList<>();
+    		
+    		//Get all student reg courses
+    		ArrayList<StudentRegisteredCourses> stuRegCourses = new ArrayList<>();
+    		stuRegCourses = accessFile.readStudentRegisteredCourses();
+    		
+    		//Store all lesson details that student takes
+    		for(int i = 0; i < lessonList.size(); i++) {
+    			for(int j = 0; j < stuRegCourses.size(); j++) {
+    				//If correct matric number
+    				if(stuRegCourses.get(j).getMatricNumber() == matric) {
+    					if(lessonList.get(i).getIndexNumber() == stuRegCourses.get(j).getIndexNumber()) {
+    						studentLesson.add(lessonList.get(i));
+    					}
+    				}
+    			}
+    		}
+    		
+    		//Store details of new index
+    		Lesson newIndexLesson = new Lesson();
+    		for(int i = 0; i < lessonList.size(); i++) {
+    			if(lessonList.get(i).getIndexNumber() == index) {
+    				newIndexLesson = lessonList.get(i);
+    			}
+    		}
+    		
+    		//Check against all other registered index for student
+    		Lesson checkIndexLesson = new Lesson();
+    		for(int i = 0; i < studentLesson.size(); i++) {
+    			checkIndexLesson = studentLesson.get(i);
+    			
+    			if(checkIndexLesson.getIndexNumber() != index) {
+    				//Check if the lesson details clash
+    				
+    	    		//If they have same start time, clash
+    	    		if(checkIndexLesson.getStartTime().compareTo(newIndexLesson.getStartTime()) == 0) {
+    	    			clash = true;
+    	    			break;
+    	    		}
+    	    		//If existing start time is later than new start time & less than new end time, clash
+    	    		else if(checkIndexLesson.getStartTime().compareTo(newIndexLesson.getStartTime()) > 0 && checkIndexLesson.getStartTime().compareTo(newIndexLesson.getEndTime()) < 0){
+    	    			clash = true;
+    	    			break;
+    	    		}
+    	    		//If new start time is later than existing start time & less than existing end time, clash
+    	    		else if(newIndexLesson.getStartTime().compareTo(checkIndexLesson.getStartTime()) > 0 && newIndexLesson.getStartTime().compareTo(checkIndexLesson.getEndTime()) < 0) {
+    	    			clash = true;
+    	    			break;
+    	    		}
+    	    		else {
+    	    			clash = false;
+    	    		}
+    			}
+    		}
+
+    	}
+    	catch(Exception e) {
+    		
+    	}
+    	return clash;
+    }
 
 	public void changeIndex(String matric, int index, int newIndex) {
 	    try {
