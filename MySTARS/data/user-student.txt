@@ -1,2 +1,4 @@
-AC123,9435f238df55fba1769179a45999ace8,ac12@gmail.com,Amiee Chambers,U193457G,female,Singaporean,2020-10-08T12:30,2020-10-30T12:30
-JB123,eafacebfd90b456c9e51d39bbe518ba1,jb12@gmail.com,Jouie Bouge,U194377G,female,Singaporean,1990-04-08T12:30,1998-04-11T12:30
+jhtan01,9d8345c08d0dd1507a8ac49847a7834b,jhtan01@gmail.com,John Tan,U191919A,Male,Singaporean,2020-11-16T11:46:46.913,2020-11-16T11:46:46.914
+JB123,d40adfa5c5af05fe11f69436cac433ee,jb12@gmail.com,Jouie Bouge,U194377G,Female,Singaporean,1990-04-08T12:30,1998-04-11T12:30
+alee01,7c55dbf077b0f2ad501e788efd117243,alee01@gmail.com,Alex Lee,U192121B,Female,Singaporean,2020-11-16T17:12:26.366,2020-11-16T17:12:26.366
+AC123,19e25774490d5b9ec4f2e04a68eec872,ac12@gmail.com,Amiee Chambers,U193457G,Female,Singaporean,2020-10-08T12:30,2020-10-30T12:30

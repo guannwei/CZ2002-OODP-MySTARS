@@ -1,5 +1,8 @@
 package Controller;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -28,7 +31,7 @@ public class FileManager {
 			}
 			return alr ;
 	}
-	public static ArrayList readStudents() throws IOException {
+	public static ArrayList readStudentsArray() throws IOException {
 		String filename = "data/user-student.txt" ;
 		ArrayList stringArray = (ArrayList)read(filename);
 		ArrayList alr = new ArrayList() ;
@@ -51,118 +54,84 @@ public class FileManager {
 			return alr ;
 	}
 	
-	public static ArrayList readStudentsNoAccessTime() throws IOException {
+	public static HashMap<String, Student> readStudents() throws IOException {
 		String filename = "data/user-student.txt" ;
-		ArrayList stringArray = (ArrayList)read(filename);
-		ArrayList alr = new ArrayList() ;
 
-        for (int i = 0 ; i < stringArray.size() ; i++) {
-				String st = (String)stringArray.get(i);
-				StringTokenizer star = new StringTokenizer(st , SEPARATOR);	
-				String  username = star.nextToken().trim();	
-				String  password = star.nextToken().trim();	
-				String  email = star.nextToken().trim();	
-				String  name = star.nextToken().trim();	
-				String  matricNumber = star.nextToken().trim();	
-				String  gender = star.nextToken().trim();	
-				String  nationality = star.nextToken().trim();	
-				Student student = new Student(username, password, email,name,matricNumber,gender,nationality);
-				alr.add(student) ;
-			}
-			return alr ;
-	}
-	
-	public static HashMap readStudents2() throws IOException {
-		String filename = "data/user-student.txt" ;
-		ArrayList stringArray = (ArrayList)read(filename);
-		HashMap<String,Student> alr = new HashMap<>() ;
-
-		for (int i = 0 ; i < stringArray.size() ; i++) {
-			String st = (String)stringArray.get(i);
-			StringTokenizer star = new StringTokenizer(st , SEPARATOR);
-			String  username = star.nextToken().trim();
-			String  password = star.nextToken().trim();
-			String  email = star.nextToken().trim();
-			String  name = star.nextToken().trim();
-			String  matricNumber = star.nextToken().trim();
-			String  gender = star.nextToken().trim();
-			String  nationality = star.nextToken().trim();
-			LocalDateTime accessStartPeriod = LocalDateTime.parse(star.nextToken().trim());
-			LocalDateTime accessEndPeriod = LocalDateTime.parse(star.nextToken().trim());
-			Student student = new Student(username, password, email,name,matricNumber,gender,nationality,accessStartPeriod,accessEndPeriod);
-			alr.put(matricNumber,student) ;
+		HashMap<String,Student> alr = new HashMap<>();
+		String line;
+		BufferedReader br = new BufferedReader(new FileReader(filename));
+		while((line = br.readLine()) != null) {
+			String [] parts = line.split(SEPARATOR);
+			String username = parts[0].trim();
+			String password = parts[1].trim();
+			String email = parts[2].trim();
+			String name = parts[3].trim();
+			String matricNumber = parts[4].trim();
+			String gender = parts[5].trim();
+			String nationality = parts[6].trim();
+			LocalDateTime accessStartPeriod = LocalDateTime.parse(parts[7].trim());
+			LocalDateTime accessEndPeriod = LocalDateTime.parse(parts[8].trim());
+			Student stu = new Student(username, password, email, name, matricNumber, gender, nationality, accessStartPeriod, accessEndPeriod);
+			alr.put(matricNumber, stu);
 		}
+
 		return alr ;
 	}
 
-	public static void saveStudent(List al) throws IOException {
-			String filename = "data/user-student.txt" ;
-			List alw = new ArrayList() ;
-	        for (int i = 0 ; i < al.size() ; i++) {
-					Student student = (Student)al.get(i);
-					StringBuilder st =  new StringBuilder() ;
-					st.append(student.getUsername().trim());
-					st.append(SEPARATOR);
-					st.append(student.hashPassword(student.getPassword()).trim());
-					st.append(SEPARATOR);
-					st.append(student.getEmail().trim());
-					st.append(SEPARATOR);
-					st.append(student.getName().trim());
-					st.append(SEPARATOR);
-					st.append(student.getMatricNumber().trim());
-					st.append(SEPARATOR);
-					st.append(student.getGender().trim());
-					st.append(SEPARATOR);
-					st.append(student.getNationality().trim());
-					st.append(SEPARATOR);
-					st.append(student.getAccessStartPeriod().toString().trim());
-					st.append(SEPARATOR);
-					st.append(student.getAccessEndPeriod().toString());
-					
-					alw.add(st.toString()) ;
-				}
-				write(filename,alw);
-		}
+//	public static void saveStudent(List al) throws IOException {
+//			String filename = "data/user-student.txt" ;
+//			List alw = new ArrayList() ;
+//	        for (int i = 0 ; i < al.size() ; i++) {
+//					Student student = (Student)al.get(i);
+//					StringBuilder st =  new StringBuilder() ;
+//					st.append(student.getUsername().trim());
+//					st.append(SEPARATOR);
+//					st.append(student.hashPassword(student.getPassword()).trim());
+//					st.append(SEPARATOR);
+//					st.append(student.getEmail().trim());
+//					st.append(SEPARATOR);
+//					st.append(student.getName().trim());
+//					st.append(SEPARATOR);
+//					st.append(student.getMatricNumber().trim());
+//					st.append(SEPARATOR);
+//					st.append(student.getGender().trim());
+//					st.append(SEPARATOR);
+//					st.append(student.getNationality().trim());
+//					st.append(SEPARATOR);
+//					st.append(student.getAccessStartPeriod().toString().trim());
+//					st.append(SEPARATOR);
+//					st.append(student.getAccessEndPeriod().toString());
+//					
+//					alw.add(st.toString()) ;
+//				}
+//				write(filename,alw);
+//		}
 	
-	public static void saveStudent2(HashMap<String,Student> al) throws IOException {
+	public static void saveStudent(HashMap<String,Student> al) throws IOException {
 		String filename = "data/user-student.txt" ;
-		List alw = new ArrayList() ;
-
-		Set set = al.entrySet();
-		Iterator it = set.iterator();
-		while (it.hasNext()) {
-			Map.Entry entry = (Map.Entry) it.next();
-			Student student = (Student) entry.getValue();
-
-			StringBuilder st =  new StringBuilder() ;
-			st.append(student.getUsername().trim());
-			st.append(SEPARATOR);
-			st.append(student.hashPassword(student.getPassword()).trim());
-			st.append(SEPARATOR);
-			st.append(student.getEmail().trim());
-			st.append(SEPARATOR);
-			st.append(student.getName().trim());
-			st.append(SEPARATOR);
-			st.append(student.getMatricNumber().trim());
-			st.append(SEPARATOR);
-			st.append(student.getGender().trim());
-			st.append(SEPARATOR);
-			st.append(student.getNationality().trim());
-			st.append(SEPARATOR);
-			st.append(student.getAccessStartPeriod().toString().trim());
-			st.append(SEPARATOR);
-			st.append(student.getAccessEndPeriod().toString());
-
-			alw.add(st.toString()) ;
-		}
-		write(filename,alw);
+		//List alw = new ArrayList() ;
+		BufferedWriter bf = new BufferedWriter(new FileWriter(filename));
+		
+		for(Map.Entry<String, Student> entry : al.entrySet()){
+            
+            //put key and value separated by a colon
+            bf.write(entry.getValue().getUsername() + SEPARATOR + entry.getValue().hashPassword(entry.getValue().getPassword().trim()) + SEPARATOR +
+            		entry.getValue().getEmail() + SEPARATOR + entry.getValue().getName() + SEPARATOR + entry.getKey() + SEPARATOR + entry.getValue().getGender() +
+            		SEPARATOR + entry.getValue().getNationality() + SEPARATOR + entry.getValue().getAccessStartPeriod() + SEPARATOR + entry.getValue().getAccessEndPeriod());
+            
+            //new line
+            bf.newLine();
+        }
+        
+        bf.flush();
+        bf.close();
 	}
 
 	
 	
 	public static void saveAdmin(List al) throws IOException {
 		String filename = "data/user-admin.txt" ;
-		List alw = new ArrayList() ;// to store Professors data
+		List alw = new ArrayList();
 
         for (int i = 0 ; i < al.size() ; i++) {
 				Admin admin = (Admin)al.get(i);
@@ -196,7 +165,7 @@ public class FileManager {
 	
 
 	public static void saveCourse(HashMap courses) throws IOException {
-		String filename = "data/user-student.txt" ;
+		String filename = "data/courses.txt";
 		List alw = new ArrayList() ;
 		Set set = courses.entrySet();
 		Iterator it = set.iterator();
@@ -227,14 +196,20 @@ public class FileManager {
 			String st = (String)stringArray.get(i);
 			StringTokenizer star = new StringTokenizer(st , SEPARATOR);
 			StringTokenizer starList = new StringTokenizer(st , SEPARATORLIST);
-			int indexNumber = Integer.parseInt(star.nextToken().trim());
-			int vacancy = Integer.parseInt(star.nextToken().trim());
-			
 			Queue<String> waitList = new LinkedList<String>();
-			while (starList.nextToken().trim()!=null){
-				waitList.add(starList.nextToken().trim());
+			
+			int indexNumber = Integer.parseInt(star.nextToken().trim());
+			String coursecode = star.nextToken().trim();
+			int vacancy = Integer.parseInt(star.nextToken().trim());
+			int max = Integer.parseInt(star.nextToken().trim());
+			
+			String waitListBeforeSplit = star.nextToken().trim();
+			String[] waitListSplit = waitListBeforeSplit.split(SEPARATORLIST);
+			for(String a : waitListSplit) {
+				waitList.add(a);
 			}
-			indexes.put(indexNumber,new Index(indexNumber,vacancy,waitList));
+			
+			indexes.put(indexNumber,new Index(indexNumber,coursecode,vacancy,max,waitList));
 
 		}
 		return indexes;
@@ -251,7 +226,11 @@ public class FileManager {
 			StringBuilder st =  new StringBuilder() ;
 			st.append(index.getIndexNumber());
 			st.append(SEPARATOR);
+			st.append(index.getCourseCode());
+			st.append(SEPARATOR);
 			st.append(index.getVacancy());
+			st.append(SEPARATOR);
+			st.append(index.getMax());
 			st.append(SEPARATOR);
 
 			for(int i = 0; i < index.getWaitList().size(); i++) {

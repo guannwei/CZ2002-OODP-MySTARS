@@ -29,15 +29,6 @@ public class Student extends User{
 		this.accessEndPeriod = accessEndPeriod;
 	}
 	
-	public Student(String username, String password,String email,String name, String matricNumber, String gender, String nationality) {
-		super(username,password);
-		this.email = email;
-		this.name = name;
-		this.matricNumber = matricNumber;
-		this.gender = gender;
-		this.nationality = nationality;
-	}
-	
 	public String getEmail() {
 		return email;
 	}
@@ -103,9 +94,9 @@ public class Student extends User{
 		for (int i=0;i<regCourse.size();i++){
 			StudentRegisteredCourses regIndex = (StudentRegisteredCourses) regCourse.get(i);
 			if (regIndex.getIndexNumber()==index)
-				return Boolean.TRUE;
+				return true;
 		}
-		return Boolean.FALSE;
+		return false;
 	}
 
 
@@ -140,6 +131,7 @@ public class Student extends User{
         		.append(this.getGender()).append(",").append(this.getNationality()).append(",")
 				.append(this.getAccessStartPeriod()).append(",").append(this.getAccessEndPeriod()).toString();
     }
+	
 
 	
 	

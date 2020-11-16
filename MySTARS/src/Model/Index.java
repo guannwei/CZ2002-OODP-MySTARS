@@ -7,12 +7,14 @@ public class Index {
 	private int indexNumber;
 	private String courseCode;
 	private int vacancy;
+	private int max;
 	private Queue<String> waitList;
 	
-	public Index(int indexNumber, String courseCode, int vacancy, Queue<String> waitList) {
+	public Index(int indexNumber, String courseCode, int vacancy, int max, Queue<String> waitList) {
 		this.indexNumber = indexNumber;
 		this.courseCode = courseCode;
 		this.vacancy = vacancy;
+		this.max = max;
 		this.waitList = waitList;
 	}
 	
@@ -53,6 +55,15 @@ public class Index {
 	public void setWaitList(Queue<String> waitList) {
 		this.waitList = waitList;
 	}
+
+	public int getMax() {
+		return max;
+	}
+
+	public void setMax(int max) {
+		this.max = max;
+	}
+	
 
 	
 	

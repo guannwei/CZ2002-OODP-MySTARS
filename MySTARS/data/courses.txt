@@ -1,4 +1,3 @@
-courseCode,courseName,school
 CZ2007,Database Management,SCSE
 CZ2002,Object Oriented,SCSE
 CZ2001,Algorithm,SCSE
