@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Course {
@@ -12,6 +13,7 @@ public class Course {
 		this.courseCode = courseCode;
 		this.courseName = courseName;
 		this.school = school;
+		this.indexList =new ArrayList<>();
 	}
 	
 	public Course(String courseCode, String courseName, String school, List<Index> indexList) {

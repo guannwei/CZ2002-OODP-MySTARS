@@ -1,4 +1,5 @@
-jhtan01,0ff38626df3dd06095f729ca6eee2160,jhtan01@gmail.com,John Tan,U191919A,Male,Singaporean,2020-11-16T07:30,2020-11-30T07:30
-JB123,64cc8b329f08b0e73316b396b43749be,jb12@gmail.com,Jouie Bouge,U194377G,Female,Singaporean,1990-04-08T12:30,1998-04-11T12:30
-alee01,b9aabfac0a41d865b50dae3be0ab849b,alee01@gmail.com,Alex Lee,U192121B,Female,Singaporean,2020-11-16T17:12:26.366,2020-11-16T17:12:26.366
-AC123,c06f44ccccbb1ac61b59e312dccecaf0,ac12@gmail.com,Amiee Chambers,U193457G,Female,Singaporean,2020-10-08T12:30,2020-10-30T12:30
+jhtan01,91ee9477d1c27e41cbd45f546f1c89ff,jhtan01@gmail.com,John Tan,U191919A,Male,Singaporean,2020-11-16T07:30,2020-11-30T07:30
+tonytan,3150e80524730a74e4e8479218581ad5,tonytan@e.ntu.edu.sg,Tony Tan,U1931939A,Male,Singaporean,2020-11-16T20:59:09.058512800,2020-11-16T20:59:09.058512800
+JB123,d13a20db10abaa6c03b989358fc8207f,jb12@gmail.com,Jouie Bouge,U194377G,Female,Singaporean,1990-04-08T12:30,1998-04-11T12:30
+alee01,5053636f3cdb2bf5c6ba8c003ba47f16,alee01@gmail.com,Alex Lee,U192121B,Female,Singaporean,2020-11-16T17:12:26.366,2020-11-16T17:12:26.366
+AC123,86036dbe80849af74fedcf30717bd59f,ac12@gmail.com,Amiee Chambers,U193457G,Female,Singaporean,2020-10-08T12:30,2020-10-30T12:30

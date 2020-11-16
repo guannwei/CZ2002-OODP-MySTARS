@@ -5,11 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import Model.Course;
 import Model.Index;
@@ -175,13 +171,18 @@ public class StudentController {
 	public ArrayList checkStudentsInIndex(int index) throws IOException {
 		ArrayList studentNominal = new ArrayList<Student>();
 
-			ArrayList<Student> studentList = accessFile.readStudentsArray();
+			ArrayList<Student> studentList = new ArrayList();
+			studentList= accessFile.readStudentsArray();
+
 			for(int i = 0; i<studentList.size(); i++) {
 				if(studentList.get(i).checkStudentInIndex(index)==true){
 					studentNominal.add(studentList.get(i));
 				}
 			}
-		return studentList;
+		if (studentNominal==null){
+			return (ArrayList) Collections.<Student>emptyList();
+		}
+		return studentNominal;
 	}
 
 	public ArrayList checkStudentsInCourse(String courseName) throws IOException {
@@ -197,6 +198,9 @@ public class StudentController {
 			if(studentList.get(i).checkStudentInIndex(indexList.get(j).getIndexNumber())==true){
 				studentNominal.add(studentList.get(i));
 			}
+		}
+		if (studentNominal==null){
+			return (ArrayList) Collections.<Student>emptyList();
 		}
 		return studentList;
 	}

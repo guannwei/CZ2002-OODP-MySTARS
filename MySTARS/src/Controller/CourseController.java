@@ -154,17 +154,28 @@ public class CourseController {
 
 
     public void printIndexNomRoll(ArrayList<Student> nomRoll, int index){
+
         System.out.println("Student List for Index "+index+" (Name, Gender, Nationality)");
+        if (nomRoll.size()==0){
+			System.out.println("Empty");
+			return;
+		}
         for (int i=0;i<nomRoll.size();i++){
             System.out.println((i+1)+") "+nomRoll.get(i).getName()+", " + nomRoll.get(i).getGender()+", " + nomRoll.get(i).getNationality() );
         }
+		System.out.println("");
     }
 
     public void printCourseNomRoll(ArrayList<Student> nomRoll, String courseName){
         System.out.println("Student List for Course Code "+courseName+" (Name, Gender, Nationality)");
+		if (nomRoll.size()==0){
+			System.out.println("Empty");
+			return;
+		}
         for (int i=0;i<nomRoll.size();i++){
             System.out.println((i+1)+") "+nomRoll.get(i).getName()+", " + nomRoll.get(i).getGender()+", " + nomRoll.get(i).getNationality() );
         }
+		System.out.println("");
     }
 
     
