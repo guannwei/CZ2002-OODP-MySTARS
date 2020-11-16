@@ -195,13 +195,13 @@ public class AdminUI {
 			case 5:
 				System.out.print("Enter Index number: ");
 				int indexNum = sc.nextInt();
-				CCtrl.printIndexNomRoll(stuCtrl.checkStudentsInIndex(indexNum),indexNum);
+				//CCtrl.printIndexNomRoll(stuCtrl.checkStudentsInIndex(indexNum),indexNum);
 
 				break;
 			case 6:
 				System.out.print("Enter Course code: ");
 				String courseCode = sc.next();
-				CCtrl.printCourseNomRoll(stuCtrl.checkStudentsInCourse(courseCode),courseCode);
+				//CCtrl.printCourseNomRoll(stuCtrl.checkStudentsInCourse(courseCode),courseCode);
 
 				break;
 			case 7:

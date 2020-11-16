@@ -318,9 +318,13 @@ public class CourseController {
 	    	ArrayList<StudentRegisteredCourses> stuRegCourses = new ArrayList<>();
 	    	stuRegCourses = accessFile.readStudentRegisteredCourses();
 	    	for(int i = 0; i < stuRegCourses.size(); i++) {
+	    		//If matric matches
 	    		if(stuRegCourses.get(i).getMatricNumber().equals(matric)) {
-	    			//Change new index
-	    			stuRegCourses.get(i).setIndexNumber(newIndex);
+	    			//If old index matches
+	    			if(stuRegCourses.get(i).getIndexNumber() == index) {
+	    				//Change new index
+		    			stuRegCourses.get(i).setIndexNumber(newIndex);
+	    			}
 	    		}
 	    	}
 	    	//Save back into file
@@ -331,9 +335,35 @@ public class CourseController {
 	    }
 	}
 	
-	public void swopIndex(String ownMatric, String otherMatric, String otherPassword, int ownIndex, int otherIndex) {
+	public void swopIndex(String ownMatric, String peerMatric, int ownIndex, int newIndex) {
 		try {
-			
+			//Get student registered courses
+			ArrayList<StudentRegisteredCourses> stuRegCourses = new ArrayList<>();
+	    	stuRegCourses = accessFile.readStudentRegisteredCourses();
+	    	
+	    	//Swap for own account
+	    	for(int i = 0; i < stuRegCourses.size(); i++) {
+	    		if(stuRegCourses.get(i).getMatricNumber().equals(ownMatric)) {
+	    			//If old index matches
+	    			if(stuRegCourses.get(i).getIndexNumber() == ownIndex) {
+	    				//Change new index
+		    			stuRegCourses.get(i).setIndexNumber(newIndex);
+	    			}
+	    		}
+	    	}
+	    	//Swap for peer's account
+	    	for(int i = 0; i < stuRegCourses.size(); i++) {
+	    		if(stuRegCourses.get(i).getMatricNumber().equals(peerMatric)) {
+	    			//If old index matches
+	    			if(stuRegCourses.get(i).getIndexNumber() == newIndex) {
+	    				//Change new index
+		    			stuRegCourses.get(i).setIndexNumber(ownIndex);
+	    			}
+	    		}
+	    	}
+	    	
+	    	//Save back into file
+	    	accessFile.saveRegisteredCourses(stuRegCourses);
 		}
 		catch(Exception e) {
 			

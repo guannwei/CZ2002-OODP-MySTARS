@@ -6,11 +6,13 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import Controller.CourseController;
+import Controller.StudentController;
 import Model.*;
 
 public class StudentUI {
 	public static void studentMenu(Student student) {
 		CourseController courseCtrl = new CourseController();
+		StudentController studentCtrl = new StudentController();
 		
 		int choice = 0;
 		boolean validInput = false;
@@ -87,6 +89,7 @@ public class StudentUI {
 		    				//Check if index clashes
 		    				if(courseCtrl.checkClash(matric, index) == false) {
 		    					courseCtrl.changeIndex(matric, index, newIndex);
+		    					System.out.println("Successfully changed index!");
 		    				}
 		    				else {
 		    					System.out.println("Chosen index clashes with current timetable, unable to change index!");
@@ -103,9 +106,40 @@ public class StudentUI {
 				break;
 			case 6:
 				System.out.println("Enter peer's username");
+				String peerUsername = sc.nextLine();
 				System.out.println("Enter peer's password");
+				String peerPassword = sc.nextLine();
 				System.out.println("Enter your index");
+				int ownIndex = sc.nextInt();
 				System.out.println("Enter peer's index");
+				int peerIndex = sc.nextInt();
+				
+				if(studentCtrl.checkUserNameExists(peerUsername) == false) {
+					System.out.println("Peer's username does not exist, unable to swap index!");
+				}
+				else {
+					if(studentCtrl.checkPassword(peerPassword) == false) {
+						System.out.println("Peer's password is wrong, unable to swap index!");
+					}
+					else {
+						//Get peer matric
+						String peerMatric = studentCtrl.getMatric(peerUsername);
+						//Check if new index clashes with own timetable
+						if(courseCtrl.checkClash(matric, peerIndex) == true ) {
+							//Check if new index clashes with peer's timetable
+							if(courseCtrl.checkClash(peerMatric, ownIndex) == true) {
+								courseCtrl.swopIndex(matric, peerMatric, ownIndex, peerIndex);
+								System.out.println("Successfully swopped index!");
+							}
+							else {
+								System.out.println("The new index clahses with peer's timetable, unable to swap index!");
+							}
+						}
+						else {
+							System.out.println("The new index clashes with current timetable, unable to swap index!");
+						}
+					}
+				}
 
 				break;
 			case 7:

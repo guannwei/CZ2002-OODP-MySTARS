@@ -91,6 +91,44 @@ public class StudentController {
 		return exists;
 	}
 	
+	public Boolean checkPassword(String password) {
+		Boolean exists = false;
+		try {
+			ArrayList<Student> studentList = new ArrayList<Student>();
+			studentList = accessFile.readStudentsArray();
+			
+			for(int i = 0; i<studentList.size(); i++) {
+				if(studentList.get(i).hashPassword(password).equals(studentList.get(i).getPassword())) {	
+					exists = true;
+					break;
+				}
+			}
+		}
+		catch(Exception e) {
+			
+		}
+		return exists;
+	}
+	
+	public String getMatric(String username){
+		String matric = "";
+		try {
+			ArrayList<Student> studentList = new ArrayList<Student>();
+			studentList = accessFile.readStudentsArray();
+			
+			for(int i = 0; i<studentList.size(); i++) {
+				if(studentList.get(i).getUsername().equals(username)) {	
+					matric = studentList.get(i).getMatricNumber();
+					break;
+				}
+			}
+		}
+		catch(Exception e) {
+			
+		}
+		return matric;
+	}
+	
 	
 	public void editAccessPeriod(String matric, LocalDateTime start, LocalDateTime end){
 		try {
