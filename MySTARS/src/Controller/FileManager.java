@@ -177,7 +177,7 @@ public class FileManager {
 	}
 
 	public static HashMap<String,Course> readCourse() throws IOException {
-		String filename = "course.txt" ;
+		String filename = "data/courses.txt" ;
 		ArrayList stringArray = (ArrayList)read(filename);
 		HashMap<String,Course> courses = new HashMap<>();
 
@@ -219,7 +219,7 @@ public class FileManager {
 	
 	
 	public static HashMap readIndex() throws IOException {
-		String filename = "Index.txt" ;
+		String filename = "data/indexes.txt" ;
 		ArrayList stringArray = (ArrayList)read(filename);
 		HashMap<Integer,Index> indexes = new HashMap<>();
 
@@ -241,7 +241,7 @@ public class FileManager {
 	}
 
 	public static void saveIndex(HashMap indexes) throws IOException {
-		String filename = "indexes.txt" ;
+		String filename = "data/indexes.txt" ;
 		List alw = new ArrayList() ;
 		Set set = indexes.entrySet();
 		Iterator it = set.iterator();
