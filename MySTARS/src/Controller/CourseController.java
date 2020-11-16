@@ -328,6 +328,10 @@ public class CourseController {
 	    	//Get student registered courses
 	    	ArrayList<StudentRegisteredCourses> stuRegCourses = new ArrayList<>();
 	    	stuRegCourses = accessFile.readStudentRegisteredCourses();
+	    	//Get Index 
+	    	HashMap<Integer,Index> indexes = new HashMap<>();
+	    	indexes = accessFile.readIndex();
+	    	
 	    	for(int i = 0; i < stuRegCourses.size(); i++) {
 	    		//If matric matches
 	    		if(stuRegCourses.get(i).getMatricNumber().equals(matric)) {
@@ -335,6 +339,11 @@ public class CourseController {
 	    			if(stuRegCourses.get(i).getIndexNumber() == index) {
 	    				//Change new index
 		    			stuRegCourses.get(i).setIndexNumber(newIndex);
+		    			//Change vacancies
+		    			int oldIndexVacancy = indexes.get(index).getVacancy();
+		    			indexes.get(index).setVacancy(oldIndexVacancy-1);
+		    			int newIndexVacancy = indexes.get(newIndex).getVacancy();
+		    			indexes.get(newIndex).setVacancy(newIndexVacancy+1);
 	    			}
 	    		}
 	    	}

@@ -1,10 +1,6 @@
 package Model;
 
-import java.util.Date;
 import java.util.List;
-import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -135,10 +131,4 @@ public class Student extends User{
         		.append(this.getGender()).append(",").append(this.getNationality()).append(",")
 				.append(this.getAccessStartPeriod()).append(",").append(this.getAccessEndPeriod()).toString();
     }
-	
-
-	
-	
-
-
 }

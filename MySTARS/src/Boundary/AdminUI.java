@@ -123,6 +123,8 @@ public class AdminUI {
 				System.out.println("Enter student's nationality: ");
 				String nationality = sc.nextLine();
 				
+				validInput = false;
+				
 				do {
 					try {
 						System.out.println("Enter start date time for access(YYYY-MM-DD HH:MM): ");
