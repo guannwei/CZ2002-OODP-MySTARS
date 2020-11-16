@@ -7,7 +7,9 @@ import java.io.ObjectInputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import Model.Course;
 import Model.Index;
@@ -19,12 +21,10 @@ public class StudentController {
 	public Boolean checkMatricExists(String matric){
 		Boolean exists = false;
 		try {
-			ArrayList<Student> studentList = accessFile.readStudents();
-			for(int i = 0; i<studentList.size(); i++) {
-				if(studentList.get(i).getMatricNumber().equals(matric)) {
-					exists = true;
-					break;
-				}	
+			HashMap<String,Student> alr = new HashMap<>();
+			alr = accessFile.readStudents();
+			if(alr.get(matric) != null) {
+				exists = true;
 			}
 		}catch(Exception e) {
 			
@@ -35,13 +35,19 @@ public class StudentController {
 	public Boolean checkUserNameExists(String username){
 		Boolean exists = false;
 		try {
-			ArrayList<Student> studentList = accessFile.readStudents();
-			for(int i = 0; i<studentList.size(); i++) {
-				if(studentList.get(i).getUsername().equals(username)) {
-					exists = true;
-					break;
-				}	
+			HashMap<String,Student> alr = new HashMap<>();
+			alr = accessFile.readStudents();
+			
+			//Store all usernames in a list
+			List<String> usernames = new ArrayList<String>();
+			for(Map.Entry<String, Student> entry : alr.entrySet()){
+				usernames.add(entry.getValue().getUsername());
 			}
+			
+			if(usernames.contains(username)) {
+				exists = true;
+			}
+			
 		}catch(Exception e) {
 			
 		}
@@ -51,13 +57,13 @@ public class StudentController {
 	public Boolean checkStudentExists(Student stu){
 		Boolean exists = false;
 		try {
-			ArrayList<Student> studentList = accessFile.readStudentsNoAccessTime();
-			for(int i = 0; i<studentList.size(); i++) {
-				if(studentList.get(i) == stu) {
-					exists = true;
-					break;
-				}	
+			HashMap<String,Student> alr = new HashMap<>();
+			alr = accessFile.readStudents();
+			if(alr.containsValue(stu)) {
+				exists = true;
 			}
+			
+			
 		}catch(Exception e) {
 			
 		}
@@ -67,12 +73,17 @@ public class StudentController {
 	public Boolean checkEmailExists(String email){
 		Boolean exists = false;
 		try {
-			ArrayList<Student> studentList = accessFile.readStudentsNoAccessTime();
-			for(int i = 0; i<studentList.size(); i++) {
-				if(studentList.get(i).getEmail().equals(email)) {
-					exists = true;
-					break;
-				}	
+			HashMap<String,Student> alr = new HashMap<>();
+			alr = accessFile.readStudents();
+			
+			//Store all emails in a list
+			List<String> emails = new ArrayList<String>();
+			for(Map.Entry<String, Student> entry : alr.entrySet()){
+				emails.add(entry.getValue().getEmail());
+			}
+			
+			if(emails.contains(email)) {
+				exists = true;
 			}
 		}catch(Exception e) {
 			
@@ -84,18 +95,20 @@ public class StudentController {
 	public void editAccessPeriod(String matric, LocalDateTime start, LocalDateTime end){
 		try {
 			//Get list of students
-			ArrayList<Student> studentList = accessFile.readStudents();
+			HashMap<String,Student> alr = new HashMap<>();
+			alr = accessFile.readStudents();
+			
 			//Edit student
-			for(int i = 0; i<studentList.size(); i++) {
-				if(studentList.get(i).getMatricNumber().equals(matric)) {
-					studentList.get(i).setAccessStartPeriod(start);
-					studentList.get(i).setAccessEndPeriod(end);
-					break;
-				}
+			if(alr.get(matric) != null) {
+				Student stu = alr.get(matric);
+				stu.setAccessStartPeriod(start);
+				stu.setAccessEndPeriod(end);
+				alr.put(matric, stu);
 			}
+			
 			//Write back to file
-			accessFile.saveStudent(studentList);
-			System.out.println("Access period successfully edited!");
+			accessFile.saveStudent(alr);
+			
 		}
 		catch(Exception e){
 		}
@@ -103,16 +116,17 @@ public class StudentController {
 	
 	public void addStudent(Student stu){
 		try {
-		//Get list of students
-		ArrayList<Student> studentList = accessFile.readStudents();
-
-		//Add student
-		Student stuAccess = new Student(stu.getUsername(), stu.getPassword(), stu.getEmail(), stu.getName(), stu.getMatricNumber(), stu.getGender(), stu.getNationality(), LocalDateTime.now(), LocalDateTime.now());
-		studentList.add(stuAccess);
-		//Write back to file
-		accessFile.saveStudent(studentList);
-		System.out.println("Student successfully added!");	
-
+			//Get list of students
+			HashMap<String,Student> alr = new HashMap<>();
+			alr = accessFile.readStudents();	
+			
+			//Add student
+			Student stuAccess = new Student(stu.getUsername(), stu.getPassword(), stu.getEmail(), stu.getName(), stu.getMatricNumber(), stu.getGender(), stu.getNationality(), LocalDateTime.now(), LocalDateTime.now());	
+			alr.put(stuAccess.getMatricNumber(), stuAccess);
+			
+			//Write back to file
+			accessFile.saveStudent(alr);
+			
 		}
 		catch(Exception e) {
 		
@@ -123,9 +137,9 @@ public class StudentController {
 	public ArrayList checkStudentsInIndex(int index) throws IOException {
 		ArrayList studentNominal = new ArrayList<Student>();
 
-			ArrayList<Student> studentList = accessFile.readStudentsNoAccessTime();
+			ArrayList<Student> studentList = accessFile.readStudentsArray();
 			for(int i = 0; i<studentList.size(); i++) {
-				if(studentList.get(i).checkStudentInIndex(index)==Boolean.TRUE){
+				if(studentList.get(i).checkStudentInIndex(index)==true){
 					studentNominal.add(studentList.get(i));
 				}
 			}
@@ -136,13 +150,13 @@ public class StudentController {
 		ArrayList studentNominal = new ArrayList<Student>();
 
 		HashMap courseList = FileManager.readCourse();
-		ArrayList<Student> studentList = FileManager.readStudentsNoAccessTime();
+		ArrayList<Student> studentList = FileManager.readStudentsArray();
 		Course toFind = (Course) courseList.get(courseName);
 		List<Index> indexList = toFind.getIndexList();
 
 		for(int i = 0; i<studentList.size(); i++) {
 			for ( int j=0; j<indexList.size(); j++)
-			if(studentList.get(i).checkStudentInIndex(indexList.get(j).getIndexNumber())==Boolean.TRUE){
+			if(studentList.get(i).checkStudentInIndex(indexList.get(j).getIndexNumber())==true){
 				studentNominal.add(studentList.get(i));
 			}
 		}

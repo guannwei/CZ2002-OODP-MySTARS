@@ -24,6 +24,9 @@ public class AdminUI {
 		int choice = 0;
 		boolean validInput = false;
 		String matric = "";
+		LocalDateTime start = LocalDateTime.now();
+		LocalDateTime end = LocalDateTime.now();
+		
 		Scanner sc = new Scanner(System.in);
 		CourseController CCtrl = new CourseController(FileManager.readCourse(),FileManager.readIndex());
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -55,8 +58,8 @@ public class AdminUI {
 			switch (choice) {
 			case 1:
 				validInput = false;
-				LocalDateTime start = LocalDateTime.now();
-				LocalDateTime end = LocalDateTime.now();
+				start = LocalDateTime.now();
+				end = LocalDateTime.now();
 				do {
 					System.out.println("Enter student's matric number: ");
 					matric = sc.nextLine();
@@ -98,9 +101,13 @@ public class AdminUI {
 				
 
 				stuCtrl.editAccessPeriod(matric, start, end);
+				System.out.println("Access period successfully edited!");
 				
 				break;
 			case 2:
+				start = LocalDateTime.now();
+				end = LocalDateTime.now();
+				
 				System.out.println("Enter student's matric number: ");
 				matric = sc.nextLine();
 				System.out.println("Enter student's name: ");
@@ -116,7 +123,32 @@ public class AdminUI {
 				System.out.println("Enter student's nationality: ");
 				String nationality = sc.nextLine();
 				
-				Student stu = new Student(username, password, email, name, matric, gender, nationality);
+				do {
+					try {
+						System.out.println("Enter start date time for access(YYYY-MM-DD HH:MM): ");
+						start = LocalDateTime.parse(sc.nextLine(), formatter);
+						validInput = true;
+					}
+					catch(DateTimeParseException e) {
+						System.out.println("Please enter the valid date time format!");
+					}
+				}while(!validInput);
+				
+				validInput = false;
+				
+				do {
+					try {
+						System.out.println("Enter end date time for access(YYYY-MM-DD HH:MM): ");
+						end = LocalDateTime.parse(sc.nextLine(), formatter);
+						validInput = true;
+					}
+					catch(DateTimeParseException e) {
+						System.out.println("Please enter the valid date time format!");
+					}
+					
+				}while(!validInput);
+				
+				Student stu = new Student(username, password, email, name, matric, gender, nationality, start, end);
 				
 				//Check if student exists
 				if(stuCtrl.checkStudentExists(stu) == true) {
@@ -138,16 +170,18 @@ public class AdminUI {
 							}
 							else {
 								//Check if gender was entered correctly
-								if(!gender.equals("Female") || !gender.equals("Male")) {
-									System.out.println("Please enter correct format for gender(Male/Female)! Please enter fields again!");
+								if(gender.equals("Female") || gender.equals("Male")) {
+									stuCtrl.addStudent(stu);
+									System.out.println("Student successfully added!");	
 								}
 								else {
-									stuCtrl.addStudent(stu);
+									System.out.println("Please enter correct format for gender(Male/Female)! Please enter fields again!");
 								}
 							}
 						}
 					}
 				}
+				
 
 				break;
 			case 3:

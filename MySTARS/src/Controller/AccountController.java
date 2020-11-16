@@ -12,7 +12,7 @@ public class AccountController {
 		userType = userType.toLowerCase();
 		Object object = new Object();
 		try {
-			ArrayList<Student> studentList = accessFile.readStudents();
+			ArrayList<Student> studentList = accessFile.readStudentsArray();
 			ArrayList<Admin> adminList = accessFile.readAdmin();
 			if(userType.equals("admin")) {
 				for(int i = 0; i<adminList.size(); i++) {

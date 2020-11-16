@@ -186,6 +186,33 @@ public class FileManager {
 		write(filename,alw);
 	}
 	
+	public static ArrayList readIndexArray() throws IOException {
+		String filename = "data/indexes.txt" ;
+		ArrayList stringArray = (ArrayList)read(filename);
+		ArrayList<Index> indexes = new ArrayList<>();
+
+		for (int i = 0 ; i < stringArray.size() ; i++) {
+			String st = (String)stringArray.get(i);
+			StringTokenizer star = new StringTokenizer(st , SEPARATOR);
+			StringTokenizer starList = new StringTokenizer(st , SEPARATORLIST);
+			Queue<String> waitList = new LinkedList<String>();
+			
+			int indexNumber = Integer.parseInt(star.nextToken().trim());
+			String coursecode = star.nextToken().trim();
+			int vacancy = Integer.parseInt(star.nextToken().trim());
+			int max = Integer.parseInt(star.nextToken().trim());
+			
+			String waitListBeforeSplit = star.nextToken().trim();
+			String[] waitListSplit = waitListBeforeSplit.split(SEPARATORLIST);
+			for(String a : waitListSplit) {
+				waitList.add(a);
+			}
+			
+			Index in = new Index(indexNumber, coursecode, vacancy, max, waitList);
+			indexes.add(in);
+		}
+		return indexes;
+	}
 	
 	public static HashMap readIndex() throws IOException {
 		String filename = "data/indexes.txt" ;
@@ -274,7 +301,7 @@ public class FileManager {
       public static ArrayList readStudentRegisteredCourses() throws IOException {
   		String filename = "data/student-registered-courses.txt" ;
   		ArrayList stringArray = (ArrayList)read(filename);
-  		ArrayList alr = new ArrayList() ;
+  		ArrayList alr = new ArrayList();
 
           for (int i = 0 ; i < stringArray.size() ; i++) {
   				String st = (String)stringArray.get(i);
