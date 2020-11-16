@@ -98,7 +98,7 @@ public class StudentController {
 			studentList = accessFile.readStudentsArray();
 			
 			for(int i = 0; i<studentList.size(); i++) {
-				if(studentList.get(i).hashPassword(password).equals(studentList.get(i).getPassword())) {	
+				if(studentList.get(i).hashPassword(password).equals(password)) {	
 					exists = true;
 					break;
 				}
@@ -159,8 +159,7 @@ public class StudentController {
 			alr = accessFile.readStudents();	
 			
 			//Add student
-			Student stuAccess = new Student(stu.getUsername(), stu.getPassword(), stu.getEmail(), stu.getName(), stu.getMatricNumber(), stu.getGender(), stu.getNationality(), LocalDateTime.now(), LocalDateTime.now());	
-			alr.put(stuAccess.getMatricNumber(), stuAccess);
+			alr.put(stu.getMatricNumber(), stu);
 			
 			//Write back to file
 			accessFile.saveStudent(alr);
