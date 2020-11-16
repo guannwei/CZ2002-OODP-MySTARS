@@ -23,7 +23,6 @@ public class AccountController {
 					if(userName.equals(studentList.get(i).getUsername()) && studentList.get(i).hashPassword(password).equals(studentList.get(i).getPassword())) {	
 						object = studentList.get(i);
 						System.out.println(studentList.get(i).getName());
-						System.out.println("in");
 					}
 				}
 				
