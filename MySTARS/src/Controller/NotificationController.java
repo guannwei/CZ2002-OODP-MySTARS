@@ -15,7 +15,7 @@ import Model.Student;
 public class NotificationController {
 	/**
 	 * Send email for wait list notification
-	 * @param studentToNotify
+	 * @param student
 	 */
 	public static void sendEmail(Student student, String courseCode)
 	{
