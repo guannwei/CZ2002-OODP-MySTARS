@@ -116,7 +116,7 @@ public class FileManager {
 		for(Map.Entry<String, Student> entry : al.entrySet()){
             
             //put key and value separated by a colon
-            bf.write(entry.getValue().getUsername() + SEPARATOR + entry.getValue().hashPassword(entry.getValue().getPassword().trim()) + SEPARATOR +
+            bf.write(entry.getValue().getUsername() + SEPARATOR + entry.getValue().getPassword() + SEPARATOR +
             		entry.getValue().getEmail() + SEPARATOR + entry.getValue().getName() + SEPARATOR + entry.getKey() + SEPARATOR + entry.getValue().getGender() +
             		SEPARATOR + entry.getValue().getNationality() + SEPARATOR + entry.getValue().getAccessStartPeriod() + SEPARATOR + entry.getValue().getAccessEndPeriod());
             

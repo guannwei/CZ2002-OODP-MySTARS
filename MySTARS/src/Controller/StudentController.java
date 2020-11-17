@@ -151,6 +151,8 @@ public class StudentController {
 			//Get list of students
 			HashMap<String,Student> alr = new HashMap<>();
 			alr = accessFile.readStudents();	
+
+			stu.setPassword(stu.hashPassword(stu.getPassword()));
 			
 			//Add student
 			alr.put(stu.getMatricNumber(), stu);
