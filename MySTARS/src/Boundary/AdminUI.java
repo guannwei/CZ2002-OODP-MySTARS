@@ -18,7 +18,7 @@ import Model.*;
 public class AdminUI {
 	public static void adminMenu(Admin admin) {
 		StudentController stuCtrl = new StudentController();
-		CourseController CCtrl = new CourseController();
+		CourseController courseCtrl = new CourseController();
 		int choice = 0;
 		boolean validInput = false;
 		String matric = "";
@@ -70,8 +70,7 @@ public class AdminUI {
 				}
 				while(!validInput);
 				
-				
-				
+				validInput = false;
 				do {
 					try {
 						System.out.println("Enter start date time for access(YYYY-MM-DD HH:MM): ");
@@ -84,7 +83,6 @@ public class AdminUI {
 				}while(!validInput);
 				
 				validInput = false;
-				
 				do {
 					try {
 						System.out.println("Enter end date time for access(YYYY-MM-DD HH:MM): ");
@@ -97,7 +95,6 @@ public class AdminUI {
 					
 				}while(!validInput);
 				
-
 				stuCtrl.editAccessPeriod(matric, start, end);
 				System.out.println("Access period successfully edited!");
 				
@@ -121,8 +118,7 @@ public class AdminUI {
 				System.out.println("Enter student's nationality: ");
 				String nationality = sc.nextLine();
 				
-				validInput = false;
-				
+				validInput = false;	
 				do {
 					try {
 						System.out.println("Enter start date time for access(YYYY-MM-DD HH:MM): ");
@@ -135,7 +131,6 @@ public class AdminUI {
 				}while(!validInput);
 				
 				validInput = false;
-				
 				do {
 					try {
 						System.out.println("Enter end date time for access(YYYY-MM-DD HH:MM): ");
@@ -187,31 +182,42 @@ public class AdminUI {
 			case 3:
 				System.out.println("1) Add a new course\n" +
 								"2) Delete a course\n" +
-								"3) Update a course\n");
-				switch (sc.nextInt()) {
+								"3) Update a course");
+				int courseChoice = sc.nextInt();
+				sc.nextLine();
+				switch (courseChoice) {
 					case 1:
-						System.out.print("Enter new Course Code:");
-						String courseCode = sc.next();
-						if (CCtrl.checkCourse(courseCode) == true) {
+						System.out.println("Enter new Course Code:");
+						String courseCode = sc.nextLine();
+						
+						if (courseCtrl.checkCourse(courseCode) == true) {
 							System.out.println("This Course Code already exists");
 							break;
 						}
-						System.out.print("Enter new Course Name:");
-						String courseName = sc.next();
-						System.out.print("Enter Course School:");
-						String school = sc.next();
-						CCtrl.addCourse(courseCode, courseName, school);
-						System.out.println("New Course successfully added!");
+						else {
+							System.out.println("Enter the Course name:");
+							String courseName = sc.nextLine();
+							
+							System.out.println("Enter Course School:");
+							String school = sc.nextLine();
+							
+							System.out.println("Enter number of AUs:");
+							int au = sc.nextInt();
+							
+							courseCtrl.addCourse(courseCode, courseName, school, au);
+							System.out.println("New Course successfully added!");
+						}
+						
 						break;
 
 					case 2:
 						System.out.print("Enter Course Code to be deleted:");
 						String delCourseCode = sc.next();
-						if (CCtrl.checkCourse(delCourseCode) == false) {
+						if (courseCtrl.checkCourse(delCourseCode) == false) {
 							System.out.println("This Course Code does not exists");
 							return;
 						}
-						CCtrl.delCourse(delCourseCode);
+						courseCtrl.delCourse(delCourseCode);
 						System.out.println("Course successfully deleted!");
 						break;
 
@@ -219,7 +225,7 @@ public class AdminUI {
 					case 3:
 						System.out.print("Enter Course Code to update:");
 						String updateCourseCode = sc.next();
-						if (CCtrl.checkCourse(updateCourseCode)) {
+						if (courseCtrl.checkCourse(updateCourseCode)) {
 							System.out.println("Choose what to update: \n" +
 									"1)Course Code\n" +
 									"2)School\n" +
@@ -229,14 +235,14 @@ public class AdminUI {
 							switch (sc.nextInt()) {
 								case 1:
 									System.out.print("Enter new Course Code:");
-									CCtrl.updateCourseCode(updateCourseCode, sc.next());
+									courseCtrl.updateCourseCode(updateCourseCode, sc.next());
 									System.out.println("Course Code successfully updated!");
 									break;
 
 								case 2:
 
 									System.out.print("Enter new School:");
-									CCtrl.updateCourseSchool(updateCourseCode, sc.next());
+									courseCtrl.updateCourseSchool(updateCourseCode, sc.next());
 									System.out.println("School successfully updated!");
 									break;
 
@@ -249,27 +255,27 @@ public class AdminUI {
 										case 1:
 											System.out.print("Enter the index you wish to change: ");
 											int indexChange = sc.nextInt();
-											if (CCtrl.checkIndex(indexChange) == false) {
+											if (courseCtrl.checkIndex(indexChange) == false) {
 												System.out.println("This index does not exist.");
 												break;
 											}
 											System.out.print("Enter the new index: ");
 											int newChange = sc.nextInt();
-											CCtrl.updateIndex(indexChange, newChange);
+											courseCtrl.updateIndex(indexChange, newChange);
 											System.out.println("Index successfully changed!");
 											break;
 
 										case 2:
 											System.out.print("Enter the index you wish to add: ");
 											int indexNum = sc.nextInt();
-											if (CCtrl.checkIndex(indexNum) == true) {
+											if (courseCtrl.checkIndex(indexNum) == true) {
 												System.out.println("This index already exists.");
 												break;
 											}
 
 											System.out.print("Enter the Vacancy: ");
 											int vacancyInt = sc.nextInt();
-											CCtrl.newIndex(indexNum, updateCourseCode, vacancyInt);
+											courseCtrl.newIndex(indexNum, updateCourseCode, vacancyInt);
 											System.out.println("New Index successfully added!");
 											break;
 									}
@@ -280,7 +286,7 @@ public class AdminUI {
 									int indexChange = sc.nextInt();
 									System.out.print("Enter the new vacancy: ");
 									int newChange = sc.nextInt();
-									CCtrl.updateVacancy(indexChange, newChange);
+									courseCtrl.updateVacancy(indexChange, newChange);
 									System.out.println("Vacancy successfully changed.");
 									break;
 
@@ -297,7 +303,7 @@ public class AdminUI {
 			case 4:
 				System.out.print("Enter the index of which you like to check vacancy for:");
 				int index = sc.nextInt();
-				int vacance= CCtrl.checkVacant(index);
+				int vacance= courseCtrl.checkVacant(index);
 				if (vacance==-1){
 					System.out.println("This index does not exist.");
 				}
@@ -309,7 +315,7 @@ public class AdminUI {
 			case 5:
 				System.out.print("Enter Index number: ");
 				int indexNum = sc.nextInt();
-				if (CCtrl.checkIndex(indexNum)==false){
+				if (courseCtrl.checkIndex(indexNum)==false){
 					System.out.println("Index does not exist");
 					break;
 				}
@@ -328,7 +334,7 @@ public class AdminUI {
 			case 6:
 				System.out.print("Enter Course code: ");
 				String courseCode = sc.next();
-				if (CCtrl.checkCourse(courseCode)==false){
+				if (courseCtrl.checkCourse(courseCode)==false){
 					System.out.println("Course does not exist");
 					break;
 				}

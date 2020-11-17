@@ -157,7 +157,8 @@ public class FileManager {
 			String  courseCode = star.nextToken().trim();
 			String  courseName = star.nextToken().trim();
 			String  school = star.nextToken().trim();
-			courses.put(courseCode, new Course(courseCode, courseName, school));
+			int au = Integer.parseInt(star.nextToken().trim());
+			courses.put(courseCode, new Course(courseCode, courseName, school, au));
 
 		}
 		return courses;
@@ -181,6 +182,8 @@ public class FileManager {
 			st.append(course.getSchool().trim());
 			st.append(SEPARATOR);
 			st.append(course.getCourseName().trim());
+			st.append(SEPARATOR);
+			st.append(course.getAu());
 
 			alw.add(st.toString()) ;
 		}

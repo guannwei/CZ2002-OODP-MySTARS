@@ -154,9 +154,9 @@ public class CourseController {
     */
 
 
-    public void addCourse(String courseCode, String courseName, String school) {
+    public void addCourse(String courseCode, String courseName, String school, int au) {
     	try {
-    		courses.put(courseCode,new Course(courseCode,courseName,school));
+    		courses.put(courseCode,new Course(courseCode,courseName,school, au));
             FileManager.saveCourse(courses);
     	}
     	catch(Exception e){

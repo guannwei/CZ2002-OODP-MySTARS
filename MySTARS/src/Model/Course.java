@@ -8,19 +8,21 @@ public class Course {
 	private String courseName;
 	private String school;
 	private List<Index> indexList;
+	private int au;
 
-	public Course(String courseCode, String courseName, String school) {
+	public Course(String courseCode, String courseName, String school, int au) {
 		this.courseCode = courseCode;
 		this.courseName = courseName;
 		this.school = school;
-		this.indexList =new ArrayList<>();
+		this.au = au;
 	}
 	
-	public Course(String courseCode, String courseName, String school, List<Index> indexList) {
+	public Course(String courseCode, String courseName, String school, int au, List<Index> indexList) {
 		this.courseCode = courseCode;
 		this.courseName = courseName;
 		this.school = school;
 		this.indexList = indexList;
+		this.au = au;
 	}
 	
 	public String getCourseCode() {
@@ -48,6 +50,14 @@ public class Course {
 
 	public void setIndexList(List<Index> indexList) {
 		this.indexList = indexList;
+	}
+
+	public int getAu() {
+		return au;
+	}
+
+	public void setAu(int au) {
+		this.au = au;
 	}
 	
 	

@@ -1,3 +1,4 @@
-CZ2007,Database Management,SCSE
-CZ2002,Object Oriented,SCSE
-CZ2001,Algorithm,SCSE
+CZ2001,Algorithm,SCSE,Algorithm,3
+CZ2002,Object Oriented,SCSE,Object Oriented,3
+CZ2006,Software Engineering,SCSE,Software Engineering,3
+CZ2007,Database Management,SCSE,Database Management,3
