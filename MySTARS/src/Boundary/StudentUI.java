@@ -153,7 +153,7 @@ public class StudentUI {
 		    			if(courseCtrl.checkVacant(newIndex) > 0) {
 		    				//Check if index clashes
 		    				if(courseCtrl.checkClash(matric, newIndex, index) == false) {
-		    					courseCtrl.changeIndex(matric, index, newIndex);
+		    					courseCtrl.changeIndex(matric, index, newIndex, courseCode);
 		    					System.out.println("Successfully changed index!");
 		    				}
 		    				else {

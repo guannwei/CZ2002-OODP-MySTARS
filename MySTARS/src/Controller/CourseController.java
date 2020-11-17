@@ -365,9 +365,9 @@ public class CourseController {
     	return clash;
     }
 
-	public void changeIndex(String matric, int index, int newIndex) {
+	public void changeIndex(String matric, int index, int newIndex, String courseCode) {
 	    try {
-	    	
+	    	HashMap<String,Student> stuList = accessFile.readStudents();
 	    	for(int i = 0; i < stuRegCourses.size(); i++) {
 	    		//If matric matches
 	    		if(stuRegCourses.get(i).getMatricNumber().equals(matric)) {
@@ -375,11 +375,19 @@ public class CourseController {
 	    			if(stuRegCourses.get(i).getIndexNumber() == index) {
 	    				//Change new index
 		    			stuRegCourses.get(i).setIndexNumber(newIndex);
-		    			//Change vacancies
-		    			int oldIndexVacancy = indexes.get(index).getVacancy();
-		    			indexes.get(index).setVacancy(oldIndexVacancy-1);
-		    			int newIndexVacancy = indexes.get(newIndex).getVacancy();
-		    			indexes.get(newIndex).setVacancy(newIndexVacancy+1);
+		    			//Check if anyone in waitlist, add them to course if yes
+		    			if(indexes.get(index).getWaitList().size() > 0) {
+		    				String waitMatric = indexes.get(index).getWaitList().remove();
+		    				stuRegCourses.add(new StudentRegisteredCourses(waitMatric,index,false));
+		    				NotificationController.sendNotification(stuList.get(waitMatric), courseCode);
+		    			}
+		    			//Else, just change vacancies
+		    			else {
+		    				int oldIndexVacancy = indexes.get(index).getVacancy();
+			    			indexes.get(index).setVacancy(oldIndexVacancy-1);
+			    			int newIndexVacancy = indexes.get(newIndex).getVacancy();
+			    			indexes.get(newIndex).setVacancy(newIndexVacancy+1);
+		    			}
 	    			}
 	    		}
 	    	}
