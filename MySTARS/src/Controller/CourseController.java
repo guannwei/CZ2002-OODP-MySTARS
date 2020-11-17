@@ -227,22 +227,13 @@ public class CourseController {
 		
     }
     
-    public ArrayList<Index> allIndexOfCourse(int index) {
+    public ArrayList<Index> allIndexOfCourse(String courseCode) {
     	ArrayList<Index> allindexList = new ArrayList<Index>();
     	ArrayList<Index> indexList = new ArrayList<Index>();
-    	String coursecode = "";
     	try {
     		allindexList = accessFile.readIndexArray();
-    		
     		for(int i = 0; i < allindexList.size(); i++) {
-    			if(allindexList.get(i).getIndexNumber() == index) {
-    				coursecode = allindexList.get(i).getCourseCode();
-    				break;
-    			}
-    		}
-    		
-    		for(int i = 0; i < allindexList.size(); i++) {
-    			if(allindexList.get(i).getCourseCode().equals(coursecode)) {
+    			if(allindexList.get(i).getCourseCode().equals(courseCode)) {
     				indexList.add(allindexList.get(i));
     			}
     		}
@@ -252,71 +243,65 @@ public class CourseController {
     	return indexList;
     }
 
-    public Boolean checkClash(String matric, int newIndex, int oldIndex) {
+    public Boolean checkClash(String matric, int index) {
     	Boolean clash = false;
     	try {
     		
     		ArrayList<Lesson> studentLesson = new ArrayList<>();
-    		ArrayList<Index> allIndex = new ArrayList<>();
     		
     		//Store all lesson details that student takes
     		for(int i = 0; i < lessonList.size(); i++) {
-    			for(int j = 0; j < stuRegCourses.size(); j++) {				
+    			for(int j = 0; j < stuRegCourses.size(); j++) {
     				//If correct matric number
-        			if(stuRegCourses.get(j).getMatricNumber().equals(matric)) {
-        				//Get all lesson plans of what student takes
-        				if(lessonList.get(i).getIndexNumber() == stuRegCourses.get(j).getIndexNumber()) {
-        					studentLesson.add(lessonList.get(i));
-        				}
+    				if(stuRegCourses.get(j).getMatricNumber() == matric) {
+    					if(lessonList.get(i).getIndexNumber() == stuRegCourses.get(j).getIndexNumber()) {
+    						studentLesson.add(lessonList.get(i));
+    					}
     				}
-    				
     			}
     		}
     		
     		//Store details of new index
-    		ArrayList<Lesson> newIndexLesson = new ArrayList();
+    		Lesson newIndexLesson = new Lesson();
     		for(int i = 0; i < lessonList.size(); i++) {
-    			if(lessonList.get(i).getIndexNumber() == newIndex) {
-    				newIndexLesson.add(lessonList.get(i));
+    			if(lessonList.get(i).getIndexNumber() == index) {
+    				newIndexLesson = lessonList.get(i);
     			}
     		}
     		
     		//Check against all other registered index for student
     		Lesson checkIndexLesson = new Lesson();
-    		outerloop:
     		for(int i = 0; i < studentLesson.size(); i++) {
     			checkIndexLesson = studentLesson.get(i);
-    			for(int j = 0; j< newIndexLesson.size(); j++) {
-    				Lesson newIndexLes = newIndexLesson.get(j);
-    				if(checkIndexLesson.getIndexNumber() != oldIndex) {
-        				//Check if the lesson details clash
-        				if(checkIndexLesson.getDay().equals(newIndexLes.getDay())) {
-        					//If they have same start time, clash
-            	    		if(checkIndexLesson.getStartTime().compareTo(newIndexLes.getStartTime()) == 0) {
-            	    			clash = true;
-            	    			break outerloop;
-            	    		}
-            	    		//If existing start time is later than new start time & less than new end time, clash
-            	    		else if(checkIndexLesson.getStartTime().compareTo(newIndexLes.getStartTime()) > 0 && checkIndexLesson.getStartTime().compareTo(newIndexLes.getEndTime()) < 0){
-            	    			clash = true;
-            	    			break outerloop;
-            	    		}
-            	    		//If new start time is later than existing start time & less than existing end time, clash
-            	    		else if(newIndexLes.getStartTime().compareTo(checkIndexLesson.getStartTime()) > 0 && newIndexLes.getStartTime().compareTo(checkIndexLesson.getEndTime()) < 0) {
-            	    			clash = true;
-            	    			break outerloop;
-            	    		}
-            	    		else {
-            	    			clash = false;
-            	    		}
-        				}
-        				else {
-        					clash = false;
-        				}
-        			}
+    			
+    			if(checkIndexLesson.getIndexNumber() != index) {
+    				//Check if the lesson details clash
+    				
+    				if(checkIndexLesson.getDay() == newIndexLesson.getDay()) {
+    					
+    					//If they have same start time, clash
+        	    		if(checkIndexLesson.getStartTime().compareTo(newIndexLesson.getStartTime()) == 0) {
+        	    			clash = true;
+        	    			break;
+        	    		}
+        	    		//If existing start time is later than new start time & less than new end time, clash
+        	    		else if(checkIndexLesson.getStartTime().compareTo(newIndexLesson.getStartTime()) > 0 && checkIndexLesson.getStartTime().compareTo(newIndexLesson.getEndTime()) < 0){
+        	    			clash = true;
+        	    			break;
+        	    		}
+        	    		//If new start time is later than existing start time & less than existing end time, clash
+        	    		else if(newIndexLesson.getStartTime().compareTo(checkIndexLesson.getStartTime()) > 0 && newIndexLesson.getStartTime().compareTo(checkIndexLesson.getEndTime()) < 0) {
+        	    			clash = true;
+        	    			break;
+        	    		}
+        	    		else {
+        	    			clash = false;
+        	    		}
+    				}
+    				else {
+    					clash = false;
+    				}
     			}
-    			
-    			
     		}
 
     	}
