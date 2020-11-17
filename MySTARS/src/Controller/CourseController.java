@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class CourseController {
@@ -176,28 +177,75 @@ public class CourseController {
 
     public int checkVacant(int index){
     	int vacancy = 0;
+  
     	if (indexes.get(index)==null){
-    		return -1;
+        	return -1;
+    	}else {
+        	vacancy=indexes.get(index).getVacancy();
         }
-    	else {
-    		vacancy=indexes.get(index).getVacancy();
-    	}
-    	
-        return vacancy;
+        	
+    	return vacancy;
     }
 
 
     
     /* For Students */
-    public Boolean checkCourseRegistered(String matric, int index){
+    public void registerCourse(Student student, int index, String courseCode) {
+    	int vacancy = 0;
+    	if(indexes != null) {
+    		vacancy = indexes.get(index).getVacancy();
+        	try {
+    			ArrayList<StudentRegisteredCourses> regCourses = accessFile.readStudentRegisteredCourses();
+    			if(checkVacant(index) > 0) {
+        			indexes.get(index).setVacancy(vacancy-1);
+    				regCourses.add(new StudentRegisteredCourses(student.getMatricNumber(),index,false));
+    				accessFile.saveRegisteredCourses(regCourses);
+    				accessFile.saveIndex(indexes);
+    			}else {
+    				Queue<String> waitList = indexes.get(index).getWaitList();
+    				waitList.add(student.getMatricNumber());
+    				indexes.get(index).setWaitList(waitList);
+    				accessFile.saveIndex(indexes);
+    			}
+    			
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    	}
+    	
+    }
+    public void deregisterCourse(Student student, int index, String courseCode) {
+    	int vacancy = 0;
+    	if(indexes != null) {
+    		vacancy = indexes.get(index).getVacancy();
+    		try {
+    			indexes.get(index).setVacancy(vacancy+1);
+    			ArrayList<StudentRegisteredCourses> regCourses = accessFile.readStudentRegisteredCourses();
+    			for(int i = 0; i<regCourses.size(); i++) {
+    				if(regCourses.get(i).getMatricNumber() == student.getMatricNumber() && regCourses.get(i).getIndexNumber() == index) {
+    					regCourses.remove(i);
+    				}
+    			}
+    			accessFile.saveIndex(indexes);
+    			accessFile.saveRegisteredCourses(regCourses);
+    			
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    	}
+    }
+    public Boolean checkCourseRegistered(String matric, int index, String courseCode){
     	//Return false if student has not registered for course
     	//Return true if student already registered
     	Boolean exists = false;
     	try {
-    		ArrayList<StudentRegisteredCourses> courseList = accessFile.readStudentRegisteredCourses();
-    		for(int i = 0; i < courseList.size(); i++) {
-    			if(courseList.get(i).getMatricNumber().equals(matric) && courseList.get(i).getIndexNumber() == index) {
-    				exists = true;
+    		ArrayList<StudentRegisteredCourses> stuCourseList = accessFile.readStudentRegisteredCourses();
+    		indexes = accessFile.readIndex();
+    		for(int i = 0; i < stuCourseList.size(); i++) {
+    			if(stuCourseList.get(i).getMatricNumber().equals(matric) && stuCourseList.get(i).getIndexNumber() == index) {
+    					exists = true;
     			}
     		}	
     	}
