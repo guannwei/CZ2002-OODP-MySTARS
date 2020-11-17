@@ -18,8 +18,7 @@ public class StudentUI {
 		boolean validInput = false;
 		Scanner sc = new Scanner(System.in);
 		String matric= student.getMatricNumber();
-		String courseCode;
-		int index;
+		
 			
 		do {
 			System.out.println("1. Add Course");
@@ -46,44 +45,8 @@ public class StudentUI {
 
 			switch (choice) {
 			case 1:
-				System.out.println("Enter the course");
-				courseCode = sc.nextLine();
-				System.out.println("Enter index");
-				index = sc.nextInt();
-				if(courseCtrl.checkCourseRegistered(matric, index, courseCode) == true) {
-		    		System.out.println("You have already registered for this course!");
-		   		}
-				if(courseCtrl.checkClash(matric, index)) {
-					System.out.println("Clash!");
-					
-				}else {
-		   			if(courseCtrl.checkCompleteCourse(matric, index) == true) {
-		   				System.out.println("You have already completed this course!");
-	    			}else {
-	    				courseCtrl.registerCourse(student, index, courseCode);
-	    				if(courseCtrl.checkVacant(index) > 0) {
-	    					System.out.println("Succesfully registered!");
-	    				}else {
-	    					System.out.println("You are added to waitlist!");
-	    				}
-	    			}
-		   		}
 				break;
 			case 2:
-				System.out.println("Enter the course");
-				courseCode = sc.nextLine();
-				System.out.println("Enter index");
-				index = sc.nextInt();
-				if(courseCtrl.checkCourseRegistered(matric, index,courseCode) == true) {
-		    		System.out.println("You have not registered for this course!");
-		   		}else {
-		   			if(courseCtrl.checkCompleteCourse(matric, index) == true) {
-		   				System.out.println("You cannot deregister a course that you have already completed!");
-	    			}else {
-	    				courseCtrl.deregisterCourse(student, index, courseCode);
-	    				System.out.println("You have already succesfully de-register from this course!");
-	    			}
-		   		}
 				break;
 			case 3:
 
@@ -94,11 +57,11 @@ public class StudentUI {
 			case 5:
 				
 				System.out.println("Enter the course");
-				courseCode = sc.nextLine();
+				String courseCode = sc.nextLine();
 				System.out.println("Enter the original index");
-				index = sc.nextInt();
+				int index = sc.nextInt();
 					
-		    	if(courseCtrl.checkCourseRegistered(matric, index,courseCode) == false) {
+		    	if(courseCtrl.checkCourseRegistered(matric, index) == false) {
 		    		System.out.println("You have not registered for this course!");
 		   		}
 		   		else {
