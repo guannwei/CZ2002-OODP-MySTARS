@@ -19,6 +19,7 @@ public class AdminUI {
 	public static void adminMenu(Admin admin) {
 		StudentController stuCtrl = new StudentController();
 		CourseController courseCtrl = new CourseController();
+		
 		int choice = 0;
 		boolean validInput = false;
 		String matric = "";

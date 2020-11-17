@@ -38,10 +38,12 @@ public class CourseController {
     }
 
     public boolean checkCourse(String courseCode){
-		if (courses.get(courseCode)!=null){
+		if (courses.get(courseCode) == null){
+			return false;
+		}
+		else {
 			return true;
 		}
-		else return false;
 	}
 
 	public boolean checkIndex(int index){

@@ -154,12 +154,15 @@ public class FileManager {
 		for (int i = 0 ; i < stringArray.size() ; i++) {
 			String st = (String)stringArray.get(i);
 			StringTokenizer star = new StringTokenizer(st , SEPARATOR);
+			
 			String  courseCode = star.nextToken().trim();
 			String  courseName = star.nextToken().trim();
 			String  school = star.nextToken().trim();
 			int au = Integer.parseInt(star.nextToken().trim());
+			
+			System.out.println("Testing");
 			courses.put(courseCode, new Course(courseCode, courseName, school, au));
-
+			
 		}
 		return courses;
 	}
@@ -180,8 +183,6 @@ public class FileManager {
 			st.append(course.getCourseName().trim());
 			st.append(SEPARATOR);
 			st.append(course.getSchool().trim());
-			st.append(SEPARATOR);
-			st.append(course.getCourseName().trim());
 			st.append(SEPARATOR);
 			st.append(course.getAu());
 
