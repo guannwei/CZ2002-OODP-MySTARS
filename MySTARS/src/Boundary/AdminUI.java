@@ -3,12 +3,17 @@ package Boundary;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 import Controller.CourseController;
 import Controller.FileManager;
@@ -25,10 +30,13 @@ public class AdminUI {
 		String matric = "";
 		LocalDateTime start = LocalDateTime.now();
 		LocalDateTime end = LocalDateTime.now();
+		LocalTime lessonStart = LocalTime.now();
+		LocalTime lessonEnd = LocalTime.now();
 		
 		Scanner sc = new Scanner(System.in);
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
 		do {
 			System.out.println("1. Edit student access period");
@@ -207,6 +215,14 @@ public class AdminUI {
 							
 							courseCtrl.addCourse(courseCode, courseName, school, au);
 							System.out.println("New Course successfully added!");
+							System.out.println("All Courses(Course Code, Name, School, AU): ");
+							HashMap<String,Course> allCourses = new HashMap<>();
+							allCourses = courseCtrl.getAllCourses();
+							for(Map.Entry<String, Course> entry : allCourses.entrySet()){
+								System.out.println(entry.getValue().getCourseCode() + "	" + entry.getValue().getCourseName() 
+										+ "	" + entry.getValue().getSchool() + "	" + entry.getValue().getAu());
+							}
+							
 						}
 						
 						break;
@@ -250,7 +266,8 @@ public class AdminUI {
 								case 3:
 									System.out.println("Do you want to: \n" +
 											"1)Update an index's number\n" +
-											"2)Add an index\n");
+											"2)Add an index\n"+
+											"3)Add a lesson\n");
 
 									switch (sc.nextInt()) {
 										case 1:
@@ -277,7 +294,48 @@ public class AdminUI {
 											System.out.print("Enter the Vacancy: ");
 											int vacancyInt = sc.nextInt();
 											courseCtrl.newIndex(indexNum, updateCourseCode, vacancyInt);
-											System.out.println("New Index successfully added!");
+											System.out.println("New Index successfully added!");											
+											break;
+											
+										case 3:
+											System.out.println("Enter index number: ");
+											int lessonIndex = sc.nextInt();
+											sc.nextLine();
+											System.out.println("Enter lesson type: ");
+											String lessonType = sc.nextLine();
+											System.out.println("Enter lesson day: ");
+											String lessonDay = sc.nextLine();
+											System.out.println("Enter lesson venue: ");
+											String lessonVenue = sc.nextLine();
+											validInput = false;	
+											do {
+												try {
+													System.out.println("Enter lesson start time(HH:MM): ");
+													lessonStart = LocalTime.parse(sc.nextLine(), timeFormatter);
+													validInput = true;
+												}
+												catch(DateTimeParseException e) {
+													System.out.println("Please enter the valid date time format!");
+												}
+											}while(!validInput);
+											
+											validInput = false;
+											do {
+												try {
+													System.out.println("Enter lesson end time(HH:MM): ");
+													lessonEnd = LocalTime.parse(sc.nextLine(), timeFormatter);
+													validInput = true;
+												}
+												catch(DateTimeParseException e) {
+													System.out.println("Please enter the valid date time format!");
+												}
+												
+											}while(!validInput);
+											
+											Lesson le = new Lesson(lessonIndex, lessonStart, lessonEnd, lessonDay, lessonType, lessonVenue);
+											courseCtrl.addLesson(le);
+											System.out.println("Lesson successfully added!");
+											
 											break;
 									}
 									break;

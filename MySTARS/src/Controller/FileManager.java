@@ -160,7 +160,7 @@ public class FileManager {
 			String  school = star.nextToken().trim();
 			int au = Integer.parseInt(star.nextToken().trim());
 			
-			System.out.println("Testing");
+			
 			courses.put(courseCode, new Course(courseCode, courseName, school, au));
 			
 		}
