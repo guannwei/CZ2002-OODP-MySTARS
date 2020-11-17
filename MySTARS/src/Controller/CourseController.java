@@ -177,15 +177,13 @@ public class CourseController {
 
     public int checkVacant(int index){
     	int vacancy = 0;
-    	if(indexes != null) {
-    		if (indexes.get(index)==null){
-        		return -1;
-            }
-        	else {
-        		vacancy=indexes.get(index).getVacancy();
-        	}
+  
+    	if (indexes.get(index)==null){
+        	return -1;
+    	}else {
+        	vacancy=indexes.get(index).getVacancy();
+        }
         	
-    	}
     	return vacancy;
     }
 
