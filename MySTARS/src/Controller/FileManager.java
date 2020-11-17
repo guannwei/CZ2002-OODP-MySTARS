@@ -261,12 +261,16 @@ public class FileManager {
 			st.append(SEPARATOR);
 			st.append(index.getMax());
 			st.append(SEPARATOR);
-
-			for(int i = 0; i < index.getWaitList().size(); i++) {
-				st.append(index.getWaitList().poll());
+			
+			if(index.getWaitList().size() <= 0) {
 				st.append(SEPARATORLIST);
 			}
-
+			else {
+				for(int i = 0; i < index.getWaitList().size(); i++) {
+					st.append(index.getWaitList().poll());
+					st.append(SEPARATORLIST);
+				}
+			}
 			alw.add(st.toString()) ;
 		}
 		write(filename,alw);

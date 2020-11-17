@@ -18,6 +18,8 @@ public class StudentUI {
 		boolean validInput = false;
 		Scanner sc = new Scanner(System.in);
 		String matric= student.getMatricNumber();
+		String courseCode;
+		int index;
 		
 			
 		do {
@@ -45,8 +47,45 @@ public class StudentUI {
 
 			switch (choice) {
 			case 1:
+				System.out.println("Enter the course");
+				courseCode = sc.nextLine();
+				System.out.println("Enter index");
+				index = sc.nextInt();
+				if(courseCtrl.checkCourseRegistered(matric, index, courseCode) == true) {
+		    		System.out.println("You have already registered for this course!");
+		   		}else {
+		   			if(courseCtrl.checkClash(matric, index, 0)) {
+						System.out.println("Clash!");
+						
+					}else {
+			   			if(courseCtrl.checkCompleteCourse(matric, index, courseCode) == true) {
+			   				System.out.println("You have already completed this course!");
+		    			}else {
+		    				courseCtrl.registerCourse(student, index, courseCode);
+		    				if(courseCtrl.checkVacant(index) > 0) {
+		    					System.out.println("Succesfully registered!");
+		    				}else {
+		    					System.out.println("You are added to waitlist!");
+		    				}
+		    			}
+			   		}
+		   		}
 				break;
 			case 2:
+				System.out.println("Enter the course");
+				courseCode = sc.nextLine();
+				System.out.println("Enter index");
+				index = sc.nextInt();
+				if(courseCtrl.checkCourseRegistered(matric, index,courseCode) == true) {
+		    		System.out.println("You have not registered for this course!");
+		   		}else {
+		   			if(courseCtrl.checkCompleteCourse(matric, index, courseCode) == true) {
+		   				System.out.println("You cannot deregister a course that you have already completed!");
+	    			}else {
+	    				courseCtrl.deregisterCourse(student, index, courseCode);
+	    				System.out.println("You have already succesfully de-register from this course!");
+	    			}
+		   		}
 				break;
 			case 3:
 
@@ -57,15 +96,15 @@ public class StudentUI {
 			case 5:
 				
 				System.out.println("Enter the course");
-				String courseCode = sc.nextLine();
+				courseCode = sc.nextLine();
 				System.out.println("Enter the original index");
-				int index = sc.nextInt();
+				index = sc.nextInt();
 					
-		    	if(courseCtrl.checkCourseRegistered(matric, index) == false) {
+		    	if(courseCtrl.checkCourseRegistered(matric, index, courseCode) == false) {
 		    		System.out.println("You have not registered for this course!");
 		   		}
 		   		else {
-		   			if(courseCtrl.checkCompleteCourse(matric, index) == true) {
+		   			if(courseCtrl.checkCompleteCourse(matric, index, courseCode) == true) {
 		   				System.out.println("You have alread completed this course!");
 	    			}
 	    			else {
@@ -85,7 +124,7 @@ public class StudentUI {
 		    			//Check if index have vacancy
 		    			if(courseCtrl.checkVacant(newIndex) > 0) {
 		    				//Check if index clashes
-		    				if(courseCtrl.checkClash(matric, index) == false) {
+		    				if(courseCtrl.checkClash(matric, newIndex, index) == false) {
 		    					courseCtrl.changeIndex(matric, index, newIndex);
 		    					System.out.println("Successfully changed index!");
 		    				}
@@ -123,9 +162,9 @@ public class StudentUI {
 						//Get peer matric
 						String peerMatric = studentCtrl.getMatric(peerUsername);
 						//Check if new index clashes with own timetable
-						if(courseCtrl.checkClash(matric, peerIndex) == false) {
+						if(courseCtrl.checkClash(matric, peerIndex, ownIndex) == false) {
 							//Check if new index clashes with peer's timetable
-							if(courseCtrl.checkClash(peerMatric, ownIndex) == false) {
+							if(courseCtrl.checkClash(peerMatric, ownIndex, peerIndex) == false) {
 								courseCtrl.swopIndex(matric, peerMatric, ownIndex, peerIndex);
 								System.out.println("Successfully swopped index!");
 							}

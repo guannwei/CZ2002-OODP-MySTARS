@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class CourseController {
@@ -188,15 +189,73 @@ public class CourseController {
 
 
     
-    /* For Students */
-    public Boolean checkCourseRegistered(String matric, int index){
+    public void registerCourse(Student student, int index, String courseCode) {
+    	int vacancy = 0;
+    	if(indexes != null) {
+    		vacancy = indexes.get(index).getVacancy();
+        	try {
+    			ArrayList<StudentRegisteredCourses> regCourses = accessFile.readStudentRegisteredCourses();
+    			if(vacancy > 0) {
+        			indexes.get(index).setVacancy(vacancy-1);
+    				regCourses.add(new StudentRegisteredCourses(student.getMatricNumber(),index,false));
+    				accessFile.saveRegisteredCourses(regCourses);
+    			}else {
+    				Queue<String> waitList = indexes.get(index).getWaitList();
+    				waitList.add(student.getMatricNumber());
+    				indexes.get(index).setWaitList(waitList);
+    			}
+    			accessFile.saveIndex(indexes);
+    			
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    	}else {
+    		try {
+    			indexes = accessFile.readIndex();
+    			
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    		System.out.println(indexes);
+    	}
+    	
+    }
+    public void deregisterCourse(Student student, int index, String courseCode) {
+    	int vacancy = 0;
+    	if(indexes != null) {
+    		vacancy = indexes.get(index).getVacancy();
+    		try {
+    			indexes.get(index).setVacancy(vacancy+1);
+    			ArrayList<StudentRegisteredCourses> regCourses = accessFile.readStudentRegisteredCourses();
+    			for(int i = 0; i<regCourses.size(); i++) {
+    				if(regCourses.get(i).getMatricNumber() == student.getMatricNumber() && regCourses.get(i).getIndexNumber() == index) {
+    					regCourses.remove(i);
+    				}
+    			}
+    			accessFile.saveIndex(indexes);
+    			accessFile.saveRegisteredCourses(regCourses);
+    			
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    	}else {
+    		System.out.println(indexes);
+    	}
+    }
+    public Boolean checkCourseRegistered(String matric, int index, String courseCode){
     	//Return false if student has not registered for course
     	//Return true if student already registered
     	Boolean exists = false;
     	try {
-    		ArrayList<StudentRegisteredCourses> courseList = accessFile.readStudentRegisteredCourses();
-    		for(int i = 0; i < courseList.size(); i++) {
-    			if(courseList.get(i).getMatricNumber().equals(matric) && courseList.get(i).getIndexNumber() == index) {
+    		indexes = accessFile.readIndex();
+    		
+    		for(int i = 0; i < stuRegCourses.size(); i++) {
+    			int ind = stuRegCourses.get(i).getIndexNumber();
+    			if(stuRegCourses.get(i).getMatricNumber().equals(matric) && indexes.get(ind).getCourseCode().equals(courseCode)) {
+    				System.out.println("Test: " + ind);
     				exists = true;
     			}
     		}	
@@ -208,14 +267,15 @@ public class CourseController {
 		
     }
     
-    public Boolean checkCompleteCourse(String matric, int index){
+    public Boolean checkCompleteCourse(String matric, int index, String courseCode){
     	//Return false if student has not completed course
     	//Return true if student already completed course
     	Boolean exists = false;
     	try {
     		ArrayList<StudentRegisteredCourses> courseList = accessFile.readStudentRegisteredCourses();
     		for(int i = 0; i < courseList.size(); i++) {
-    			if(courseList.get(i).getMatricNumber().equals(matric) && courseList.get(i).getIndexNumber() == index && courseList.get(i).getComplete() == true) {
+    			int ind = stuRegCourses.get(i).getIndexNumber();
+    			if(courseList.get(i).getMatricNumber().equals(matric) && indexes.get(ind).getCourseCode().equals(courseCode) && courseList.get(i).getComplete() == true) {
     				exists = true;
     			}
     		}
@@ -243,65 +303,72 @@ public class CourseController {
     	return indexList;
     }
 
-    public Boolean checkClash(String matric, int index) {
+    public Boolean checkClash(String matric, int newIndex, int oldIndex) {
     	Boolean clash = false;
     	try {
     		
     		ArrayList<Lesson> studentLesson = new ArrayList<>();
+    		ArrayList<Index> allIndex = new ArrayList<>();
     		
     		//Store all lesson details that student takes
     		for(int i = 0; i < lessonList.size(); i++) {
-    			for(int j = 0; j < stuRegCourses.size(); j++) {
+    			for(int j = 0; j < stuRegCourses.size(); j++) {				
     				//If correct matric number
-    				if(stuRegCourses.get(j).getMatricNumber() == matric) {
-    					if(lessonList.get(i).getIndexNumber() == stuRegCourses.get(j).getIndexNumber()) {
-    						studentLesson.add(lessonList.get(i));
-    					}
+        			if(stuRegCourses.get(j).getMatricNumber().equals(matric)) {
+        				//Get all lesson plans of what student takes
+        				if(lessonList.get(i).getIndexNumber() == stuRegCourses.get(j).getIndexNumber()) {
+        					studentLesson.add(lessonList.get(i));
+        				}
     				}
+    				
     			}
     		}
     		
     		//Store details of new index
-    		Lesson newIndexLesson = new Lesson();
+    		ArrayList<Lesson> newIndexLesson = new ArrayList();
     		for(int i = 0; i < lessonList.size(); i++) {
-    			if(lessonList.get(i).getIndexNumber() == index) {
-    				newIndexLesson = lessonList.get(i);
+    			if(lessonList.get(i).getIndexNumber() == newIndex) {
+    				newIndexLesson.add(lessonList.get(i));
     			}
     		}
     		
     		//Check against all other registered index for student
     		Lesson checkIndexLesson = new Lesson();
+    		outerloop:
     		for(int i = 0; i < studentLesson.size(); i++) {
     			checkIndexLesson = studentLesson.get(i);
-    			
-    			if(checkIndexLesson.getIndexNumber() != index) {
-    				//Check if the lesson details clash
-    				
-    				if(checkIndexLesson.getDay() == newIndexLesson.getDay()) {
-    					
-    					//If they have same start time, clash
-        	    		if(checkIndexLesson.getStartTime().compareTo(newIndexLesson.getStartTime()) == 0) {
-        	    			clash = true;
-        	    			break;
-        	    		}
-        	    		//If existing start time is later than new start time & less than new end time, clash
-        	    		else if(checkIndexLesson.getStartTime().compareTo(newIndexLesson.getStartTime()) > 0 && checkIndexLesson.getStartTime().compareTo(newIndexLesson.getEndTime()) < 0){
-        	    			clash = true;
-        	    			break;
-        	    		}
-        	    		//If new start time is later than existing start time & less than existing end time, clash
-        	    		else if(newIndexLesson.getStartTime().compareTo(checkIndexLesson.getStartTime()) > 0 && newIndexLesson.getStartTime().compareTo(checkIndexLesson.getEndTime()) < 0) {
-        	    			clash = true;
-        	    			break;
-        	    		}
-        	    		else {
-        	    			clash = false;
-        	    		}
-    				}
-    				else {
-    					clash = false;
-    				}
+    			for(int j = 0; j< newIndexLesson.size(); j++) {
+    				Lesson newIndexLes = newIndexLesson.get(j);
+    				//If not equals to old index, check if clash
+    				if(checkIndexLesson.getIndexNumber() != oldIndex) {
+        				//Check if the lesson details clash
+        				if(checkIndexLesson.getDay().equals(newIndexLes.getDay())) {
+        					//If they have same start time, clash
+            	    		if(checkIndexLesson.getStartTime().compareTo(newIndexLes.getStartTime()) == 0) {
+            	    			clash = true;
+            	    			break outerloop;
+            	    		}
+            	    		//If existing start time is later than new start time & less than new end time, clash
+            	    		else if(checkIndexLesson.getStartTime().compareTo(newIndexLes.getStartTime()) > 0 && checkIndexLesson.getStartTime().compareTo(newIndexLes.getEndTime()) < 0){
+            	    			clash = true;
+            	    			break outerloop;
+            	    		}
+            	    		//If new start time is later than existing start time & less than existing end time, clash
+            	    		else if(newIndexLes.getStartTime().compareTo(checkIndexLesson.getStartTime()) > 0 && newIndexLes.getStartTime().compareTo(checkIndexLesson.getEndTime()) < 0) {
+            	    			clash = true;
+            	    			break outerloop;
+            	    		}
+            	    		else {
+            	    			clash = false;
+            	    		}
+        				}
+        				else {
+        					clash = false;
+        				}
+        			}
     			}
+    			
+    			
     		}
 
     	}
@@ -331,6 +398,7 @@ public class CourseController {
 	    	}
 	    	//Save back into file
 	    	accessFile.saveRegisteredCourses(stuRegCourses);
+	    	accessFile.saveIndex(indexes);
 	    }
 	    catch(Exception e){
 	    		
