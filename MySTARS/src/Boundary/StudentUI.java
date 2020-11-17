@@ -56,8 +56,6 @@ public class StudentUI {
 				break;
 			case 5:
 				
-				System.out.println("Enter the course");
-				String courseCode = sc.nextLine();
 				System.out.println("Enter the original index");
 				int index = sc.nextInt();
 					
@@ -71,7 +69,7 @@ public class StudentUI {
 	    			else {
 	    				//Print all indexes that course has
 		    			ArrayList<Index> indexList = new ArrayList<Index>();
-		    			indexList = courseCtrl.allIndexOfCourse(courseCode);
+		    			indexList = courseCtrl.allIndexOfCourse(index);
 		    			System.out.println("List of indexes and vacancies:");
 		   				System.out.println("Index		Vacancy");
 		   				System.out.println("--------------------");
@@ -85,7 +83,7 @@ public class StudentUI {
 		    			//Check if index have vacancy
 		    			if(courseCtrl.checkVacant(newIndex) > 0) {
 		    				//Check if index clashes
-		    				if(courseCtrl.checkClash(matric, index) == false) {
+		    				if(courseCtrl.checkClash(matric, newIndex, index) == false) {
 		    					courseCtrl.changeIndex(matric, index, newIndex);
 		    					System.out.println("Successfully changed index!");
 		    				}
@@ -123,9 +121,9 @@ public class StudentUI {
 						//Get peer matric
 						String peerMatric = studentCtrl.getMatric(peerUsername);
 						//Check if new index clashes with own timetable
-						if(courseCtrl.checkClash(matric, peerIndex) == false) {
+						if(courseCtrl.checkClash(matric, peerIndex, ownIndex) == false) {
 							//Check if new index clashes with peer's timetable
-							if(courseCtrl.checkClash(peerMatric, ownIndex) == false) {
+							if(courseCtrl.checkClash(peerMatric, ownIndex, peerIndex) == false) {
 								courseCtrl.swopIndex(matric, peerMatric, ownIndex, peerIndex);
 								System.out.println("Successfully swopped index!");
 							}
