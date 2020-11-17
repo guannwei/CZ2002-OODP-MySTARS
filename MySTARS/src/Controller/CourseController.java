@@ -17,14 +17,21 @@ import java.util.Scanner;
 public class CourseController {
     private HashMap<String,Course> courses;
     private HashMap<Integer, Index> indexes;
+    private ArrayList<Lesson> lessonList = new ArrayList<>();
+    ArrayList<StudentRegisteredCourses> stuRegCourses = new ArrayList<>();
+    
     private static FileManager accessFile = new FileManager();
     
-    public CourseController( HashMap courses, HashMap indexes ){
-        this.courses=courses;
-        this.indexes=indexes;
-    }
-    
     public CourseController() {
+    	try {
+    		courses = accessFile.readCourse();
+    		indexes = accessFile.readIndex();
+    		lessonList = accessFile.readLessonArray();
+    		stuRegCourses = accessFile.readStudentRegisteredCourses();
+    	}
+    	catch(Exception e) {
+    		
+    	}
     	
     }
 
@@ -160,11 +167,14 @@ public class CourseController {
     }
 
     public int checkVacant(int index){
-
-        if (indexes.get(index)==null){
-            return -1;
+    	int vacancy = 0;
+    	if (indexes.get(index)==null){
+    		return -1;
         }
-        int vacancy=indexes.get(index).getVacancy();
+    	else {
+    		vacancy=indexes.get(index).getVacancy();
+    	}
+    	
         return vacancy;
     }
 
@@ -224,38 +234,11 @@ public class CourseController {
     	}	
     	return indexList;
     }
-    
-    public Boolean checkVacancy(int index) {
-    	Boolean vacant = true;
-    	ArrayList<Index> allindexList = new ArrayList<Index>();
-    	try {
-    		allindexList = accessFile.readIndexArray();
-    		for(int i = 0; i < allindexList.size(); i++) {
-    			if(allindexList.get(i).getIndexNumber() == index) {
-    				if(allindexList.get(i).getVacancy() <= 0) {
-    					vacant = false;
-    				}
-    			}
-    		}
-    	}
-    	catch(Exception e) {
-    		
-    	}
-    	return vacant;
-    }
 
     public Boolean checkClash(String matric, int index) {
     	Boolean clash = false;
     	try {
-    		//Get all lesson details
-    		ArrayList<Lesson> lessonList = new ArrayList<>();
-    		lessonList = accessFile.readLessonArray();
-    		
     		ArrayList<Lesson> studentLesson = new ArrayList<>();
-    		
-    		//Get all student reg courses
-    		ArrayList<StudentRegisteredCourses> stuRegCourses = new ArrayList<>();
-    		stuRegCourses = accessFile.readStudentRegisteredCourses();
     		
     		//Store all lesson details that student takes
     		for(int i = 0; i < lessonList.size(); i++) {
@@ -315,12 +298,6 @@ public class CourseController {
 
 	public void changeIndex(String matric, int index, int newIndex) {
 	    try {
-	    	//Get student registered courses
-	    	ArrayList<StudentRegisteredCourses> stuRegCourses = new ArrayList<>();
-	    	stuRegCourses = accessFile.readStudentRegisteredCourses();
-	    	//Get Index 
-	    	HashMap<Integer,Index> indexes = new HashMap<>();
-	    	indexes = accessFile.readIndex();
 	    	
 	    	for(int i = 0; i < stuRegCourses.size(); i++) {
 	    		//If matric matches
@@ -347,9 +324,6 @@ public class CourseController {
 	
 	public void swopIndex(String ownMatric, String peerMatric, int ownIndex, int newIndex) {
 		try {
-			//Get student registered courses
-			ArrayList<StudentRegisteredCourses> stuRegCourses = new ArrayList<>();
-	    	stuRegCourses = accessFile.readStudentRegisteredCourses();
 	    	
 	    	//Swap for own account
 	    	for(int i = 0; i < stuRegCourses.size(); i++) {

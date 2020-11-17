@@ -16,12 +16,9 @@ import Controller.StudentController;
 import Model.*;
 
 public class AdminUI {
-	
-	public static StudentController stuCtrl = new StudentController();
-
-
-
-	public static void adminMenu(Admin admin) throws IOException {
+	public static void adminMenu(Admin admin) {
+		StudentController stuCtrl = new StudentController();
+		CourseController CCtrl = new CourseController();
 		int choice = 0;
 		boolean validInput = false;
 		String matric = "";
@@ -29,7 +26,7 @@ public class AdminUI {
 		LocalDateTime end = LocalDateTime.now();
 		
 		Scanner sc = new Scanner(System.in);
-		CourseController CCtrl = new CourseController(FileManager.readCourse(),FileManager.readIndex());
+		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
 		do {

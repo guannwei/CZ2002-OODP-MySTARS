@@ -83,7 +83,7 @@ public class StudentUI {
 		    			System.out.println("\nEnter new index");
 		    			int newIndex = sc.nextInt();
 		    			//Check if index have vacancy
-		    			if(courseCtrl.checkVacancy(newIndex) == true) {
+		    			if(courseCtrl.checkVacant(newIndex) > 0) {
 		    				//Check if index clashes
 		    				if(courseCtrl.checkClash(matric, index) == false) {
 		    					courseCtrl.changeIndex(matric, index, newIndex);
