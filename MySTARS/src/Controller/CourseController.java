@@ -189,6 +189,7 @@ public class CourseController {
     	if(indexes != null) {
     		vacancy = indexes.get(index).getVacancy();
     		try {
+    			HashMap<String,Student> stuList = accessFile.readStudents();
     			for(int i = 0; i<stuRegCourses.size(); i++) {
     				if(stuRegCourses.get(i).getMatricNumber().equals(student.getMatricNumber()) && stuRegCourses.get(i).getIndexNumber() == index) {
     					stuRegCourses.remove(i);
@@ -197,10 +198,11 @@ public class CourseController {
     			if(indexes.get(index).getWaitList().size() > 0) {
     				String temp = indexes.get(index).getWaitList().remove();
     				stuRegCourses.add(new StudentRegisteredCourses(temp,index,false));
+    				NotificationController.sendEmail(stuList.get(temp), courseCode);
     			}else {
     				indexes.get(index).setVacancy(vacancy+1);
-    				accessFile.saveIndex(indexes);
     			}
+    			accessFile.saveIndex(indexes);
     			accessFile.saveRegisteredCourses(stuRegCourses);
     			
     		} catch (IOException e) {

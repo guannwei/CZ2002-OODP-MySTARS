@@ -62,12 +62,12 @@ public class StudentUI {
 			   			if(courseCtrl.checkCompleteCourse(matric, index, courseCode) == true) {
 			   				System.out.println("You have already completed this course!");
 		    			}else {
-		    				courseCtrl.registerCourse(student, index, courseCode);
 		    				if(courseCtrl.checkVacant(index) > 0) {
 		    					System.out.println("Succesfully registered!");
 		    				}else {
 		    					System.out.println("You are added to waitlist!");
 		    				}
+		    				courseCtrl.registerCourse(student, index, courseCode);
 		    			}
 			   		}
 		   		}
@@ -81,10 +81,10 @@ public class StudentUI {
 		    		System.out.println("You have not registered for this course!");
 		   		}else {
 		   			if(courseCtrl.checkCompleteCourse(matric, index, courseCode) == true) {
-		   				System.out.println("You cannot deregister a course that you have already completed!");
+		   				System.out.println("You cannot deregister from a course that you have already completed!");
 	    			}else {
 	    				courseCtrl.deregisterCourse(student, index, courseCode);
-	    				System.out.println("You have already succesfully de-register from this course!");
+	    				System.out.println("You have succesfully de-register from this course!");
 	    			}
 		   		}
 				break;
