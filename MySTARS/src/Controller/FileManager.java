@@ -79,34 +79,6 @@ public class FileManager {
 		return alr ;
 	}
 
-//	public static void saveStudent(List al) throws IOException {
-//			String filename = "data/user-student.txt" ;
-//			List alw = new ArrayList() ;
-//	        for (int i = 0 ; i < al.size() ; i++) {
-//					Student student = (Student)al.get(i);
-//					StringBuilder st =  new StringBuilder() ;
-//					st.append(student.getUsername().trim());
-//					st.append(SEPARATOR);
-//					st.append(student.hashPassword(student.getPassword()).trim());
-//					st.append(SEPARATOR);
-//					st.append(student.getEmail().trim());
-//					st.append(SEPARATOR);
-//					st.append(student.getName().trim());
-//					st.append(SEPARATOR);
-//					st.append(student.getMatricNumber().trim());
-//					st.append(SEPARATOR);
-//					st.append(student.getGender().trim());
-//					st.append(SEPARATOR);
-//					st.append(student.getNationality().trim());
-//					st.append(SEPARATOR);
-//					st.append(student.getAccessStartPeriod().toString().trim());
-//					st.append(SEPARATOR);
-//					st.append(student.getAccessEndPeriod().toString());
-//					
-//					alw.add(st.toString()) ;
-//				}
-//				write(filename,alw);
-//		}
 	
 	public static void saveStudent(HashMap<String,Student> al) throws IOException {
 		String filename = "data/user-student.txt" ;
@@ -189,34 +161,6 @@ public class FileManager {
 			alw.add(st.toString()) ;
 		}
 		write(filename,alw);
-	}
-	
-	public static ArrayList readIndexArray() throws IOException {
-		String filename = "data/indexes.txt" ;
-		ArrayList stringArray = (ArrayList)read(filename);
-		ArrayList<Index> indexes = new ArrayList<>();
-
-		for (int i = 0 ; i < stringArray.size() ; i++) {
-			String st = (String)stringArray.get(i);
-			StringTokenizer star = new StringTokenizer(st , SEPARATOR);
-			StringTokenizer starList = new StringTokenizer(st , SEPARATORLIST);
-			Queue<String> waitList = new LinkedList<String>();
-			
-			int indexNumber = Integer.parseInt(star.nextToken().trim());
-			String coursecode = star.nextToken().trim();
-			int vacancy = Integer.parseInt(star.nextToken().trim());
-			int max = Integer.parseInt(star.nextToken().trim());
-			
-			String waitListBeforeSplit = star.nextToken().trim();
-			String[] waitListSplit = waitListBeforeSplit.split(SEPARATORLIST);
-			for(String a : waitListSplit) {
-				waitList.add(a);
-			}
-			
-			Index in = new Index(indexNumber, coursecode, vacancy, max, waitList);
-			indexes.add(in);
-		}
-		return indexes;
 	}
 	
 	public static HashMap readIndex() throws IOException {

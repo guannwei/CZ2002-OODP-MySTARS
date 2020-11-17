@@ -10,7 +10,7 @@ public class AccountController {
 		Object object = new Object();
 		object = null;
 		try {
-			ArrayList<Student> studentList = accessFile.readStudentsArray();
+			HashMap<String,Student> stuList = accessFile.readStudents();
 			ArrayList<Admin> adminList = accessFile.readAdmin();
 			if(userType.equals("admin")) {
 				for(int i = 0; i<adminList.size(); i++) {
@@ -19,12 +19,11 @@ public class AccountController {
 					}
 				}
 			}else if(userType.equals("student")){
-				for(int i = 0; i<studentList.size(); i++) {
-					if(userName.equals(studentList.get(i).getUsername()) && studentList.get(i).hashPassword(password).equals(studentList.get(i).getPassword())) {	
-						object = studentList.get(i);
-						System.out.println(studentList.get(i).getName());
+				for (String i : stuList.keySet()) {
+					if(userName.equals(stuList.get(i).getUsername()) && stuList.get(i).hashPassword(password).equals(stuList.get(i).getPassword())) {	
+						object = stuList.get(i);
 					}
-				}
+		    	}
 				
 			}
 			

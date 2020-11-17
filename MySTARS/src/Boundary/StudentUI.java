@@ -3,8 +3,9 @@ package Boundary;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.Iterator;
 import java.util.Scanner;
-
+import java.util.Map.*;
 import Controller.CourseController;
 import Controller.StudentController;
 import Model.*;
@@ -76,7 +77,7 @@ public class StudentUI {
 				courseCode = sc.nextLine();
 				System.out.println("Enter index");
 				index = sc.nextInt();
-				if(courseCtrl.checkCourseRegistered(matric, index,courseCode) == true) {
+				if(courseCtrl.checkCourseRegistered(matric, index,courseCode) == false) {
 		    		System.out.println("You have not registered for this course!");
 		   		}else {
 		   			if(courseCtrl.checkCompleteCourse(matric, index, courseCode) == true) {
@@ -88,10 +89,37 @@ public class StudentUI {
 		   		}
 				break;
 			case 3:
-
+				HashMap<Integer,Course> courses = courseCtrl.getRegisteredCourses(student);
+				if(courses.isEmpty()) {
+					System.out.println("You have yet to registerd any courses.");
+				}else {
+					for (Integer i : courses.keySet()) {
+						  System.out.println("Course Code: " + i + " || Course Name: " + courses.get(i).getCourseName()+" || School: " + courses.get(i).getSchool());
+						  ArrayList<Lesson> lessons = courseCtrl.getLessons(i);
+						  for(Lesson lesson: lessons) {
+							  //Start end day type venue.
+							  System.out.println(lesson.getType() + " Start time: " +lesson.getStartTime() + " End time: " + lesson.getEndTime()+
+									  " Venue : " + lesson.getVenue() + " Day : " + lesson.getDay());
+						  }
+						  System.out.println("===================================================================================================================");
+						  
+					}
+				}
 				break;
 			case 4:
-
+				System.out.println("Enter the course code ");
+				courseCode = sc.nextLine();
+				ArrayList<Index> courseIndexes = courseCtrl.getVacancies(courseCode);
+				if(courseIndexes.isEmpty()) {
+					
+				}else {
+					System.out.println("Course Code: " + courseCode);
+					System.out.println("Index		Vacancy");
+	   				System.out.println("--------------------");
+					for(Index indx: courseIndexes) {
+						System.out.println(indx.getIndexNumber() + "		" + indx.getVacancy());
+					}
+				}
 				break;
 			case 5:
 				
@@ -110,7 +138,7 @@ public class StudentUI {
 	    			else {
 	    				//Print all indexes that course has
 		    			ArrayList<Index> indexList = new ArrayList<Index>();
-		    			indexList = courseCtrl.allIndexOfCourse(courseCode);
+		    			indexList = courseCtrl.getVacancies(courseCode);
 		    			System.out.println("List of indexes and vacancies:");
 		   				System.out.println("Index		Vacancy");
 		   				System.out.println("--------------------");

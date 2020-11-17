@@ -157,16 +157,16 @@ public class CourseController {
         
     }
 
+    /*Add course*/
     public void registerCourse(Student student, int index, String courseCode) {
     	int vacancy = 0;
     	if(indexes != null) {
     		vacancy = indexes.get(index).getVacancy();
         	try {
-    			ArrayList<StudentRegisteredCourses> regCourses = accessFile.readStudentRegisteredCourses();
     			if(vacancy > 0) {
         			indexes.get(index).setVacancy(vacancy-1);
-    				regCourses.add(new StudentRegisteredCourses(student.getMatricNumber(),index,false));
-    				accessFile.saveRegisteredCourses(regCourses);
+        			stuRegCourses.add(new StudentRegisteredCourses(student.getMatricNumber(),index,false));
+    				accessFile.saveRegisteredCourses(stuRegCourses);
     			}else {
     				Queue<String> waitList = indexes.get(index).getWaitList();
     				waitList.add(student.getMatricNumber());
@@ -179,31 +179,29 @@ public class CourseController {
     			e.printStackTrace();
     		}
     	}else {
-    		try {
-    			indexes = accessFile.readIndex();
-    			
-    		} catch (IOException e) {
-    			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    		}
-    		System.out.println(indexes);
+    		System.out.println("Error null values");
     	}
     	
     }
+    /*Drop course*/
     public void deregisterCourse(Student student, int index, String courseCode) {
     	int vacancy = 0;
     	if(indexes != null) {
     		vacancy = indexes.get(index).getVacancy();
     		try {
-    			indexes.get(index).setVacancy(vacancy+1);
-    			ArrayList<StudentRegisteredCourses> regCourses = accessFile.readStudentRegisteredCourses();
-    			for(int i = 0; i<regCourses.size(); i++) {
-    				if(regCourses.get(i).getMatricNumber() == student.getMatricNumber() && regCourses.get(i).getIndexNumber() == index) {
-    					regCourses.remove(i);
+    			for(int i = 0; i<stuRegCourses.size(); i++) {
+    				if(stuRegCourses.get(i).getMatricNumber().equals(student.getMatricNumber()) && stuRegCourses.get(i).getIndexNumber() == index) {
+    					stuRegCourses.remove(i);
     				}
     			}
-    			accessFile.saveIndex(indexes);
-    			accessFile.saveRegisteredCourses(regCourses);
+    			if(indexes.get(index).getWaitList().size() > 0) {
+    				String temp = indexes.get(index).getWaitList().remove();
+    				stuRegCourses.add(new StudentRegisteredCourses(temp,index,false));
+    			}else {
+    				indexes.get(index).setVacancy(vacancy+1);
+    				accessFile.saveIndex(indexes);
+    			}
+    			accessFile.saveRegisteredCourses(stuRegCourses);
     			
     		} catch (IOException e) {
     			// TODO Auto-generated catch block
@@ -213,6 +211,41 @@ public class CourseController {
     		System.out.println(indexes);
     	}
     }
+    /*Check/Print Courses Registered*/
+    public HashMap<Integer,Course> getRegisteredCourses(Student student) {
+    	HashMap<Integer,Course> stuCourses = new HashMap<Integer,Course>();
+    	
+    	for(int i = 0; i <stuRegCourses.size(); i++) {
+			if(student.getMatricNumber().equals(stuRegCourses.get(i).getMatricNumber())) {
+				int index = stuRegCourses.get(i).getIndexNumber();
+				Course course = courses.get(indexes.get(index).getCourseCode());
+				stuCourses.put(index,course);
+			}
+		}
+    	return stuCourses;
+    	
+    }
+    public ArrayList<Lesson> getLessons(int index) {
+    	ArrayList<Lesson> stuLessons = new ArrayList<Lesson>();
+    	for(int i=0; i < lessonList.size(); i++) {
+    		if(lessonList.get(i).getIndexNumber() == index) {
+    			stuLessons.add(lessonList.get(i));
+    		}
+    	}
+    	return stuLessons;
+    }
+    /*Check Vacancies Available*/
+    public ArrayList<Index> getVacancies(String courseCode) {
+    	ArrayList<Index> courseIndex = new ArrayList<Index>();
+    	for (Integer i : indexes.keySet()) {
+    		if(indexes.get(i).getCourseCode().equals(courseCode)) {
+    			courseIndex.add(indexes.get(i));
+    		}
+    	}
+    	return courseIndex;
+    	
+    }
+    
     public Boolean checkCourseRegistered(String matric, int index, String courseCode){
     	//Return false if student has not registered for course
     	//Return true if student already registered
@@ -253,22 +286,6 @@ public class CourseController {
     	}
 		return exists;
 		
-    }
-    
-    public ArrayList<Index> allIndexOfCourse(String courseCode) {
-    	ArrayList<Index> allindexList = new ArrayList<Index>();
-    	ArrayList<Index> indexList = new ArrayList<Index>();
-    	try {
-    		allindexList = accessFile.readIndexArray();
-    		for(int i = 0; i < allindexList.size(); i++) {
-    			if(allindexList.get(i).getCourseCode().equals(courseCode)) {
-    				indexList.add(allindexList.get(i));
-    			}
-    		}
-    	}
-    	catch(Exception e){
-    	}	
-    	return indexList;
     }
 
     public Boolean checkClash(String matric, int newIndex, int oldIndex) {
