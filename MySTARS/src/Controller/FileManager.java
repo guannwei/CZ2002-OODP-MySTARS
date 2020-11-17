@@ -300,22 +300,23 @@ public class FileManager {
         return data;
       }
       
-      public static ArrayList readStudentRegisteredCourses() throws IOException {
+      public static ArrayList<StudentRegisteredCourses> readStudentRegisteredCourses() throws IOException {
   		String filename = "data/student-registered-courses.txt" ;
   		ArrayList stringArray = (ArrayList)read(filename);
-  		ArrayList alr = new ArrayList();
+  		ArrayList<StudentRegisteredCourses> alr = new ArrayList();
 
-          for (int i = 0 ; i < stringArray.size() ; i++) {
-  				String st = (String)stringArray.get(i);
-  				StringTokenizer star = new StringTokenizer(st , SEPARATOR);	
-  				String  matricNumber = star.nextToken().trim();	
-  				int  indexNumber = Integer.parseInt(star.nextToken().trim());	
-  				Boolean  complete = Boolean.parseBoolean(star.nextToken().trim());	
+        for (int i = 0 ; i < stringArray.size() ; i++) {
+  			String st = (String)stringArray.get(i);
+  			StringTokenizer star = new StringTokenizer(st , SEPARATOR);	
+  			String  matricNumber = star.nextToken().trim();	
+  			int  indexNumber = Integer.parseInt(star.nextToken().trim());	
+  			Boolean  complete = Boolean.parseBoolean(star.nextToken().trim());	
   				
-  				StudentRegisteredCourses course = new StudentRegisteredCourses(matricNumber, indexNumber, complete);
-  				alr.add(course) ;
-  			}
-  			return alr;
+  			StudentRegisteredCourses course = new StudentRegisteredCourses(matricNumber, indexNumber, complete);
+  				
+  			alr.add(course);
+  		}
+  		return alr;
   	}
       
       public static void saveRegisteredCourses(List al) throws IOException {
@@ -334,28 +335,31 @@ public class FileManager {
 				}
 				write(filename,alw);
 		}
-
+      
       public static ArrayList<Lesson> readLessonArray() throws IOException {
-  		String filename = "data/lessons.txt" ;
-  		ArrayList stringArray = (ArrayList)read(filename);
-  		ArrayList<Lesson> Lessons = new ArrayList<>();
+    		String filename = "data/lessons.txt" ;
+    		ArrayList stringArray = (ArrayList)read(filename);
+    		ArrayList<Lesson> alr = new ArrayList();
 
-  		for (int i = 0 ; i < stringArray.size() ; i++) {
-  			String st = (String)stringArray.get(i);
-  			StringTokenizer star = new StringTokenizer(st , SEPARATOR);
-  			
-  			int indexNumber = Integer.parseInt(star.nextToken().trim());
-  			LocalTime startTime = LocalTime.parse(star.nextToken().trim());
-  			LocalTime endTime = LocalTime.parse(star.nextToken().trim());
-  			String day = star.nextToken().trim();
-  			String type = star.nextToken().trim();
-  			String venue = star.nextToken().trim();
-  			
-  			Lesson le = new Lesson(indexNumber, startTime, endTime, day, type, venue);
-  			
-  		}
-  		return Lessons;
-  	}
+    		for (int i = 0 ; i < stringArray.size() ; i++) {
+	        	String st = (String)stringArray.get(i);
+	    		StringTokenizer star = new StringTokenizer(st , SEPARATOR);
+	    		
+	        	int indexNumber = Integer.parseInt(star.nextToken().trim());
+	    		LocalTime startTime = LocalTime.parse(star.nextToken().trim());
+	    		LocalTime endTime = LocalTime.parse(star.nextToken().trim());
+	    		String day = star.nextToken().trim();
+	    		String type = star.nextToken().trim();
+	    		String venue = star.nextToken().trim();
+    			
+    			Lesson le = new Lesson(indexNumber, startTime, endTime, day, type, venue);
+    			alr.add(le);
+    		}
+    		
+    		
+    		
+    		return alr;
+    	}
       
       public static void saveLesson(ArrayList<Lesson> al) throws IOException {
 			String filename = "data/lessons.txt" ;

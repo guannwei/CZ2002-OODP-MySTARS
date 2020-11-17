@@ -18,7 +18,7 @@ public class CourseController {
     private HashMap<String,Course> courses;
     private HashMap<Integer, Index> indexes;
     private ArrayList<Lesson> lessonList = new ArrayList<>();
-    ArrayList<StudentRegisteredCourses> stuRegCourses = new ArrayList<>();
+    private ArrayList<StudentRegisteredCourses> stuRegCourses = new ArrayList<>();
     
     private static FileManager accessFile = new FileManager();
     
@@ -28,6 +28,7 @@ public class CourseController {
     		indexes = accessFile.readIndex();
     		lessonList = accessFile.readLessonArray();
     		stuRegCourses = accessFile.readStudentRegisteredCourses();
+    		
     	}
     	catch(Exception e) {
     		
@@ -245,6 +246,7 @@ public class CourseController {
     public Boolean checkClash(String matric, int index) {
     	Boolean clash = false;
     	try {
+    		
     		ArrayList<Lesson> studentLesson = new ArrayList<>();
     		
     		//Store all lesson details that student takes
@@ -275,24 +277,30 @@ public class CourseController {
     			if(checkIndexLesson.getIndexNumber() != index) {
     				//Check if the lesson details clash
     				
-    	    		//If they have same start time, clash
-    	    		if(checkIndexLesson.getStartTime().compareTo(newIndexLesson.getStartTime()) == 0) {
-    	    			clash = true;
-    	    			break;
-    	    		}
-    	    		//If existing start time is later than new start time & less than new end time, clash
-    	    		else if(checkIndexLesson.getStartTime().compareTo(newIndexLesson.getStartTime()) > 0 && checkIndexLesson.getStartTime().compareTo(newIndexLesson.getEndTime()) < 0){
-    	    			clash = true;
-    	    			break;
-    	    		}
-    	    		//If new start time is later than existing start time & less than existing end time, clash
-    	    		else if(newIndexLesson.getStartTime().compareTo(checkIndexLesson.getStartTime()) > 0 && newIndexLesson.getStartTime().compareTo(checkIndexLesson.getEndTime()) < 0) {
-    	    			clash = true;
-    	    			break;
-    	    		}
-    	    		else {
-    	    			clash = false;
-    	    		}
+    				if(checkIndexLesson.getDay() == newIndexLesson.getDay()) {
+    					
+    					//If they have same start time, clash
+        	    		if(checkIndexLesson.getStartTime().compareTo(newIndexLesson.getStartTime()) == 0) {
+        	    			clash = true;
+        	    			break;
+        	    		}
+        	    		//If existing start time is later than new start time & less than new end time, clash
+        	    		else if(checkIndexLesson.getStartTime().compareTo(newIndexLesson.getStartTime()) > 0 && checkIndexLesson.getStartTime().compareTo(newIndexLesson.getEndTime()) < 0){
+        	    			clash = true;
+        	    			break;
+        	    		}
+        	    		//If new start time is later than existing start time & less than existing end time, clash
+        	    		else if(newIndexLesson.getStartTime().compareTo(checkIndexLesson.getStartTime()) > 0 && newIndexLesson.getStartTime().compareTo(checkIndexLesson.getEndTime()) < 0) {
+        	    			clash = true;
+        	    			break;
+        	    		}
+        	    		else {
+        	    			clash = false;
+        	    		}
+    				}
+    				else {
+    					clash = false;
+    				}
     			}
     		}
 
@@ -331,7 +339,6 @@ public class CourseController {
 	
 	public void swopIndex(String ownMatric, String peerMatric, int ownIndex, int newIndex) {
 		try {
-	    	
 	    	//Swap for own account
 	    	for(int i = 0; i < stuRegCourses.size(); i++) {
 	    		if(stuRegCourses.get(i).getMatricNumber().equals(ownMatric)) {

@@ -72,11 +72,11 @@ public class StudentUI {
 	    				//Print all indexes that course has
 		    			ArrayList<Index> indexList = new ArrayList<Index>();
 		    			indexList = courseCtrl.allIndexOfCourse(courseCode);
-		    			System.out.println("List of indexes");
-		   				System.out.println("Index	Vacancy");
-		   				System.out.println("----------------");
+		    			System.out.println("List of indexes and vacancies:");
+		   				System.out.println("Index		Vacancy");
+		   				System.out.println("--------------------");
 		   				for(int i = 0; i < indexList.size(); i++) {
-		   					System.out.println(indexList.get(i).getIndexNumber() + "	" + indexList.get(i).getVacancy());
+		   					System.out.println(indexList.get(i).getIndexNumber() + "		" + indexList.get(i).getVacancy());
 	    				}
 		   				
 		   				//Get new index
@@ -116,16 +116,16 @@ public class StudentUI {
 					System.out.println("Peer's username does not exist, unable to swap index!");
 				}
 				else {
-					if(studentCtrl.checkPassword(peerPassword) == false) {
+					if(studentCtrl.checkPassword(peerUsername, peerPassword) == false) {
 						System.out.println("Peer's password is wrong, unable to swap index!");
 					}
 					else {
 						//Get peer matric
 						String peerMatric = studentCtrl.getMatric(peerUsername);
 						//Check if new index clashes with own timetable
-						if(courseCtrl.checkClash(matric, peerIndex) == true ) {
+						if(courseCtrl.checkClash(matric, peerIndex) == false) {
 							//Check if new index clashes with peer's timetable
-							if(courseCtrl.checkClash(peerMatric, ownIndex) == true) {
+							if(courseCtrl.checkClash(peerMatric, ownIndex) == false) {
 								courseCtrl.swopIndex(matric, peerMatric, ownIndex, peerIndex);
 								System.out.println("Successfully swopped index!");
 							}

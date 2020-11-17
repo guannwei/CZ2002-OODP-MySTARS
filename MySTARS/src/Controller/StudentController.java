@@ -85,17 +85,19 @@ public class StudentController {
 		return exists;
 	}
 	
-	public Boolean checkPassword(String password) {
+	public Boolean checkPassword(String username, String password) {
 		Boolean exists = false;
 		try {
 			ArrayList<Student> studentList = new ArrayList<Student>();
 			studentList = accessFile.readStudentsArray();
-			
 			for(int i = 0; i<studentList.size(); i++) {
-				if(studentList.get(i).hashPassword(password).equals(password)) {	
-					exists = true;
-					break;
+				if(studentList.get(i).getUsername().equals(username)) {
+					if(studentList.get(i).hashPassword(password).equals(studentList.get(i).getPassword())) {	
+						exists = true;
+						break;
+					}
 				}
+				
 			}
 		}
 		catch(Exception e) {

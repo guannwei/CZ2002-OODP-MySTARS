@@ -1,6 +1,6 @@
 19801,12:30,14:30,Tuesday,Lecture,LT2A
 19801,14:30,16:30,Tuesday,Tutorial,TR+17
-18811,14:30,16:30,Tuesday,Tutorial,TR+16
+18811,14:30,16:30,Thursday,Tutorial,TR+16
 18812,10:30,12:30,Tuesday,Tutorial,TR+14
-18811,8:30,10:30,Tuesday,Lecture,LT2A
-18812,8:30,10:30,Tuesday,Lecture,LT2A
+18811,08:30,10:30,Tuesday,Lecture,LT2A
+18812,08:30,10:30,Tuesday,Lecture,LT2A
