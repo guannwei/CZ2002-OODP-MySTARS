@@ -13,6 +13,9 @@ import javax.activation.*;
 import Model.Student;
 
 public class NotificationController {
+	public static void sendNotification(Student student, String courseCode) {
+		sendEmail(student,courseCode);
+	}
 	/**
 	 * Send email for wait list notification
 	 * @param student

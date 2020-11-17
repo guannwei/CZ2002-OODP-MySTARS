@@ -198,7 +198,7 @@ public class CourseController {
     			if(indexes.get(index).getWaitList().size() > 0) {
     				String temp = indexes.get(index).getWaitList().remove();
     				stuRegCourses.add(new StudentRegisteredCourses(temp,index,false));
-    				NotificationController.sendEmail(stuList.get(temp), courseCode);
+    				NotificationController.sendNotification(stuList.get(temp), courseCode);
     			}else {
     				indexes.get(index).setVacancy(vacancy+1);
     			}
