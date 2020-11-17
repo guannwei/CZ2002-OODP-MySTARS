@@ -165,35 +165,47 @@ public class StudentController {
 		
 	}
 
-	public ArrayList checkStudentsInIndex(int index) throws IOException {
+	public ArrayList checkStudentsInIndex(int index) {
 		ArrayList studentNominal = new ArrayList<Student>();
+		
+		try {
+			HashMap<String,Student> studentList = FileManager.readStudents();
+			ArrayList<StudentRegisteredCourses> regCourseList = FileManager.readStudentRegisteredCourses();
 
-		HashMap<String,Student> studentList = FileManager.readStudents();
-		ArrayList<StudentRegisteredCourses> regCourseList = FileManager.readStudentRegisteredCourses();
-
-		for(int i = 0; i<regCourseList.size(); i++) {
-			if(regCourseList.get(i).getIndexNumber()==index&&!regCourseList.get(i).getComplete()){
-				studentNominal.add(studentList.get(regCourseList.get(i).getMatricNumber()));
+			for(int i = 0; i<regCourseList.size(); i++) {
+				if(regCourseList.get(i).getIndexNumber()==index&&!regCourseList.get(i).getComplete()){
+					studentNominal.add(studentList.get(regCourseList.get(i).getMatricNumber()));
+				}
+			}
+			if (studentNominal==null){
+				return (ArrayList) Collections.<Student>emptyList();
 			}
 		}
-		if (studentNominal==null){
-			return (ArrayList) Collections.<Student>emptyList();
+		catch(Exception e){
+			
 		}
 		return studentNominal;
 	}
 
-	public ArrayList<Student> checkStudentsInCourse(String courseName) throws IOException {
+	public ArrayList<Student> checkStudentsInCourse(String courseName) {
 		ArrayList studentNominal = new ArrayList<Student>();
-		HashMap<Integer,Index> indexList = FileManager.readIndex();
-		HashMap<String,Student> studentList = FileManager.readStudents();
-		ArrayList<StudentRegisteredCourses> regCourseList = FileManager.readStudentRegisteredCourses();
+		
+		try {
+			HashMap<Integer,Index> indexList = FileManager.readIndex();
+			HashMap<String,Student> studentList = FileManager.readStudents();
+			ArrayList<StudentRegisteredCourses> regCourseList = FileManager.readStudentRegisteredCourses();
 
-		for(int i = 0; i<regCourseList.size(); i++) {
-			if(indexList.get(regCourseList.get(i).getIndexNumber()).getCourseCode().equals(courseName)&&!regCourseList.get(i).getComplete()){
-				studentNominal.add(studentList.get(regCourseList.get(i).getMatricNumber()));
+			for(int i = 0; i<regCourseList.size(); i++) {
+				if(indexList.get(regCourseList.get(i).getIndexNumber()).getCourseCode().equals(courseName)&&!regCourseList.get(i).getComplete()){
+					studentNominal.add(studentList.get(regCourseList.get(i).getMatricNumber()));
 
+				}
 			}
 		}
+		catch(Exception e) {
+			
+		}
+		
 
 		return studentNominal;
 	}

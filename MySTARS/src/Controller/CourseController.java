@@ -152,18 +152,25 @@ public class CourseController {
     */
 
 
-    public void addCourse(String courseCode, String courseName, String school) throws IOException {
-
-        courses.put(courseCode,new Course(courseCode,courseName,school));
-        FileManager.saveCourse(courses);
+    public void addCourse(String courseCode, String courseName, String school) {
+    	try {
+    		courses.put(courseCode,new Course(courseCode,courseName,school));
+            FileManager.saveCourse(courses);
+    	}
+    	catch(Exception e){
+    		
+    	}
+        
     }
 
-    public void delCourse(String courseCode) throws IOException {
-
-        courses.remove(courseCode);
-        FileManager.saveCourse(courses);
-
-
+    public void delCourse(String courseCode) {
+    	try {
+    		courses.remove(courseCode);
+            FileManager.saveCourse(courses);
+    	}
+    	catch(Exception e) {
+    		
+    	}
     }
 
     public int checkVacant(int index){
