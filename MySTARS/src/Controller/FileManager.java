@@ -32,28 +32,6 @@ public class FileManager {
 			}
 			return alr ;
 	}
-	public static ArrayList readStudentsArray() throws IOException {
-		String filename = "data/user-student.txt" ;
-		ArrayList stringArray = (ArrayList)read(filename);
-		ArrayList alr = new ArrayList() ;
-
-        for (int i = 0 ; i < stringArray.size() ; i++) {
-				String st = (String)stringArray.get(i);
-				StringTokenizer star = new StringTokenizer(st , SEPARATOR);	
-				String  username = star.nextToken().trim();	
-				String  password = star.nextToken().trim();	
-				String  email = star.nextToken().trim();	
-				String  name = star.nextToken().trim();	
-				String  matricNumber = star.nextToken().trim();	
-				String  gender = star.nextToken().trim();	
-				String  nationality = star.nextToken().trim();	
-				LocalDateTime accessStartPeriod = LocalDateTime.parse(star.nextToken().trim());
-				LocalDateTime accessEndPeriod = LocalDateTime.parse(star.nextToken().trim());
-				Student student = new Student(username, password, email,name,matricNumber,gender,nationality,accessStartPeriod,accessEndPeriod);
-				alr.add(student) ;
-			}
-			return alr ;
-	}
 	
 	public static HashMap<String, Student> readStudents() throws IOException {
 		String filename = "data/user-student.txt" ;
