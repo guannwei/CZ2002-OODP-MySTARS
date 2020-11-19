@@ -12,7 +12,6 @@ public class Student extends User{
 	private String nationality;
 	private LocalDateTime accessStartPeriod;
 	private LocalDateTime accessEndPeriod;
-	private List<StudentRegisteredCourses> registeredCourses;
 	
 	public Student(String username, String password,String email,String name, String matricNumber, String gender, String nationality, LocalDateTime accessStartPeriod, LocalDateTime accessEndPeriod) {
 		super(username,password);
@@ -85,29 +84,6 @@ public class Student extends User{
 		this.accessEndPeriod = accessEndPeriod;
 	}
 	
-	public List<StudentRegisteredCourses> getRegisteredCourses() {
-		return registeredCourses;
-	}
-
-	public Boolean checkStudentInIndex(int index) {
-		List regCourse = getRegisteredCourses();
-		if (regCourse==null){
-			return false;
-		}
-		for (int i=0;i<regCourse.size();i++){
-			StudentRegisteredCourses regIndex = (StudentRegisteredCourses) regCourse.get(i);
-			if (regIndex.getIndexNumber()==index)
-				return true;
-		}
-		return false;
-	}
-
-
-	
-	public void setRegisteredCourses(List<StudentRegisteredCourses> registeredCourses) {
-		this.registeredCourses = registeredCourses;
-	}
-	
 	public boolean equals(Object o) {
 		if (o instanceof Student) {
 			Student s = (Student)o;
@@ -127,11 +103,11 @@ public class Student extends User{
         return false;
 		
 	}
-	@Override
-	public String toString() {
-        return new StringBuffer(this.getUsername()).append(",").append(super.hashPassword(this.getPassword())).append(",")
-        		.append(this.getName()).append(",").append(this.getMatricNumber()).append(",")
-        		.append(this.getGender()).append(",").append(this.getNationality()).append(",")
-				.append(this.getAccessStartPeriod()).append(",").append(this.getAccessEndPeriod()).toString();
-    }
+//	@Override
+//	public String toString() {
+//        return new StringBuffer(this.getUsername()).append(",").append(super.hashPassword(this.getPassword())).append(",")
+//        		.append(this.getName()).append(",").append(this.getMatricNumber()).append(",")
+//        		.append(this.getGender()).append(",").append(this.getNationality()).append(",")
+//				.append(this.getAccessStartPeriod()).append(",").append(this.getAccessEndPeriod()).toString();
+//    }
 }

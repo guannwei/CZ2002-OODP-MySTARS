@@ -78,24 +78,6 @@ public class FileManager {
         bf.close();
 	}
 
-	
-	
-	public static void saveAdmin(List al) throws IOException {
-		String filename = "data/user-admin.txt" ;
-		List alw = new ArrayList();
-
-        for (int i = 0 ; i < al.size() ; i++) {
-				Admin admin = (Admin)al.get(i);
-				StringBuilder st =  new StringBuilder() ;
-				st.append(admin.getUsername().trim());
-				st.append(SEPARATOR);
-				st.append(admin.hashPassword(admin.getPassword()).trim());
-				
-				alw.add(st.toString()) ;
-			}
-			write(filename,alw);
-	}
-
 	public static HashMap<String,Course> readCourse() throws IOException {
 		String filename = "data/courses.txt" ;
 		ArrayList stringArray = (ArrayList)read(filename);

@@ -7,7 +7,6 @@ public class StudentRegisteredCourses {
 	
 	
 	public StudentRegisteredCourses(String matricNumber, int indexNumber, Boolean complete) {
-		super();
 		this.matricNumber = matricNumber;
 		this.indexNumber = indexNumber;
 		this.complete = complete;

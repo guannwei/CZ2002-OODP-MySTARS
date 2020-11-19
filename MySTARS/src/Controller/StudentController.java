@@ -157,8 +157,8 @@ public class StudentController {
 		
 	}
 
-	public ArrayList checkStudentsInIndex(int index) {
-		ArrayList studentNominal = new ArrayList<Student>();
+	public ArrayList<Student> checkStudentsInIndex(int index) {
+		ArrayList<Student> studentNominal = new ArrayList<Student>();
 		
 		try {
 			HashMap<String,Student> studentList = accessFile.readStudents();

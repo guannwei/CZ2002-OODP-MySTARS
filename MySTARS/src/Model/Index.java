@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.List;
 import java.util.Queue;
 
 public class Index {
@@ -8,6 +9,7 @@ public class Index {
 	private int vacancy;
 	private int max;
 	private Queue<String> waitList;
+	private List<Lesson> listOfLessons;
 	
 	public Index(int indexNumber, String courseCode, int vacancy, int max, Queue<String> waitList) {
 		this.indexNumber = indexNumber;
@@ -61,6 +63,14 @@ public class Index {
 
 	public void setMax(int max) {
 		this.max = max;
+	}
+
+	public List<Lesson> getListOfLessons() {
+		return listOfLessons;
+	}
+
+	public void setListOfLessons(List<Lesson> listOfLessons) {
+		this.listOfLessons = listOfLessons;
 	}
 	
 
