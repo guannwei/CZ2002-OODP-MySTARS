@@ -51,6 +51,11 @@ public class CourseController {
 		}
 		else return false;
 	}
+	public boolean checkIndexInCourse(String courseCode, int index) {
+		if(indexes.get(index).getCourseCode().equals(courseCode)) {
+			return true;
+		}else return false;
+	}
 
 	public void updateCourseCode(String courseCodeOld, String courseCodeNew){
 		courses.get(courseCodeOld).setCourseCode(courseCodeNew);
@@ -159,18 +164,20 @@ public class CourseController {
 
     /*Add course*/
     public void registerCourse(Student student, int index, String courseCode) {
-    	int vacancy = 0;
-    	if(indexes != null) {
+       	int vacancy = 0;
+    	if(indexes.get(index) != null) {
     		vacancy = indexes.get(index).getVacancy();
         	try {
     			if(vacancy > 0) {
         			indexes.get(index).setVacancy(vacancy-1);
         			stuRegCourses.add(new StudentRegisteredCourses(student.getMatricNumber(),index,false));
     				accessFile.saveRegisteredCourses(stuRegCourses);
+    				
     			}else {
     				Queue<String> waitList = indexes.get(index).getWaitList();
     				waitList.add(student.getMatricNumber());
     				indexes.get(index).setWaitList(waitList);
+    				
     			}
     			accessFile.saveIndex(indexes);
     			
@@ -178,8 +185,6 @@ public class CourseController {
     			// TODO Auto-generated catch block
     			e.printStackTrace();
     		}
-    	}else {
-    		System.out.println("Error null values");
     	}
     	
     }
@@ -209,8 +214,6 @@ public class CourseController {
     			// TODO Auto-generated catch block
     			e.printStackTrace();
     		}
-    	}else {
-    		System.out.println(indexes);
     	}
     }
     /*Check/Print Courses Registered*/
@@ -225,6 +228,23 @@ public class CourseController {
 			}
 		}
     	return stuCourses;
+    	
+    }
+    //get waitlist courses
+    public HashMap<Integer,Course> getWaitlistCourses(Student student) {
+    	HashMap<Integer,Course> stuWaitListCourses = new HashMap<Integer,Course>();
+    	
+
+    	for(Integer i : indexes.keySet()) {
+    		if(!indexes.get(i).getWaitList().isEmpty()) {
+    			if(indexes.get(i).getWaitList().contains(student.getMatricNumber())){
+        			int index = indexes.get(i).getIndexNumber();
+        			Course course = courses.get(indexes.get(index).getCourseCode());
+        			stuWaitListCourses.put(index,course);
+        		}
+    		}
+    	}
+    	return stuWaitListCourses;
     	
     }
     public ArrayList<Lesson> getLessons(int index) {
@@ -258,7 +278,6 @@ public class CourseController {
     		for(int i = 0; i < stuRegCourses.size(); i++) {
     			int ind = stuRegCourses.get(i).getIndexNumber();
     			if(stuRegCourses.get(i).getMatricNumber().equals(matric) && indexes.get(ind).getCourseCode().equals(courseCode)) {
-    				System.out.println("Test: " + ind);
     				exists = true;
     			}
     		}	

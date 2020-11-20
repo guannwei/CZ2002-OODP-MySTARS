@@ -1,5 +1,7 @@
 CZ2001,Algorithm,SCSE,3
 CZ2002,Object Oriented,SCSE,3
+CZ1002,Basic Programming,SCSE,3
 CZ2004,Human Computer Interaction,SCSE,3
+CZ3005,Computer Visualization,SCSE,3
 CZ2006,Software Engineering,SCSE,3
 CZ2007,Database Management,SCSE,3

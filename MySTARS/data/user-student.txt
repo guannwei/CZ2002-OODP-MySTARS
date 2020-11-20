@@ -4,3 +4,4 @@ jtan01,01a47877cc60a77ac0841587a932e4cb,grp9stud@gmail.com,John Tan,U192233O,Mal
 alee1,dd9f3a2986cd57ddfab3cefd52a1d05c,grp9stud@gmail.com,Alex Lee,U192011A,Male,Singaporean,2020-11-16T10:30,2020-11-30T10:30
 rox01,cdaeb4835ba1e614edf617ccfafb480c,grp9stud@gmail.com,Roxanna Jing,U198989M,Female,Singaporean,2020-11-16T10:30,2020-11-30T10:30
 bgyu,9be2ec69228656fcf65e61a109f21895,grp9stud@gmail.com,Bagel Yu,U1921929B,Male,Singaporean,2020-11-16T10:30,2020-11-30T10:30
+CCL89,2360c4fc8c84fe61c845f0fc923a2617,CCL89@gmail.com,CHESTER LIM,U3429458T,Male,Singaporean,2021-06-12T11:55,2021-07-23T11:55

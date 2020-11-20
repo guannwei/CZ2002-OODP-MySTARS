@@ -56,7 +56,7 @@ public class AdminUI {
 					sc.nextLine();
 					}
 				} catch (InputMismatchException e) {
-					System.out.println("Enter a valid integer!");
+					System.out.println("Invalid input. Please choose valid option");
 					sc.nextLine();
 				}
 			} while (!validInput);
@@ -413,7 +413,7 @@ public class AdminUI {
 				loginStatus = false;
 				break;
 			default:
-				System.out.println("");
+				System.out.println("Invalid input. Please choose valid option");
 				break;
 			}
 		} while (loginStatus);

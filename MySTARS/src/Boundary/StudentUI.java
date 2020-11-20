@@ -40,7 +40,7 @@ public class StudentUI {
 					sc.nextLine();
 					}
 				} catch (InputMismatchException e) {
-					System.out.println("Enter a valid integer!");
+					System.out.println("Invalid input. Please choose valid option");
 					sc.nextLine();
 				}
 			} while (!validInput);
@@ -52,73 +52,117 @@ public class StudentUI {
 				courseCode = sc.nextLine();
 				System.out.println("Enter index");
 				index = sc.nextInt();
-				if(courseCtrl.checkCourseRegistered(matric, index, courseCode) == true) {
-		    		System.out.println("You have already registered for this course!");
-		   		}else {
-		   			if(courseCtrl.checkClash(matric, index, 0)) {
-						System.out.println("Clash!");
-						
+				if(courseCtrl.checkCourse(courseCode)&& courseCtrl.checkIndex(index)) {
+					if(courseCtrl.checkIndexInCourse(courseCode, index)) {
+						if(courseCtrl.checkCourseRegistered(matric, index, courseCode) == true) {
+				    		System.out.println("You have already registered for this course!");
+				   		}else {
+				   			if(courseCtrl.checkClash(matric, index, 0)) {
+				   				System.out.println("Chosen index clashes with current timetable. Please choose another index");
+								
+							}else {
+					   			if(courseCtrl.checkCompleteCourse(matric, index, courseCode) == true) {
+					   				System.out.println("You have already completed this course!");
+				    			}else {
+				    				if(courseCtrl.checkVacant(index) > 0) {
+				    					System.out.println("Succesfully registered!");
+				    				}else {
+				    					System.out.println("You are added to waitlist!");
+				    				}
+				    				courseCtrl.registerCourse(student, index, courseCode);
+				    			}
+					   		}
+				   		}
 					}else {
-			   			if(courseCtrl.checkCompleteCourse(matric, index, courseCode) == true) {
-			   				System.out.println("You have already completed this course!");
-		    			}else {
-		    				if(courseCtrl.checkVacant(index) > 0) {
-		    					System.out.println("Succesfully registered!");
-		    				}else {
-		    					System.out.println("You are added to waitlist!");
-		    				}
-		    				courseCtrl.registerCourse(student, index, courseCode);
-		    			}
-			   		}
-		   		}
+						System.out.println("Index does not belong under the course. Please re-enter");
+					}
+				}else if(!courseCtrl.checkCourse(courseCode)) {
+					System.out.println("Invalid course code: Please re-enter!");
+				}else if(!courseCtrl.checkIndex(index)) {
+					System.out.println("Invalid index: Please re-enter!");
+				}else {
+					System.out.println("Invalid index and course code: Please re-enter!");
+				}
 				break;
 			case 2:
 				System.out.println("Enter the course");
 				courseCode = sc.nextLine();
 				System.out.println("Enter index");
 				index = sc.nextInt();
-				if(courseCtrl.checkCourseRegistered(matric, index,courseCode) == false) {
-		    		System.out.println("You have not registered for this course!");
-		   		}else {
-		   			if(courseCtrl.checkCompleteCourse(matric, index, courseCode) == true) {
-		   				System.out.println("You cannot deregister from a course that you have already completed!");
-	    			}else {
-	    				courseCtrl.deregisterCourse(student, index, courseCode);
-	    				System.out.println("You have succesfully de-register from this course!");
-	    			}
-		   		}
+				if(courseCtrl.checkCourse(courseCode)&& courseCtrl.checkIndex(index)) {
+					if(courseCtrl.checkIndexInCourse(courseCode, index)) {
+						if(courseCtrl.checkCourseRegistered(matric, index,courseCode) == false) {
+				    		System.out.println("You have not registered for this course!");
+				   		}else {
+				   			if(courseCtrl.checkCompleteCourse(matric, index, courseCode) == true) {
+				   				System.out.println("You cannot deregister from a course that you have already completed!");
+			    			}else {
+			    				courseCtrl.deregisterCourse(student, index, courseCode);
+			    				System.out.println("You have succesfully de-register from this course!");
+			    			}
+				   		}
+					}else {
+						System.out.println("Index does not belong under the course. Please re-enter!");
+					}
+				}else if(!courseCtrl.checkCourse(courseCode)) {
+					System.out.println("Invalid course code: Please re-enter!");
+				}else if(!courseCtrl.checkIndex(index)) {
+					System.out.println("Invalid index: Please re-enter!");
+				}else {
+					System.out.println("Invalid index and course code: Please re-enter!");
+				}
 				break;
 			case 3:
-				HashMap<Integer,Course> courses = courseCtrl.getRegisteredCourses(student);
-				if(courses.isEmpty()) {
+				System.out.println( student.getName() +" registered courses.");
+				System.out.println("=============================================================================================");
+				HashMap<Integer,Course> regCourses = courseCtrl.getRegisteredCourses(student);
+				HashMap<Integer,Course> waitListCourses = courseCtrl.getWaitlistCourses(student);
+				if(regCourses.isEmpty()) {
 					System.out.println("You have yet to registerd any courses.");
 				}else {
-					for (Integer i : courses.keySet()) {
-						  System.out.println("Course Code: " + i + " || Course Name: " + courses.get(i).getCourseName()+" || School: " + courses.get(i).getSchool());
+					for (Integer i : regCourses.keySet()) {
+						System.out.println("Course: " + regCourses.get(i).getCourseCode() + " || Title: " + regCourses.get(i).getCourseName()+" || AU: " + regCourses.get(i).getAu() + " || Index: " + i + " || School: " + regCourses.get(i).getSchool());
 						  ArrayList<Lesson> lessons = courseCtrl.getLessons(i);
 						  for(Lesson lesson: lessons) {
-							  //Start end day type venue.
-							  System.out.println(lesson.getType() + " Start time: " +lesson.getStartTime() + " End time: " + lesson.getEndTime()+
-									  " Venue : " + lesson.getVenue() + " Day : " + lesson.getDay());
+							  System.out.println(lesson.getType()+"  "+ " Day: " +lesson.getDay() + " Time: " +lesson.getStartTime() + "-" + lesson.getEndTime()+
+									  " Venue: " + lesson.getVenue() + " Registered" );
 						  }
-						  System.out.println("===================================================================================================================");
+						  System.out.println("=============================================================================================");
 						  
 					}
 				}
+				if(!waitListCourses.equals(null)) {
+					for (Integer i : waitListCourses.keySet()) {
+						  System.out.println("Course: " + regCourses.get(i).getCourseCode() + " || Title: " + regCourses.get(i).getCourseName()+" || AU: " + regCourses.get(i).getAu() + " || Index: " + i + " || School: " + regCourses.get(i).getSchool());
+						  ArrayList<Lesson> lessons = courseCtrl.getLessons(i);
+						  for(Lesson lesson: lessons) {
+							  //Start end day type venue.
+							  System.out.println(lesson.getType()+"  "+ " Day: " +lesson.getDay() + " Time: " +lesson.getStartTime() + "-" + lesson.getEndTime()+
+									  " Venue: " + lesson.getVenue() + " On WaitList" );
+						  }
+						  System.out.println("=============================================================================================");
+						  
+					}
+				}
+
 				break;
 			case 4:
 				System.out.println("Enter the course code ");
 				courseCode = sc.nextLine();
 				ArrayList<Index> courseIndexes = courseCtrl.getVacancies(courseCode);
-				if(courseIndexes.isEmpty()) {
-					
-				}else {
-					System.out.println("Course Code: " + courseCode);
-					System.out.println("Index		Vacancy");
-	   				System.out.println("--------------------");
-					for(Index indx: courseIndexes) {
-						System.out.println(indx.getIndexNumber() + "		" + indx.getVacancy());
+				if(courseCtrl.checkCourse(courseCode)) {
+					if(!courseIndexes.isEmpty()) {
+						System.out.println("Course Code: " + courseCode);
+						System.out.println("Index		Vacancy");
+		   				System.out.println("--------------------");
+						for(Index indx: courseIndexes) {
+							System.out.println(indx.getIndexNumber() + "		" + indx.getVacancy()+"/"+indx.getMax());
+						}
+					}else {
+						System.out.println("Currently, this course code have no indexes.");
 					}
+				}else {
+					System.out.println("Invalid course code: Please re-enter.");
 				}
 				break;
 			case 5:
@@ -212,7 +256,7 @@ public class StudentUI {
 				System.out.println("Logged out successfully");
 				break;
 			default:
-				System.out.println("");
+				System.out.println("Invalid input. Please choose valid option");
 				break;
 			}
 		} while (loginStatus);
