@@ -21,7 +21,7 @@ import Controller.StudentController;
 import Model.*;
 
 public class AdminUI {
-	public static void adminMenu(Admin admin) {
+	public static void adminMenu(Admin admin, boolean loginStatus) {
 		StudentController stuCtrl = new StudentController();
 		CourseController courseCtrl = new CourseController();
 		
@@ -410,13 +410,13 @@ public class AdminUI {
 
 				break;
 			case 7:
-
+				loginStatus = false;
 				break;
 			default:
 				System.out.println("");
 				break;
 			}
-		} while (choice > 0 && choice < 7);
+		} while (loginStatus);
 		
 	}
 }

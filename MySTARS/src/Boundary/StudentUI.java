@@ -11,7 +11,7 @@ import Controller.StudentController;
 import Model.*;
 
 public class StudentUI {
-	public static void studentMenu(Student student) {
+	public static void studentMenu(Student student, boolean loginStatus) {
 		CourseController courseCtrl = new CourseController();
 		StudentController studentCtrl = new StudentController();
 		
@@ -208,13 +208,14 @@ public class StudentUI {
 
 				break;
 			case 7:
+				loginStatus = false;
 				System.out.println("Logged out successfully");
 				break;
 			default:
 				System.out.println("");
 				break;
 			}
-		} while (choice > 0 && choice < 7);
+		} while (loginStatus);
 		
 	}
 }
