@@ -1,3 +1,4 @@
+package Boundary;
 import java.io.Console;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -5,7 +6,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import Controller.*;
-import Boundary.*;
 import Model.*;
 
 public class MySTARSApp {
