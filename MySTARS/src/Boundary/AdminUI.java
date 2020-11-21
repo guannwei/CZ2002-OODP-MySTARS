@@ -177,6 +177,16 @@ public class AdminUI {
 								if(gender.equals("Female") || gender.equals("Male")) {
 									stuCtrl.addStudent(stu);
 									System.out.println("Student successfully added!");	
+									HashMap<String, Student> stuList = stuCtrl.getAllStudent();
+									System.out.println("List of all Students: ");
+									System.out.println("Matric Number | Username | Name | Email | Gender | Nationality");
+									System.out.println("=================================================================");
+									for(Map.Entry<String, Student> entry : stuList.entrySet()){
+										System.out.println(entry.getValue().getMatricNumber() + " | " + entry.getValue().getUsername() 
+												+ " | " + entry.getValue().getName()+ " | " + entry.getValue().getEmail() + " | " +
+												entry.getValue().getGender() + " | " + entry.getValue().getNationality());
+									}
+									
 								}
 								else {
 									System.out.println("Please enter correct format for gender(Male/Female)! Please enter fields again!");
@@ -215,12 +225,13 @@ public class AdminUI {
 							
 							courseCtrl.addCourse(courseCode, courseName, school, au);
 							System.out.println("New Course successfully added!");
-							System.out.println("All Courses(Course Code, Name, School, AU): ");
+							System.out.println("List of all Courses: ");
+							System.out.println("Course Code | Name | School | AU): ");
 							HashMap<String,Course> allCourses = new HashMap<>();
 							allCourses = courseCtrl.getAllCourses();
 							for(Map.Entry<String, Course> entry : allCourses.entrySet()){
-								System.out.println(entry.getValue().getCourseCode() + "	" + entry.getValue().getCourseName() 
-										+ "	" + entry.getValue().getSchool() + "	" + entry.getValue().getAu());
+								System.out.println(entry.getValue().getCourseCode() + " | " + entry.getValue().getCourseName() 
+										+ " | " + entry.getValue().getSchool() + " | " + entry.getValue().getAu());
 							}
 							
 						}

@@ -197,6 +197,20 @@ public class StudentController {
 		
 	}
 	/***
+	 * This method reads student list and returns it
+	 * @return Returns a HashMap matric number : Student
+	 */
+	public HashMap<String, Student> getAllStudent(){
+		HashMap<String,Student> alr = new HashMap<>();
+		try {
+			//Get list of students
+			alr = accessFile.readStudents();	
+		}
+		catch(Exception e) {
+		}
+		return alr;
+	}
+	/***
 	 * This method takes in an index number and returns an ArrayList of students belonging to that index
 	 * @param index Index Number of a course
 	 * @return Returns ArrayList of Students
