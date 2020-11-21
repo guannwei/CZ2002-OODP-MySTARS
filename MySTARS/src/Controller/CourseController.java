@@ -48,8 +48,10 @@ public class CourseController {
 		else return false;
 	}
 	public boolean checkIndexInCourse(String courseCode, int index) {
-		if(indexes.get(index).getCourseCode().equals(courseCode)) {
-			return true;
+		if(indexes.get(index)!= null) {
+			if(indexes.get(index).getCourseCode().equals(courseCode)) {
+				return true;
+			}else return false;
 		}else return false;
 	}
 

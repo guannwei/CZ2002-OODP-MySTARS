@@ -1,3 +1,4 @@
+CZ3001,Advance Computer Architecture,SCSE,3
 CZ2001,Algorithm,SCSE,3
 CZ2002,Object Oriented,SCSE,3
 CZ1002,Basic Programming,SCSE,3
