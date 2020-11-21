@@ -41,16 +41,13 @@ public class MySTARSApp {
 			if(userType.equals("admin") || userType.equals("student")) {
 				System.out.println("Enter username: ");
 				String username = sc.nextLine();
-//				Console console = System.console();
-//				if (console == null) {
-//					System.out.println("Couldn't get Console instance");
-//					System.exit(0);
-//				}
-//				char[] passwordArray = console.readPassword("Enter password: ");
-//				//console.printf("Password entered was: %s%n", new String(passwordArray));
-//				String password = new String(passwordArray);
-				System.out.println("Enter password: ");
-				String password = sc.nextLine();
+				Console console = System.console();
+				if (console == null) {
+					System.out.println("Couldn't get Console instance");
+					System.exit(0);
+				}
+				char[] passwordArray = console.readPassword("Enter password: ");
+			    String password = new String(passwordArray);
 				Object object = AccountController.logIn(userType, username, password);
 				if(object != null) {
 					if((boolean)object.equals(false)){
