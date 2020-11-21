@@ -76,9 +76,34 @@ public class StudentController {
 	public Boolean checkStudentExists(Student stu){
 		Boolean exists = false;
 		try {
-			if(studentList.containsValue(stu)) {
-				exists = true;
+			//Hash password
+			stu.setPassword(stu.hashPassword(stu.getPassword()));
+			//Get matric
+			String matric = stu.getMatricNumber();
+			
+			if(studentList.get(matric) != null) {
+				if(studentList.get(matric).getUsername().equals(stu.getUsername())) {
+					if(studentList.get(matric).getPassword().equals(stu.getPassword())) {
+						if(studentList.get(matric).getEmail().equals(stu.getEmail())) {
+							if(studentList.get(matric).getName().equals(stu.getName())) {
+								if(studentList.get(matric).getGender().equals(stu.getGender())) {
+									if(studentList.get(matric).getNationality().equals(stu.getNationality())) {
+										if(studentList.get(matric).getAccessStartPeriod().equals(stu.getAccessStartPeriod())) {
+											if(studentList.get(matric).getAccessEndPeriod().equals(stu.getAccessEndPeriod())) {
+												exists = true;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
 			}
+
+//			if(studentList.containsValue(stu)) {
+//				exists = true;
+//			}
 			
 			
 		}catch(Exception e) {
