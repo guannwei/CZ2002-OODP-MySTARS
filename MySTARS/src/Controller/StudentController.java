@@ -227,9 +227,6 @@ public class StudentController {
 					studentNominal.add(studentList.get(regCourseList.get(i).getMatricNumber()));
 				}
 			}
-			if (studentNominal==null){
-				return (ArrayList) Collections.<Student>emptyList();
-			}
 		}
 		catch(Exception e){
 			
