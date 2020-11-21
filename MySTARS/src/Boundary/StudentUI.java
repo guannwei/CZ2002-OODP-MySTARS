@@ -32,7 +32,7 @@ public class StudentUI {
 		String courseCode;
 		int index;
 		
-			
+		System.out.println("------------------------Student Menu-----------------------");	
 		do {
 			System.out.println("1. Add Course");
 			System.out.println("2. Drop Course");

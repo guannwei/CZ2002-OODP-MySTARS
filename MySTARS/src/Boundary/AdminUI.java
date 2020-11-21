@@ -41,7 +41,8 @@ public class AdminUI {
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-
+		
+		System.out.println("------------------------Admin Menu-----------------------");	
 		do {
 			System.out.println("1. Edit student access period");
 			System.out.println("2. Add a student (name, matric number, gender, nationality, etc)");

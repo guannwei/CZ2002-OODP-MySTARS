@@ -6,8 +6,8 @@
 18811,08:30,10:30,Tuesday,Lecture,LT2A
 18812,08:30,10:30,Tuesday,Lecture,LT2A
 19999,08:30,10:30,Wednesday,Lecture,LT2A
-19998,08:30,10:30,Wednesday,Lecture,LT2A
+13002,08:30,10:30,Wednesday,Lecture,LT2A
 19999,08:30,10:30,Friday,Tutorial,TR+18
-19998,08:30,10:30,Monday,Tutorial,TR+18
+13002,08:30,10:30,Monday,Tutorial,TR+18
 19802,12:30,14:30,Tuesday,Lecture,LT2A
 12320,11:00,12:00,Thursday,Lecture,LT2A

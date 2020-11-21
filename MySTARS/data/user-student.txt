@@ -1,7 +1,7 @@
 alch01,992b19faf196fc06c32d970fc4c32077,alch01@gmail.com,Albert Ching,U1922331U,Male,Singaporean,2020-11-20T10:30,2020-11-30T10:30
 slam01,a19f68ae77947d88acf81bea4daea0e9,grp9stud@gmail.com,Susan Lam,U1988771E,Female,Singaporean,2020-11-16T10:30,2020-11-30T10:30
-jonlee1,8840a94ecb18c814b35934ed9e315985,jonlee1@gmail.com,Jonas Lee,U1823454C,Male,Singaporean,2020-11-20T10:30,2020-11-30T10:30
-ivtan2,abae017da50a2b1d92d3ab4982ff39d0,ivtan2@gmail.com,Ivan Tan,U1899229E,Male,Singaporean,2020-11-20T10:30,2020-11-30T10:30
+jonlee1,8840a94ecb18c814b35934ed9e315985,grp9stud@gmail.com,Jonas Lee,U1823454C,Male,Singaporean,2020-11-20T10:30,2020-11-30T10:30
+ivtan2,abae017da50a2b1d92d3ab4982ff39d0,grp9stud@gmail.com,Ivan Tan,U1899229E,Male,Singaporean,2020-11-20T10:30,2020-11-30T10:30
 alee1,dd9f3a2986cd57ddfab3cefd52a1d05c,grp9stud@gmail.com,Alex Lee,U1920117A,Male,Singaporean,2020-11-16T10:30,2020-11-30T10:30
 haich01,e911161728039d2235c38c89f92d9bdd,haich01@gmail.com,Hailey Chua,U1878330R,Female,Singaporean,2020-11-20T10:30,2020-11-30T10:30
 justch1,e92f0ec9692fb1b5792e55ff95d885e4,justch1@gmail.com,Justin Chong,U1856315S,Male,Singaporean,2020-11-20T10:30,2020-11-30T10:30
