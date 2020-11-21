@@ -12,6 +12,11 @@ import javax.activation.*;
 
 import Model.Student;
 
+/**
+ * This class has all the methods managing notification to students. 
+ * @author Ray Myat
+ *
+ */
 public class NotificationController {
 	public static void sendNotification(Student student, String courseCode) {
 		sendEmail(student,courseCode);
@@ -47,14 +52,11 @@ public class NotificationController {
 			message.addRecipient(Message.RecipientType.TO,new InternetAddress(emailTo)); // to be added an email addr
 			message.setSubject("Testing Subject");
 			message.setText("Dear " + studentName
-				+ "\n\n You have successfuly registered" + courseCode);
+				+ "\n\n You have successfuly registered " + courseCode);
 
 			Transport.send(message);
 
-			System.out.println("Done");
-
 		} catch (MessagingException e) {
-			System.out.println("failed");
 			throw new RuntimeException(e);
 		}
 		

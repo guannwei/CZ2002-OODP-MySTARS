@@ -17,8 +17,8 @@ public class AccountController {
 	
 	/**
 	 * This method take in usertype, username and password and return relevant object.
-	 * If the user is a student, it will return student object.
-	 * If the user is a admin, it will return admin object.
+	 * On successful log in as student, it will return student object.
+	 * On successful log in as admin, it will return admin object.
 	 * If the user entered wrong password, this method will return false.
 	 * If the return object is null, the user entered wrong username and password.
 	 * @param userType Domain of the user

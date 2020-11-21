@@ -1,26 +1,30 @@
 package Boundary;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.InputMismatchException;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
-
 import Controller.CourseController;
-import Controller.FileManager;
 import Controller.StudentController;
 import Model.*;
 
+/**
+ * This is the interface which will be displayed after the admin is logged in.
+ * @author Ray Myat, Guan Wei
+ *
+ */
 public class AdminUI {
+	/**
+	 * This method provides a list of operations that are designated for the admin.
+	 * It contains necessary prompts and print statements for the respective operation.
+	 * @param admin Currently logged in admin
+	 * @param loginStatus Login Status of the admin
+	 */
 	public static void adminMenu(Admin admin, boolean loginStatus) {
 		StudentController stuCtrl = new StudentController();
 		CourseController courseCtrl = new CourseController();
@@ -63,6 +67,8 @@ public class AdminUI {
 			validInput = false;
 
 			switch (choice) {
+			
+			/*Edit student access period*/
 			case 1:
 				validInput = false;
 				start = LocalDateTime.now();
@@ -108,6 +114,7 @@ public class AdminUI {
 				System.out.println("Access period successfully edited!");
 				
 				break;
+			/*Add a student*/
 			case 2:
 				start = LocalDateTime.now();
 				end = LocalDateTime.now();
@@ -198,6 +205,7 @@ public class AdminUI {
 				
 
 				break;
+			/*Add/Update a course*/
 			case 3:
 				System.out.println("1) Add a new course\n" +
 								"2) Delete a course\n" +
@@ -381,7 +389,7 @@ public class AdminUI {
 				}
 
 				break;
-
+			/*Check available slot for index number*/
 			case 4:
 				System.out.print("Enter the index of which you like to check vacancy for:");
 				int index = sc.nextInt();
@@ -394,6 +402,7 @@ public class AdminUI {
 				}
 
 				break;
+			/*Print student list by index number*/
 			case 5:
 				System.out.print("Enter Index number: ");
 				int indexNum = sc.nextInt();
@@ -413,6 +422,7 @@ public class AdminUI {
 				System.out.println("");
 
 				break;
+			/*Print student list by course*/
 			case 6:
 				System.out.print("Enter Course code: ");
 				String courseCode = sc.next();
@@ -432,6 +442,7 @@ public class AdminUI {
 				System.out.println("");
 
 				break;
+			/*Log out*/
 			case 7:
 				loginStatus = false;
 				break;

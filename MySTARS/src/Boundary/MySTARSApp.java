@@ -8,16 +8,22 @@ import Model.Student;
 import Model.Admin;
 
 /**
- * 
+ * This is the main interface which will be displayed once users starts the application.
  * @author Ray Myat
  *
  */
 public class MySTARSApp {
-	private static Admin admin;
-	private static Student student;
 	
+	/**
+	 * This is the main class which provides the common login interface for the users.
+	 * It contains necessary prompts and print statements for the respective operation.
+	 * @param args
+	 * @throws IOException
+	 */
 	public static void main(String[] args) throws IOException {
 		// accountStatus is to track user log
+		Admin admin;
+		Student student;
 		boolean loginStatus = true;
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MMM-yyyy HH:mm");
 		System.out.println("------------------------------------------------------------------");

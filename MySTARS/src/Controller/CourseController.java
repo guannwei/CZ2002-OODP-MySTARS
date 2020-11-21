@@ -13,13 +13,17 @@ import java.util.Queue;
  *
  */
 public class CourseController {
-    private HashMap<String,Course> courses;
+	
+
+    private HashMap<String,Course> courses; 
     private HashMap<Integer, Index> indexes;
     private ArrayList<Lesson> lessonList = new ArrayList<>();
     private ArrayList<StudentRegisteredCourses> stuRegCourses = new ArrayList<>();
-    
     private static FileManager accessFile = new FileManager();
     
+    /**
+     * This is the constructors which load list of courses, indexes, lessonList and studRegCourses respectively.
+     */
     public CourseController() {
     	try {
     		courses = accessFile.readCourse();
@@ -32,6 +36,11 @@ public class CourseController {
     	}
     }
 
+    /**
+     * This method takes in course code and checks whether the course code exist in the course list.
+     * @param courseCode Course code of course
+     * @return Return true or false
+     */
     public boolean checkCourse(String courseCode){
 		if (courses.get(courseCode) == null){
 			return false;
@@ -41,12 +50,24 @@ public class CourseController {
 		}
 	}
 
+	/**
+	 * This method takes in index and checks whether the index exists in the index list.
+	 * @param index Index number of index
+	 * @return Return true or false
+	 */
 	public boolean checkIndex(int index){
 		if (indexes.get(index)!=null){
 			return true;
 		}
 		else return false;
 	}
+	
+	/**
+	 * This method takes in course code ,and index and checks whether the index belongs to the course code.
+	 * @param courseCode Course code of Course
+	 * @param index Index number of index
+	 * @return Return true or false
+	 */
 	public boolean checkIndexInCourse(String courseCode, int index) {
 		if(indexes.get(index)!= null) {
 			if(indexes.get(index).getCourseCode().equals(courseCode)) {
@@ -55,6 +76,11 @@ public class CourseController {
 		}else return false;
 	}
 
+	/**
+	 * This method takes in old course code , and new course code and updates the old course code to new course code.
+	 * @param courseCodeOld Old course code of course
+	 * @param courseCodeNew New course code to be updated
+	 */
 	public void updateCourseCode(String courseCodeOld, String courseCodeNew){
 		courses.get(courseCodeOld).setCourseCode(courseCodeNew);
 		try {
@@ -64,6 +90,11 @@ public class CourseController {
     	}
 	}
 
+	/**
+	 * This method takes in course code and new school, and updates the school name of the course code to new school name.
+	 * @param courseCode Course code of course
+	 * @param newSchool New school name to be updated
+	 */
 	public void updateCourseSchool(String courseCode, String newSchool){
 		courses.get(courseCode).setSchool(newSchool);
 		try {
@@ -74,6 +105,11 @@ public class CourseController {
 		
 	}
 
+	/**
+	 * This method takes in old index number and new index number, and updates the old index number to new index number.
+	 * @param newIndex New index number to be updated
+	 * @param oldIndex Old index number of index
+	 */
 	public void updateIndex(int newIndex, int oldIndex){
 		indexes.get(oldIndex).setIndexNumber(newIndex);
 		try {
@@ -83,8 +119,13 @@ public class CourseController {
     	}
 	}
 
-	public void updateVacancy(int indexNum, int vacancy){
-		indexes.get(indexNum).setVacancy(vacancy);
+	/**
+	 * This method takes in index number and new vacancy, and updates the vacancy of the index number to new vacancy.
+	 * @param indexNum Index number of index
+	 * @param newVacancy New vacancy to be updated
+	 */
+	public void updateVacancy(int indexNum, int newVacancy){
+		indexes.get(indexNum).setVacancy(newVacancy);
 		try {
     		accessFile.saveIndex(indexes);
     	}
@@ -92,9 +133,15 @@ public class CourseController {
     	}
 	}
 
-	public void newIndex(int indexNum, String courseCode, int vacancyInt){
+	/**
+	 * This method takes in new index number, course code and new vacancy number, and creates a new index under the course code.
+	 * @param newIndexNum New index number to be added
+	 * @param courseCode Course code of course
+	 * @param newVacancyInt Vacancy number of new index number
+	 */
+	public void newIndex(int newIndexNum, String courseCode, int newVacancyInt){
 		Queue<String> waitlist =  new LinkedList<String>();
-    	indexes.put(indexNum,new Index(indexNum,courseCode,vacancyInt, vacancyInt, waitlist));
+    	indexes.put(newIndexNum,new Index(newIndexNum,courseCode,newVacancyInt, newVacancyInt, waitlist));
     	try {
     		accessFile.saveIndex(indexes);
     	}
@@ -103,6 +150,13 @@ public class CourseController {
     	
 	}
 
+    /**
+     * This method takes in course code, course name , school and AU, and creates new course.
+     * @param courseCode Course code of new course
+     * @param courseName Course name of new course
+     * @param school School of the new course
+     * @param au AU of the new course
+     */
     public void addCourse(String courseCode, String courseName, String school, int au) {
     	try {
     		courses.put(courseCode,new Course(courseCode,courseName,school, au));
@@ -114,6 +168,10 @@ public class CourseController {
         
     }
 
+    /**
+     * This method takes in course code and delete the course from courses.
+     * @param courseCode Course code of course
+     */
     public void delCourse(String courseCode) {
     	try {
     		courses.remove(courseCode);
@@ -124,6 +182,10 @@ public class CourseController {
     	}
     }
     
+    /**
+     * This method load all the courses.
+     * @return HashMap Course code : Course
+     */
     public HashMap<String,Course> getAllCourses(){
     	HashMap<String,Course> allcourse = new HashMap<>();
     	try {
@@ -137,6 +199,11 @@ public class CourseController {
     	
     }
 
+    /**
+     * This method takes in index number and checks vacancy of the index number.
+     * @param index Index number of index
+     * @return vacancy of the index number
+     */
     public int checkVacant(int index){
     	int vacancy = 0;
     	if (indexes.get(index)==null){
@@ -149,6 +216,10 @@ public class CourseController {
         return vacancy;
     }
     
+    /**
+     * This method create lesson object and adds into lesson list.
+     * @param le Lesson object
+     */
     public void addLesson(Lesson le) {
     	try {
     		lessonList.add(le);
@@ -160,7 +231,13 @@ public class CourseController {
         
     }
 
-    /*Add course*/
+ 
+    /**
+     * This method takes in student object, index number and course code, and registers student to the course.
+     * @param student Student object 
+     * @param index Index number of the course to be registered
+     * @param courseCode Course code of the course to be registered
+     */
     public void registerCourse(Student student, int index, String courseCode) {
        	int vacancy = 0;
     	if(indexes.get(index) != null) {
@@ -186,7 +263,13 @@ public class CourseController {
     	}
     	
     }
-    /*Drop course*/
+    
+    /**
+     * This method takes in student object, index number and course code, and de-registers student from the course.
+     * @param student Student Object
+     * @param index Index number of the course to be deregister
+     * @param courseCode Course code of the course to be deregister
+     */
     public void deregisterCourse(Student student, int index, String courseCode) {
     	int vacancy = 0;
     	if(indexes != null) {
@@ -214,7 +297,12 @@ public class CourseController {
     		}
     	}
     }
-    /*Check/Print Courses Registered*/
+    
+    /**
+     * This method takes in student object and return list of courses that the student registered.
+     * @param student Student object
+     * @return List of courses that the student registered 
+     */
     public HashMap<Integer,Course> getRegisteredCourses(Student student) {
     	HashMap<Integer,Course> stuCourses = new HashMap<Integer,Course>();
     	
@@ -228,7 +316,12 @@ public class CourseController {
     	return stuCourses;
     	
     }
-    //get waitlist courses
+    
+    /**
+     * This method takes in student object and return list of courses that the student is on wait list.
+     * @param student Student object
+     * @return List of courses that the student is on wait list
+     */
     public HashMap<Integer,Course> getWaitlistCourses(Student student) {
     	HashMap<Integer,Course> stuWaitListCourses = new HashMap<Integer,Course>();
     	
@@ -245,6 +338,12 @@ public class CourseController {
     	return stuWaitListCourses;
     	
     }
+    
+    /**
+     * This method takes in index number and return list of lessons that has the index number.
+     * @param index Index number of index
+     * @return List of lessons that has the index number
+     */
     public ArrayList<Lesson> getLessons(int index) {
     	ArrayList<Lesson> stuLessons = new ArrayList<Lesson>();
     	for(int i=0; i < lessonList.size(); i++) {
@@ -254,8 +353,13 @@ public class CourseController {
     	}
     	return stuLessons;
     }
-    /*Check Vacancies Available*/
-    public ArrayList<Index> getVacancies(String courseCode) {
+    
+    /**
+     * This method takes in course code and return list of indexes that has the course code
+     * @param courseCode Course code of course
+     * @return List of indexes that has the course code
+     */
+    public ArrayList<Index> getIndexInCourse(String courseCode) {
     	ArrayList<Index> courseIndex = new ArrayList<Index>();
     	for (Integer i : indexes.keySet()) {
     		if(indexes.get(i).getCourseCode().equals(courseCode)) {
@@ -266,6 +370,14 @@ public class CourseController {
     	
     }
     
+    /**
+     * This method takes in matric number, index number, and course code and 
+     * checks whether the student has registered for the course
+     * @param matric Matriculation number of the student
+     * @param index Index number of a course
+     * @param courseCode Course code of a course
+     * @return
+     */
     public Boolean checkCourseRegistered(String matric, int index, String courseCode){
     	//Return false if student has not registered for course
     	//Return true if student already registered
@@ -287,6 +399,13 @@ public class CourseController {
 		
     }
     
+    /**
+     * This method takes in matric number, index number, and course code and checks whether the student has completed the course.
+     * @param matric Matriculation number of the student
+     * @param index Index number of a course
+     * @param courseCode Course code of a course
+     * @return
+     */
     public Boolean checkCompleteCourse(String matric, int index, String courseCode){
     	//Return false if student has not completed course
     	//Return true if student already completed course
@@ -307,6 +426,14 @@ public class CourseController {
 		
     }
 
+    /**
+     * This method takes in the matric number of the student, new index number, and old index number 
+     * and checks whether the timing of the lessons under the new index number clashed with the lessons under the student's registered indexes.
+     * @param matric
+     * @param newIndex New index number of the course
+     * @param oldIndex Old index number of the course that the student has registered. It can be set to 0 if it is not needed.
+     * @return true or false 
+     */
     public Boolean checkClash(String matric, int newIndex, int oldIndex) {
     	Boolean clash = false;
     	try {
@@ -382,6 +509,14 @@ public class CourseController {
     	return clash;
     }
 
+	/**
+	 * This method takes in student's matric number, course code of the course, registered index number of the course, and new index number of the course
+	 * and changes the registered index number to the new index number.
+	 * @param matric Matriculation number of the student
+	 * @param index Registered index number of the course
+	 * @param newIndex New index number of the course to be changed
+	 * @param courseCode Course code of the course
+	 */
 	public void changeIndex(String matric, int index, int newIndex, String courseCode) {
 	    try {
 	    	HashMap<String,Student> stuList = accessFile.readStudents();
@@ -417,6 +552,14 @@ public class CourseController {
 	    }
 	}
 	
+	/**
+	 * This method takes in student's matric number, peer's matric number, student's index number, and peer's index number 
+	 * and swaps peer's and students index.
+	 * @param ownMatric Matriculation number of the student
+	 * @param peerMatric Matriculation number of the peer
+	 * @param ownIndex Index number of the course that the student has already registered 
+	 * @param newIndex Index number of the course that the peer has already registered
+	 */
 	public void swopIndex(String ownMatric, String peerMatric, int ownIndex, int newIndex) {
 		try {
 	    	//Swap for own account

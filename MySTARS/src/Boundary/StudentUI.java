@@ -3,14 +3,24 @@ package Boundary;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
-import java.util.Iterator;
 import java.util.Scanner;
-import java.util.Map.*;
 import Controller.CourseController;
 import Controller.StudentController;
 import Model.*;
 
+/**
+ * This is the interface which will be displayed after the student is logged in.
+ * @author Guan Wei, Zhi Xuan
+ *
+ */
 public class StudentUI {
+	
+	/**
+	 * This method provides a list of operations that are designated for the student.
+	 * It contains necessary prompts and print statements for the respective operation.
+	 * @param student Currently logged in student
+	 * @param loginStatus Login status of the student.
+	 */
 	public static void studentMenu(Student student, boolean loginStatus) {
 		CourseController courseCtrl = new CourseController();
 		StudentController studentCtrl = new StudentController();
@@ -47,6 +57,7 @@ public class StudentUI {
 			validInput = false;
 
 			switch (choice) {
+			/*Add course*/
 			case 1:
 				System.out.println("Enter the course");
 				courseCode = sc.nextLine();
@@ -83,6 +94,7 @@ public class StudentUI {
 					System.out.println("Invalid course code: Please re-enter!");
 				}
 				break;
+			/*Drop course*/
 			case 2:
 				System.out.println("Enter the course");
 				courseCode = sc.nextLine();
@@ -103,14 +115,15 @@ public class StudentUI {
 					}else {
 						System.out.println("Index does not belong under the course. Please re-enter!");
 					}
-				}else if(courseCtrl.checkCourse(courseCode)== false) {
-					System.out.println("Invalid course code: Please re-enter!");
+				}else if(courseCtrl.checkCourse(courseCode) == false && courseCtrl.checkIndex(index) == false) {
+					System.out.println("Invalid index and course code: Please re-enter!");
 				}else if(courseCtrl.checkIndex(index) == false) {
 					System.out.println("Invalid index: Please re-enter!");
-				}else {
-					System.out.println("Invalid index and course code: Please re-enter!");
+				}else if(courseCtrl.checkCourse(courseCode) == false) {
+					System.out.println("Invalid course code: Please re-enter!");
 				}
 				break;
+			/*Check/Print courses registered*/
 			case 3:
 				System.out.println( student.getName() +" registered courses.");
 				System.out.println("=============================================================================================");
@@ -145,10 +158,11 @@ public class StudentUI {
 				}
 
 				break;
+			/*Check vacancies available*/
 			case 4:
 				System.out.println("Enter the course code ");
 				courseCode = sc.nextLine();
-				ArrayList<Index> courseIndexes = courseCtrl.getVacancies(courseCode);
+				ArrayList<Index> courseIndexes = courseCtrl.getIndexInCourse(courseCode);
 				if(courseCtrl.checkCourse(courseCode) == true) {
 					if(!courseIndexes.isEmpty()) {
 						System.out.println("Course Code: " + courseCode);
@@ -164,6 +178,7 @@ public class StudentUI {
 					System.out.println("Invalid course code: Please re-enter.");
 				}
 				break;
+			/*Change index number of course*/
 			case 5:
 				System.out.println("Enter the course");
 				courseCode = sc.nextLine();
@@ -179,7 +194,7 @@ public class StudentUI {
 	    			else {
 	    				//Print all indexes that course has
 		    			ArrayList<Index> indexList = new ArrayList<Index>();
-		    			indexList = courseCtrl.getVacancies(courseCode);
+		    			indexList = courseCtrl.getIndexInCourse(courseCode);
 		    			System.out.println("List of indexes and vacancies:");
 		   				System.out.println("Index		Vacancy");
 		   				System.out.println("--------------------");
@@ -208,6 +223,7 @@ public class StudentUI {
 		   			}
 		    	}
 				break;
+			/*Swap index number with another student*/
 			case 6:
 				System.out.println("Enter peer's username");
 				String peerUsername = sc.nextLine();
@@ -245,6 +261,7 @@ public class StudentUI {
 				}
 
 				break;
+			/*Log out*/
 			case 7:
 				loginStatus = false;
 				System.out.println("Logged out successfully");
