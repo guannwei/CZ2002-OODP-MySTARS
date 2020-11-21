@@ -385,18 +385,18 @@ public class AdminUI {
 			case 5:
 				System.out.print("Enter Index number: ");
 				int indexNum = sc.nextInt();
-				if (courseCtrl.checkIndex(indexNum)==false){
-					System.out.println("Index does not exist");
-					break;
-				}
-				ArrayList<Student> nomRoll1 = stuCtrl.checkStudentsInIndex(indexNum);
-				System.out.println("Student List for Index "+indexNum+" (Name, Gender, Nationality)");
-				if (nomRoll1.size()==0){
-					System.out.println("Empty");
-					break;
-				}
-				for (int i=0;i<nomRoll1.size();i++){
-					System.out.println((i+1)+") "+nomRoll1.get(i).getName()+", " + nomRoll1.get(i).getGender()+", " + nomRoll1.get(i).getNationality() );
+				if (courseCtrl.checkIndex(indexNum)){
+					ArrayList<Student> studentsInIndex = stuCtrl.checkStudentsInIndex(indexNum);
+					System.out.println("Student List for Index "+indexNum+" (Name, Gender, Nationality)");
+					if (!studentsInIndex.isEmpty()){
+						for (int i=0;i<studentsInIndex.size();i++){
+							System.out.println((i+1)+") "+studentsInIndex.get(i).getName()+", " + studentsInIndex.get(i).getGender()+", " + studentsInIndex.get(i).getNationality() );
+						}
+					}else {
+						System.out.println("There no student under this index.");
+					}
+				}else {
+					System.out.println("The Index does not exist.");
 				}
 				System.out.println("");
 
@@ -404,18 +404,18 @@ public class AdminUI {
 			case 6:
 				System.out.print("Enter Course code: ");
 				String courseCode = sc.next();
-				if (courseCtrl.checkCourse(courseCode)==false){
-					System.out.println("Course does not exist");
-					break;
-				}
-				ArrayList<Student> nomRoll2=stuCtrl.checkStudentsInCourse(courseCode);
-				System.out.println("Student List for Course Code "+courseCode+" (Name, Gender, Nationality)");
-				if (nomRoll2.size()==0){
-					System.out.println("Empty");
-					break;
-				}
-				for (int i=0;i<nomRoll2.size();i++){
-					System.out.println((i+1)+") "+nomRoll2.get(i).getName()+", " + nomRoll2.get(i).getGender()+", " + nomRoll2.get(i).getNationality() );
+				if (courseCtrl.checkCourse(courseCode)){
+					ArrayList<Student> studentsInCourse=stuCtrl.checkStudentsInCourse(courseCode);
+					System.out.println("Student List for Course Code "+courseCode+" (Name, Gender, Nationality)");
+					if(!studentsInCourse.isEmpty()) {
+						for (int i=0;i<studentsInCourse.size();i++){
+							System.out.println((i+1)+") "+studentsInCourse.get(i).getName()+", " + studentsInCourse.get(i).getGender()+", " + studentsInCourse.get(i).getNationality() );
+						}
+					}else {
+						System.out.println("There no student under this course.");
+					}
+				}else {
+					System.out.println("The course does not exist.");
 				}
 				System.out.println("");
 
