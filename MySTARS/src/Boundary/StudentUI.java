@@ -52,8 +52,11 @@ public class StudentUI {
 				courseCode = sc.nextLine();
 				System.out.println("Enter index");
 				index = sc.nextInt();
-				if(courseCtrl.checkCourse(courseCode)&& courseCtrl.checkIndex(index)) {
-					if(courseCtrl.checkIndexInCourse(courseCode, index)) {
+				if(courseCtrl.checkCourse(courseCode)&& courseCtrl.checkIndex(index) == true) {
+					if(courseCtrl.checkIndexInCourse(courseCode, index) == true) {
+						if(courseCtrl.checkCompleteCourse(matric, index, courseCode) == true) {
+			   				System.out.println("You have already completed this course!");
+		    			}
 						if(courseCtrl.checkCourseRegistered(matric, index, courseCode) == true) {
 				    		System.out.println("You have already registered for this course!");
 				   		}else {
@@ -61,27 +64,23 @@ public class StudentUI {
 				   				System.out.println("Chosen index clashes with current timetable. Please choose another index");
 								
 							}else {
-					   			if(courseCtrl.checkCompleteCourse(matric, index, courseCode) == true) {
-					   				System.out.println("You have already completed this course!");
-				    			}else {
-				    				if(courseCtrl.checkVacant(index) > 0) {
-				    					System.out.println("Succesfully registered!");
-				    				}else {
-				    					System.out.println("You are added to waitlist!");
-				    				}
-				    				courseCtrl.registerCourse(student, index, courseCode);
-				    			}
+			    				if(courseCtrl.checkVacant(index) > 0) {
+			    					System.out.println("Succesfully registered!");
+			    				}else {
+			    					System.out.println("You are added to waitlist!");
+			    				}
+			    				courseCtrl.registerCourse(student, index, courseCode);
 					   		}
 				   		}
 					}else {
 						System.out.println("Index does not belong under the course. Please re-enter");
 					}
-				}else if(!courseCtrl.checkCourse(courseCode)) {
-					System.out.println("Invalid course code: Please re-enter!");
-				}else if(!courseCtrl.checkIndex(index)) {
-					System.out.println("Invalid index: Please re-enter!");
-				}else {
+				}else if(courseCtrl.checkCourse(courseCode) == false && courseCtrl.checkIndex(index) == false) {
 					System.out.println("Invalid index and course code: Please re-enter!");
+				}else if(courseCtrl.checkIndex(index) == false) {
+					System.out.println("Invalid index: Please re-enter!");
+				}else if(courseCtrl.checkCourse(courseCode) == false) {
+					System.out.println("Invalid course code: Please re-enter!");
 				}
 				break;
 			case 2:
@@ -89,8 +88,8 @@ public class StudentUI {
 				courseCode = sc.nextLine();
 				System.out.println("Enter index");
 				index = sc.nextInt();
-				if(courseCtrl.checkCourse(courseCode)&& courseCtrl.checkIndex(index)) {
-					if(courseCtrl.checkIndexInCourse(courseCode, index)) {
+				if(courseCtrl.checkCourse(courseCode)&& courseCtrl.checkIndex(index) == true) {
+					if(courseCtrl.checkIndexInCourse(courseCode, index) == true) {
 						if(courseCtrl.checkCourseRegistered(matric, index,courseCode) == false) {
 				    		System.out.println("You have not registered for this course!");
 				   		}else {
@@ -104,9 +103,9 @@ public class StudentUI {
 					}else {
 						System.out.println("Index does not belong under the course. Please re-enter!");
 					}
-				}else if(!courseCtrl.checkCourse(courseCode)) {
+				}else if(courseCtrl.checkCourse(courseCode)== false) {
 					System.out.println("Invalid course code: Please re-enter!");
-				}else if(!courseCtrl.checkIndex(index)) {
+				}else if(courseCtrl.checkIndex(index) == false) {
 					System.out.println("Invalid index: Please re-enter!");
 				}else {
 					System.out.println("Invalid index and course code: Please re-enter!");
@@ -150,7 +149,7 @@ public class StudentUI {
 				System.out.println("Enter the course code ");
 				courseCode = sc.nextLine();
 				ArrayList<Index> courseIndexes = courseCtrl.getVacancies(courseCode);
-				if(courseCtrl.checkCourse(courseCode)) {
+				if(courseCtrl.checkCourse(courseCode) == true) {
 					if(!courseIndexes.isEmpty()) {
 						System.out.println("Course Code: " + courseCode);
 						System.out.println("Index		Vacancy");
@@ -166,12 +165,10 @@ public class StudentUI {
 				}
 				break;
 			case 5:
-				
 				System.out.println("Enter the course");
 				courseCode = sc.nextLine();
 				System.out.println("Enter the original index");
 				index = sc.nextInt();
-					
 		    	if(courseCtrl.checkCourseRegistered(matric, index, courseCode) == false) {
 		    		System.out.println("You have not registered for this course!");
 		   		}
@@ -210,8 +207,6 @@ public class StudentUI {
 		   				}	
 		   			}
 		    	}
-		    	
-		    	
 				break;
 			case 6:
 				System.out.println("Enter peer's username");
@@ -222,7 +217,6 @@ public class StudentUI {
 				int ownIndex = sc.nextInt();
 				System.out.println("Enter peer's index");
 				int peerIndex = sc.nextInt();
-				
 				if(studentCtrl.checkUserNameExists(peerUsername) == false) {
 					System.out.println("Peer's username does not exist, unable to swap index!");
 				}

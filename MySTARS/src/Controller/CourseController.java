@@ -1,21 +1,17 @@
 package Controller;
-import Controller.FileManager;
-import Model.Course;
-import Model.Index;
-import Model.Lesson;
-import Model.Student;
-import Model.StudentRegisteredCourses;
 
-import java.io.File;
+import Model.*;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Scanner;
 
+/**
+ * The class has all the methods managing Course object and all objects related to 
+ * @author Ray Myat, Guan Wei, Zhi Xuan
+ *
+ */
 public class CourseController {
     private HashMap<String,Course> courses;
     private HashMap<Integer, Index> indexes;

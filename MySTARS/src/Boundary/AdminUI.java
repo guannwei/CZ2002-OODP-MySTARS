@@ -263,8 +263,12 @@ public class AdminUI {
 							switch (sc.nextInt()) {
 								case 1:
 									System.out.print("Enter new Course Code:");
-									courseCtrl.updateCourseCode(updateCourseCode, sc.next());
-									System.out.println("Course Code successfully updated!");
+									if(courseCtrl.checkCourse(updateCourseCode) == false) {
+										courseCtrl.updateCourseCode(updateCourseCode, sc.next());
+										System.out.println("Course Code successfully updated!");
+									}else {
+										System.out.println("The Course Code already existed. Please re-enter!");
+									}
 									break;
 
 								case 2:
@@ -284,14 +288,14 @@ public class AdminUI {
 										case 1:
 											System.out.print("Enter the index you wish to change: ");
 											int indexChange = sc.nextInt();
-											if (courseCtrl.checkIndex(indexChange) == false) {
-												System.out.println("This index does not exist.");
-												break;
+											if (courseCtrl.checkIndexInCourse(updateCourseCode, indexChange) == true) {
+												System.out.print("Enter the new index: ");
+												int newChange = sc.nextInt();
+												courseCtrl.updateIndex(indexChange, newChange);
+												System.out.println("Index successfully changed!");
+											}else {
+												System.out.println("This index does not exist in this course.");
 											}
-											System.out.print("Enter the new index: ");
-											int newChange = sc.nextInt();
-											courseCtrl.updateIndex(indexChange, newChange);
-											System.out.println("Index successfully changed!");
 											break;
 
 										case 2:
@@ -311,41 +315,45 @@ public class AdminUI {
 										case 3:
 											System.out.println("Enter index number: ");
 											int lessonIndex = sc.nextInt();
-											sc.nextLine();
-											System.out.println("Enter lesson type: ");
-											String lessonType = sc.nextLine();
-											System.out.println("Enter lesson day: ");
-											String lessonDay = sc.nextLine();
-											System.out.println("Enter lesson venue: ");
-											String lessonVenue = sc.nextLine();
-											validInput = false;	
-											do {
-												try {
-													System.out.println("Enter lesson start time(HH:MM): ");
-													lessonStart = LocalTime.parse(sc.nextLine(), timeFormatter);
-													validInput = true;
-												}
-												catch(DateTimeParseException e) {
-													System.out.println("Please enter the valid date time format!");
-												}
-											}while(!validInput);
-											
-											validInput = false;
-											do {
-												try {
-													System.out.println("Enter lesson end time(HH:MM): ");
-													lessonEnd = LocalTime.parse(sc.nextLine(), timeFormatter);
-													validInput = true;
-												}
-												catch(DateTimeParseException e) {
-													System.out.println("Please enter the valid date time format!");
-												}
+											if(courseCtrl.checkIndexInCourse(updateCourseCode, lessonIndex)== true) {
+												sc.nextLine();
+												System.out.println("Enter lesson type: ");
+												String lessonType = sc.nextLine();
+												System.out.println("Enter lesson day: ");
+												String lessonDay = sc.nextLine();
+												System.out.println("Enter lesson venue: ");
+												String lessonVenue = sc.nextLine();
+												validInput = false;	
+												do {
+													try {
+														System.out.println("Enter lesson start time(HH:MM): ");
+														lessonStart = LocalTime.parse(sc.nextLine(), timeFormatter);
+														validInput = true;
+													}
+													catch(DateTimeParseException e) {
+														System.out.println("Please enter the valid date time format!");
+													}
+												}while(!validInput);
 												
-											}while(!validInput);
-											
-											Lesson le = new Lesson(lessonIndex, lessonStart, lessonEnd, lessonDay, lessonType, lessonVenue);
-											courseCtrl.addLesson(le);
-											System.out.println("Lesson successfully added!");
+												validInput = false;
+												do {
+													try {
+														System.out.println("Enter lesson end time(HH:MM): ");
+														lessonEnd = LocalTime.parse(sc.nextLine(), timeFormatter);
+														validInput = true;
+													}
+													catch(DateTimeParseException e) {
+														System.out.println("Please enter the valid date time format!");
+													}
+													
+												}while(!validInput);
+												
+												Lesson le = new Lesson(lessonIndex, lessonStart, lessonEnd, lessonDay, lessonType, lessonVenue);
+												courseCtrl.addLesson(le);
+												System.out.println("Lesson successfully added!");
+											}else {
+												System.out.println("The index doesn't belong to the course. Please re-enter!");
+											}
 											
 											break;
 									}
@@ -354,10 +362,14 @@ public class AdminUI {
 								case 4:
 									System.out.print("Enter the index which vacancy you wish to change: ");
 									int indexChange = sc.nextInt();
-									System.out.print("Enter the new vacancy: ");
-									int newChange = sc.nextInt();
-									courseCtrl.updateVacancy(indexChange, newChange);
-									System.out.println("Vacancy successfully changed.");
+									if(courseCtrl.checkIndexInCourse(updateCourseCode, indexChange) == true) {
+										System.out.print("Enter the new vacancy: ");
+										int newChange = sc.nextInt();
+										courseCtrl.updateVacancy(indexChange, newChange);
+										System.out.println("Vacancy successfully changed.");
+									}else {
+										System.out.println("The index does not belongs to the course code.Please re-enter!");
+									}
 									break;
 
 							}
