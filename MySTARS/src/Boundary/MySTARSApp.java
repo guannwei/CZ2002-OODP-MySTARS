@@ -19,9 +19,8 @@ public class MySTARSApp {
 	 * This is the main class which provides the common login interface for the users.
 	 * It contains necessary prompts and print statements for the respective operation.
 	 * @param args
-	 * @throws IOException
 	 */
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		// accountStatus is to track user log
 		Admin admin;
 		Student student;
