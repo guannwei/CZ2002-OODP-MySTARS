@@ -1,7 +1,11 @@
 package Model;
 
 import java.time.LocalTime;
-
+/***
+ * Lesson class with all lesson details
+ * @author Guan Wei
+ *
+ */
 public class Lesson {
 	private int indexNumber;
 	private LocalTime startTime;

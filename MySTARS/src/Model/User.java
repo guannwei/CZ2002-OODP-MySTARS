@@ -3,7 +3,12 @@ package Model;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
+/***
+ * User class with username and password
+ * Password hashing is done here
+ * @author Ray
+ *
+ */
 public class User{
 	private String userName;
 	private String password;

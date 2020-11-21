@@ -2,7 +2,14 @@ package Model;
 
 import java.util.List;
 import java.util.Queue;
-
+/***
+ * Index class with all index details
+ * Takes course code from Course class
+ * Has a waitlist of student matric number
+ * Has a list of Lesson classes
+ * @author Guan Wei
+ *
+ */
 public class Index {
 	private int indexNumber;
 	private String courseCode;

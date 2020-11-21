@@ -3,6 +3,12 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 
+/***
+ * Course class with all course details
+ * Has list of Index classes
+ * @author Guan Wei
+ *
+ */
 public class Course {
 	private String courseCode;
 	private String courseName;

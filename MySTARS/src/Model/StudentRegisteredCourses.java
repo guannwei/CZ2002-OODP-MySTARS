@@ -1,5 +1,12 @@
 package Model;
 
+/***
+ * StudentRegisteredCourses with all student registered courses details
+ * Takes matric number from Student class
+ * Takes index number from Index class
+ * @author Guan Wei
+ *
+ */
 public class StudentRegisteredCourses {
 	private String matricNumber;
 	private int indexNumber;

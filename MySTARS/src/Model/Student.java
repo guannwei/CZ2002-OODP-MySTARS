@@ -3,7 +3,11 @@ package Model;
 import java.util.List;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
+/***
+ * Student class with all student details, extends User class
+ * @author Ray
+ *
+ */
 public class Student extends User{
 	private String email;
 	private String name;
