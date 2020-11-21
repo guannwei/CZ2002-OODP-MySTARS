@@ -267,13 +267,18 @@ public class StudentController {
 		ArrayList studentNominal = new ArrayList<Student>();
 		
 		try {
+			ArrayList<StudentRegisteredCourses> regCourseList = accessFile.readStudentRegisteredCourses();
 			HashMap<Integer,Index> indexList = accessFile.readIndex();
 			HashMap<String,Student> studentList = accessFile.readStudents();
-			ArrayList<StudentRegisteredCourses> regCourseList = accessFile.readStudentRegisteredCourses();
 
 			for(int i = 0; i<regCourseList.size(); i++) {
-				if(indexList.get(regCourseList.get(i).getIndexNumber()).getCourseCode().equals(courseCode)&&!regCourseList.get(i).getComplete()){
-					studentNominal.add(studentList.get(regCourseList.get(i).getMatricNumber()));
+				int regIndexNum = regCourseList.get(i).getIndexNumber();
+				String regIndexCourseCode = indexList.get(regIndexNum).getCourseCode();
+				boolean regCourseStatus = regCourseList.get(i).getComplete();
+				if(regIndexCourseCode.equals(courseCode)&&!regCourseStatus){
+					String regMatricNum = regCourseList.get(i).getMatricNumber();
+					Student regStudent = studentList.get(regMatricNum);
+					studentNominal.add(regStudent);
 
 				}
 			}
