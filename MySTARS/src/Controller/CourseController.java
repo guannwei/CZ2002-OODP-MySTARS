@@ -167,20 +167,6 @@ public class CourseController {
     	}
         
     }
-
-    /**
-     * This method takes in course code and delete the course from courses.
-     * @param courseCode Course code of course
-     */
-    public void delCourse(String courseCode) {
-    	try {
-    		courses.remove(courseCode);
-            accessFile.saveCourse(courses);
-    	}
-    	catch(Exception e) {
-    		
-    	}
-    }
     
     /**
      * This method load all the courses.

@@ -209,8 +209,7 @@ public class AdminUI {
 			/*Add/Update a course*/
 			case 3:
 				System.out.println("1) Add a new course\n" +
-								"2) Delete a course\n" +
-								"3) Update a course");
+								"2) Update a course");
 				int courseChoice = sc.nextInt();
 				sc.nextLine();
 				switch (courseChoice) {
@@ -248,18 +247,6 @@ public class AdminUI {
 						break;
 
 					case 2:
-						System.out.print("Enter Course Code to be deleted:");
-						String delCourseCode = sc.next();
-						if (courseCtrl.checkCourse(delCourseCode) == false) {
-							System.out.println("This Course Code does not exists");
-							return;
-						}
-						courseCtrl.delCourse(delCourseCode);
-						System.out.println("Course successfully deleted!");
-						break;
-
-
-					case 3:
 						System.out.print("Enter Course Code to update:");
 						String updateCourseCode = sc.next();
 						if (courseCtrl.checkCourse(updateCourseCode)) {
@@ -415,7 +402,7 @@ public class AdminUI {
 							System.out.println((i+1)+") "+studentsInIndex.get(i).getName()+", " + studentsInIndex.get(i).getGender()+", " + studentsInIndex.get(i).getNationality() );
 						}
 					}else {
-						System.out.println("There no student under this index.");
+						System.out.println("There is no student under this index.");
 					}
 				}else {
 					System.out.println("The Index does not exist.");
@@ -435,7 +422,7 @@ public class AdminUI {
 							System.out.println((i+1)+") "+studentsInCourse.get(i).getName()+", " + studentsInCourse.get(i).getGender()+", " + studentsInCourse.get(i).getNationality() );
 						}
 					}else {
-						System.out.println("There no student under this course.");
+						System.out.println("There is no student under this course.");
 					}
 				}else {
 					System.out.println("The course does not exist.");

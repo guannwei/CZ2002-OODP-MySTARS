@@ -1,5 +1,6 @@
 package Boundary;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
@@ -31,6 +32,11 @@ public class StudentUI {
 		String matric= student.getMatricNumber();
 		String courseCode;
 		int index;
+		Console console = System.console();
+		if (console == null) {
+			System.out.println("Couldn't get Console instance");
+			System.exit(0);
+		}
 		
 		System.out.println("------------------------Student Menu-----------------------");	
 		do {
@@ -231,8 +237,8 @@ public class StudentUI {
 			case 6:
 				System.out.println("Enter peer's username");
 				String peerUsername = sc.nextLine();
-				System.out.println("Enter peer's password");
-				String peerPassword = sc.nextLine();
+				char[] peerPass = console.readPassword("Enter peer's password: ");
+			    String peerPassword = new String(peerPass);
 				System.out.println("Enter your index");
 				int ownIndex = sc.nextInt();
 				System.out.println("Enter peer's index");
