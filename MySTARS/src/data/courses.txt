@@ -6,3 +6,5 @@ CZ2004,Human Computer Interaction,SCSE,3
 CZ3005,Computer Visualization,SCSE,3
 CZ2006,Software Engineering,SCSE,3
 CZ2007,Database Management,SCSE,3
+EE8086,Astronomy,EEE,3
+CZ2005,Operating System,SCSE,3

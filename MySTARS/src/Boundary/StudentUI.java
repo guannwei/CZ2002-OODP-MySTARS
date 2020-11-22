@@ -68,21 +68,25 @@ public class StudentUI {
 						if(courseCtrl.checkCompleteCourse(matric, index, courseCode) == true) {
 			   				System.out.println("You have already completed this course!");
 		    			}
-						if(courseCtrl.checkCourseRegistered(matric, index, courseCode) == true) {
-				    		System.out.println("You have already registered for this course!");
-				   		}else {
-				   			if(courseCtrl.checkClash(matric, index, 0)) {
-				   				System.out.println("Chosen index clashes with current timetable. Please choose another index");
-								
-							}else {
-			    				if(courseCtrl.checkVacant(index) > 0) {
-			    					System.out.println("Succesfully registered!");
-			    				}else {
-			    					System.out.println("You are added to waitlist!");
-			    				}
-			    				courseCtrl.registerCourse(student, index, courseCode);
+						if(courseCtrl.checkTotalAU(student) == true) {
+							if(courseCtrl.checkCourseRegistered(matric, index, courseCode) == true) {
+					    		System.out.println("You have already registered for this course!");
+					   		}else {
+					   			if(courseCtrl.checkClash(matric, index, 0)) {
+					   				System.out.println("Chosen index clashes with current timetable. Please choose another index");
+									
+								}else {
+				    				if(courseCtrl.checkVacant(index) > 0) {
+				    					System.out.println("Succesfully registered!");
+				    				}else {
+				    					System.out.println("You are added to waitlist!");
+				    				}
+				    				courseCtrl.registerCourse(student, index, courseCode);
+						   		}
 					   		}
-				   		}
+						}else {
+							System.out.println("You have exceeded the total AU!");
+						}
 					}else {
 						System.out.println("Index does not belong under the course. Please re-enter");
 					}

@@ -307,7 +307,7 @@ public class CourseController {
     	HashMap<Integer,Course> stuCourses = new HashMap<Integer,Course>();
     	
     	for(int i = 0; i <stuRegCourses.size(); i++) {
-			if(student.getMatricNumber().equals(stuRegCourses.get(i).getMatricNumber())) {
+			if(student.getMatricNumber().equals(stuRegCourses.get(i).getMatricNumber()) && stuRegCourses.get(i).getComplete()== false) {
 				int index = stuRegCourses.get(i).getIndexNumber();
 				Course course = courses.get(indexes.get(index).getCourseCode());
 				stuCourses.put(index,course);
@@ -397,6 +397,30 @@ public class CourseController {
     	}
 		return exists;
 		
+    }
+
+    /**
+     * This method takes in student object and checks whether the student exceed the maximum amount of AU for registration.
+     * @param student Student object
+     * @return
+     */
+    public Boolean checkTotalAU(Student student) {
+    	int total = 0;
+    	HashMap<Integer,Course> stuCourses = getRegisteredCourses(student);
+    	HashMap<Integer,Course> stuWaitListCourses = getWaitlistCourses(student);
+    	if(!stuCourses.isEmpty()) {
+    		for(Integer i : stuCourses.keySet()) {
+        		total += stuCourses.get(i).getAu();
+        	}
+    	}
+    	if(!stuWaitListCourses.isEmpty()) {
+    		for(Integer i: stuWaitListCourses.keySet()) {
+    			total += stuWaitListCourses.get(i).getAu();
+    		}
+    	}
+    	if(total >= 21) {
+    		return false;
+    	}else return true;
     }
     
     /**
