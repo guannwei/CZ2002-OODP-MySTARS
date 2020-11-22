@@ -258,12 +258,12 @@ public class AdminUI {
 
 							switch (sc.nextInt()) {
 								case 1:
-									System.out.print("Enter new Course Code:");
-									if(courseCtrl.checkCourse(updateCourseCode) == false) {
+									if(courseCtrl.checkCourse(updateCourseCode) == true) {
+										System.out.print("Enter new Course Code:");
 										courseCtrl.updateCourseCode(updateCourseCode, sc.next());
 										System.out.println("Course Code successfully updated!");
 									}else {
-										System.out.println("The Course Code already existed. Please re-enter!");
+										System.out.println("The Course Code does not exist. Please re-enter!");
 									}
 									break;
 
@@ -286,8 +286,7 @@ public class AdminUI {
 											int indexChange = sc.nextInt();
 											if (courseCtrl.checkIndexInCourse(updateCourseCode, indexChange) == true) {
 												System.out.print("Enter the new index: ");
-												int newChange = sc.nextInt();
-												courseCtrl.updateIndex(indexChange, newChange);
+												courseCtrl.updateIndex(sc.nextInt(), indexChange);
 												System.out.println("Index successfully changed!");
 											}else {
 												System.out.println("This index does not exist in this course.");

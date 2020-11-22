@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 
 /**
@@ -82,9 +83,17 @@ public class CourseController {
 	 * @param courseCodeNew New course code to be updated
 	 */
 	public void updateCourseCode(String courseCodeOld, String courseCodeNew){
+		//Set new course code
 		courses.get(courseCodeOld).setCourseCode(courseCodeNew);
+		//Set new course code for all indexes under that course
+		for(Map.Entry<Integer, Index> entry : indexes.entrySet()){
+			if(entry.getValue().getCourseCode().equals(courseCodeOld)) {
+				entry.getValue().setCourseCode(courseCodeNew);
+			}
+		}
 		try {
     		accessFile.saveCourse(courses);
+    		accessFile.saveIndex(indexes);
     	}
     	catch(Exception e){
     	}
@@ -111,9 +120,24 @@ public class CourseController {
 	 * @param oldIndex Old index number of index
 	 */
 	public void updateIndex(int newIndex, int oldIndex){
+		//Set new index
 		indexes.get(oldIndex).setIndexNumber(newIndex);
+		//Set new index for all StudentRegisteredCourses & Lessons under old index
+		for(int i = 0; i < stuRegCourses.size(); i++) {
+			if(stuRegCourses.get(i).getIndexNumber() == oldIndex) {
+				stuRegCourses.get(i).setIndexNumber(newIndex);
+			}
+		}
+		for(int i = 0; i < lessonList.size(); i++) {
+			if(lessonList.get(i).getIndexNumber() == oldIndex) {
+				lessonList.get(i).setIndexNumber(newIndex);
+			}
+		}
+		
 		try {
     		accessFile.saveIndex(indexes);
+    		accessFile.saveRegisteredCourses(stuRegCourses);
+    		accessFile.saveLesson(lessonList);
     	}
     	catch(Exception e){
     	}
