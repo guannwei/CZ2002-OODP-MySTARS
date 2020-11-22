@@ -13,7 +13,7 @@ import javax.activation.*;
 import Model.Student;
 
 /**
- * This class has all the methods managing notification to students. 
+ * This is the abstract class Notification. 
  * @author Ray Myat
  *
  */
