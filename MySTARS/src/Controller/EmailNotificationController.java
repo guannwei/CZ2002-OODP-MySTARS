@@ -11,7 +11,11 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import Model.Student;
-
+/**
+ * This is the child class of NotificationController which implements send email function. 
+ * @author Ray Myat
+ *
+ */
 public class EmailNotificationController extends NotificationController {
 	/**
 	 * Send email for wait list notification
