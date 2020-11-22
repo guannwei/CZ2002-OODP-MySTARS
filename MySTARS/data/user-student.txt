@@ -13,4 +13,4 @@ rox01,cdaeb4835ba1e614edf617ccfafb480c,grp9stud@gmail.com,Roxanna Jing,U1989829M
 selng1,6d48cec954fb3901b982bdca9e91c66d,selng1@gmail.com,Selena Ng,U1900152G,Female,Singaporean,2020-11-20T10:30,2020-11-30T10:30
 aimann01,7281de17d00d7ba1dcfaff46b67c8a0b,grp9stud@gmail.com,Aimee Ann,U1919191A,Female,Singaporean,2020-11-16T10:30,2020-11-30T10:30
 jtan01,01a47877cc60a77ac0841587a932e4cb,grp9stud@gmail.com,John Tan,U1922337O,Male,Singaporean,2020-11-30T10:30,2020-11-30T12:30
-mikch4,3ca30789b905505e122c9a2e882d8390,mikch4@gmail.com,Mike Chan,U1944728P,Male,Singaporean,2020-11-20T10:30,2020-11-30T10:30
+mikch4,3ca30789b905505e122c9a2e882d8390,mikch4@gmail.com,Mike Chan,U1944728P,Male,Singaporean,2021-11-20T10:30,2021-11-30T10:30

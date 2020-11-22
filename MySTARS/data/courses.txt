@@ -1,4 +1,3 @@
-EE8086,Astronomy,EEE,3
 CZ3001,Advance Computer Architecture,SCSE,3
 CZ2001,Algorithm,SCSE,3
 CZ2002,Object Oriented,SCSE,3
@@ -8,3 +7,4 @@ CZ3005,Computer Visualization,SCSE,3
 CZ2005,Operating System,SCSE,3
 CZ2006,Software Engineering,SCSE,3
 CZ2007,Database Management,SCSE,3
+CZ1001,Digital Logic,SCSE,3
