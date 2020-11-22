@@ -259,11 +259,11 @@ public class AdminUI {
 							switch (sc.nextInt()) {
 								case 1:
 									if(courseCtrl.checkCourse(updateCourseCode) == true) {
-										System.out.print("Enter new Course Code:");
+										System.out.print("Enter new course Code:");
 										courseCtrl.updateCourseCode(updateCourseCode, sc.next());
 										System.out.println("Course Code successfully updated!");
 									}else {
-										System.out.println("The Course Code does not exist. Please re-enter!");
+										System.out.println("The Course Code does not exists. Please re-enter!");
 									}
 									break;
 

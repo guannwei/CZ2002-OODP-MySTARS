@@ -34,7 +34,7 @@ public class MySTARSApp {
 			Scanner sc = new Scanner(System.in);
 			String userType = "";
 			while (!userType.equals("admin") && !userType.equals("student")) {
-				System.out.println("Enter Domain (Admin or Student): ");
+				System.out.println("Enter domain (Admin or Student): ");
 				userType = sc.nextLine();
 				userType = userType.toLowerCase();
 			 }

@@ -21,7 +21,7 @@ public class CourseController {
     private ArrayList<Lesson> lessonList = new ArrayList<>();
     private ArrayList<StudentRegisteredCourses> stuRegCourses = new ArrayList<>();
     private static FileManager accessFile = new FileManager();
-    
+    private static NotificationController emailNoti = new EmailNotificationController();
     /**
      * This is the constructors which load list of courses, indexes, lessonList and studRegCourses respectively.
      */
@@ -294,7 +294,7 @@ public class CourseController {
     			if(indexes.get(index).getWaitList().size() > 0) {
     				String temp = indexes.get(index).getWaitList().remove();
     				stuRegCourses.add(new StudentRegisteredCourses(temp,index,false));
-    				NotificationController.sendNotification(stuList.get(temp), courseCode);
+    				emailNoti.sendNotification(stuList.get(temp), courseCode);
     			}else {
     				indexes.get(index).setVacancy(vacancy+1);
     			}
@@ -565,7 +565,7 @@ public class CourseController {
 		    			if(indexes.get(index).getWaitList().size() > 0) {
 		    				String waitMatric = indexes.get(index).getWaitList().remove();
 		    				stuRegCourses.add(new StudentRegisteredCourses(waitMatric,index,false));
-		    				NotificationController.sendNotification(stuList.get(waitMatric), courseCode);
+		    				emailNoti.sendNotification(stuList.get(waitMatric), courseCode);
 		    			}
 		    			//Else, just change vacancies
 		    			else {
